@@ -23,7 +23,10 @@ mongoose
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
-app.use("/images", express.static(path.join("public/images")));
+// app.use("/images", express.static(path.join("public/images")));
+
+app.use("/images", express.static(path.join(__dirname, 'public/images')));
+app.use("/", express.static(path.join(__dirname, "angular")));
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
