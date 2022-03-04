@@ -23,7 +23,6 @@ mongoose
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
-// app.use("/images", express.static(path.join("public/images")));
 
 app.use("/images", express.static(path.join(__dirname, 'public/images')));
 app.use("/", express.static(path.join(__dirname, "angular")));
@@ -44,34 +43,6 @@ app.use((req, res, next) => {
 
 // products routes
 app.use('/products', ProductRoute)
-
-// app.post("/add", upload.single('image'), (req, res, next) => {
-//     console.log(req.body)
-//   // console.log(req.file);
-//   var product = new Product({
-//     _id: new mongoose.Types.ObjectId(),
-//     title: req.body.title,
-//     description: req.body.description,
-//     price: req.body.price,
-//     quantity: req.body.quantity,
-//     image: "images/" + req.file.filename
-
-//   }); product
-//     .save()
-//     .then(createdProduct => {
-//     //   console.log(createdProduct.image)
-//       res.status(201).json({
-//         message: "Product added successfully",
-//         createdProduct: createdProduct
-//       });
-//     })
-//     .catch(error => {
-//       res.status(500).json({
-//         message: "Creating a product failed!",
-//         errorMsg: error
-//       });
-//     });
-// });
 
 app.use((req, res, next) => {
   var error = new Error('The page u request is not found');
