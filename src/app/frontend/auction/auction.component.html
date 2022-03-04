@@ -1,0 +1,272 @@
+<main>
+    <section class="auction--section">
+        <div class="container">
+            <div class="auction__head">
+                <h2>Auction House</h2>
+            </div>
+            <div class="auction__wrap">
+                <div class="auction__box">
+                    <div class="auction__box__head">
+                        <div class="auction__image">
+                            <img src="../../../assets/images/auction1.png">
+                        </div>
+                    </div>
+                    <div class="wrapper">
+                        <div class="countdown-container" class="countdown-container">
+                            <h5>Time Remaing :</h5>
+                            <article class="countdown">
+                                <div class="js-days" class="number"></div>
+                                <div class="js-hours" class="number"></div>
+                                <div class="sub__min">
+                                    <div class="js-minutes" class="number"></div>
+                                    <div class="dotts">:</div>
+                                    <div class="js-seconds" class="number"></div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                    <div class="auction__box__main">
+                        <div class="highest__bid">
+                            <div class="bid__text">
+                                <p>Highest Bid By :</p>
+                            </div>
+                            <div class="bid__desc">
+                                <div class="desc__image">
+                                    <img src="../../../assets/images/bid-desc.svg">
+                                </div>
+                                <div class="desc__text">
+                                    <p>carryan@gmail.com</p>
+                                    <p>Amount = 300 XRP</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box__offer">
+                        <div class="offer__btn">
+                            <a href="javascript:;" (click)="clickEvent()">OFFER</a>
+                        </div>
+                    </div>
+                    <div class="auction__box__form" *ngIf="show">
+                        <form class="auction__form">
+                            <div class="form-group">
+                                <input type="text" id="xrp__address" placeholder="XRP Address">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="email__address" placeholder="Email Address">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="bid__fak" placeholder="Bid in FAK">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="bid__xrp" placeholder="Bid in XRP">
+                            </div>
+                            <div class="auction__checkbox">
+                                <input class="styled-checkbox" id="styled-checkbox-1" type="checkbox" value="value1">
+                                <label for="styled-checkbox-1">No Maximum Bid</label>
+                            </div>
+                        </form>
+                        <div class="submit__btn">
+                            <a href="javascript:;">Submit</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="auction__box">
+                    <div class="auction__box__head">
+                        <div class="auction__image2">
+                            <img src="../../../assets/images/auction2.png">
+                        </div>
+                    </div>
+                    <div class="wrapper">
+                        <div class="countdown-container" class="countdown-container">
+                            <h5>Time Remaing :</h5>
+                            <article class="countdown">
+                                <div class="js-days" class="number"></div>
+                                <div class="js-hours" class="number"></div>
+                                <div class="sub__min">
+                                    <div class="js-minutes" class="number"></div>
+                                    <div class="dotts">:</div>
+                                    <div class="js-seconds" class="number"></div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+
+                    <div class="auction__box__main">
+                        <div class="highest__bid">
+                            <div class="bid__text">
+                                <p>Highest Bid By :</p>
+                            </div>
+                            <div class="bid__desc">
+                                <div class="desc__image">
+                                    <img src="../../../assets/images/bid-desc.svg">
+                                </div>
+                                <div class="desc__text">
+                                    <p>carryan@gmail.com</p>
+                                    <p>Amount = 300 XRP</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box__offer">
+                        <div class="offer__btn">
+                            <a href="javascript:;" (click)="clickEvent()">OFFER</a>
+                        </div>
+                    </div>
+                    <div class="auction__box__form" *ngIf="show">
+                        <form class="auction__form">
+                            <div class="form-group">
+                                <input type="text" placeholder="XRP Address">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" placeholder="Email Address">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" placeholder="Bid in FAK">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" placeholder="Bid in XRP">
+                            </div>
+                            <div class="auction__checkbox">
+                                <input class="styled-checkbox" id="styled-checkbox-2" type="checkbox" value="value1">
+                                <label for="styled-checkbox-2">No Maximum Bid</label>
+                            </div>
+                        </form>
+                        <div class="submit__btn">
+                            <a href="javascript:;">Submit</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="auction__box">
+                    <div class="auction__box__head">
+                        <div class="auction__image">
+                            <img src="../../../assets/images/auction3.png">
+                        </div>
+                    </div>
+                    <div class="wrapper">
+                        <div class="countdown-container" class="countdown-container">
+                            <h5>Time Remaing :</h5>
+                            <article class="countdown">
+                                <div class="js-days" class="number"></div>
+                                <div class="js-hours" class="number"></div>
+                                <div class="sub__min">
+                                    <div class="js-minutes" class="number"></div>
+                                    <div class="dotts">:</div>
+                                    <div class="js-seconds" class="number"></div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                    <div class="auction__box__main">
+                        <div class="highest__bid">
+                            <div class="bid__text">
+                                <p>Highest Bid By :</p>
+                            </div>
+                            <div class="bid__desc">
+                                <div class="desc__image">
+                                    <img src="../../../assets/images/bid-desc.svg">
+                                </div>
+                                <div class="desc__text">
+                                    <p>carryan@gmail.com</p>
+                                    <p>Amount = 300 XRP</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box__offer">
+                        <div class="offer__btn">
+                            <a href="javascript:;" (click)="clickEvent()">OFFER</a>
+                        </div>
+                    </div>
+                    <div class="auction__box__form" *ngIf="show">
+                        <form class="auction__form">
+                            <div class="form-group">
+                                <input type="text" placeholder="XRP Address">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" placeholder="Email Address">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" placeholder="Bid in FAK">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" placeholder="Bid in XRP">
+                            </div>
+                            <div class="auction__checkbox">
+                                <input class="styled-checkbox" id="styled-checkbox-3" type="checkbox" value="value1">
+                                <label for="styled-checkbox-3">No Maximum Bid</label>
+                            </div>
+                        </form>
+                        <div class="submit__btn">
+                            <a href="javascript:;">Submit</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="auction__box">
+                    <div class="auction__box__head">
+                        <div class="auction__image">
+                            <img src="../../../assets/images/auction4.png">
+                        </div>
+                    </div>
+                    <div class="wrapper">
+                        <div class="countdown-container" class="countdown-container">
+                            <h5>Time Remaing :</h5>
+                            <article class="countdown">
+                                <div class="js-days" class="number"></div>
+                                <div class="js-hours" class="number"></div>
+                                <div class="sub__min">
+                                    <div class="js-minutes" class="number"></div>
+                                    <div class="dotts">:</div>
+                                    <div class="js-seconds" class="number"></div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                    <div class="auction__box__main">
+                        <div class="highest__bid">
+                            <div class="bid__text">
+                                <p>Highest Bid By :</p>
+                            </div>
+                            <div class="bid__desc">
+                                <div class="desc__image">
+                                    <img src="../../../assets/images/bid-desc.svg">
+                                </div>
+                                <div class="desc__text">
+                                    <p>carryan@gmail.com</p>
+                                    <p>Amount = 300 XRP</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box__offer">
+                        <div class="offer__btn">
+                            <a href="javascript:;" (click)="clickEvent()">OFFER</a>
+                        </div>
+                    </div>
+                    <div class="auction__box__form" *ngIf="show">
+                        <form class="auction__form">
+                            <div class="form-group">
+                                <input type="text" placeholder="XRP Address">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" placeholder="Email Address">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" placeholder="Bid in FAK">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" placeholder="Bid in XRP">
+                            </div>
+                            <div class="auction__checkbox">
+                                <input class="styled-checkbox" id="styled-checkbox-4" type="checkbox" value="value1">
+                                <label for="styled-checkbox-4">No Maximum Bid</label>
+                            </div>
+                        </form>
+                        <div class="submit__btn">
+                            <a href="javascript:;">Submit</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

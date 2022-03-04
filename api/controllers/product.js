@@ -1,0 +1,127 @@
+var Product = require('../schemas/products.schema');
+var mongoose = require('mongoose');
+
+exports.product_gets_all = (req, res, next) => {
+  Product.find().select('_id title description price quantity image').exec().then(doc => {
+    var response = {
+      count: doc.length,
+      Product: doc.map(doc => {
+        return {
+          _id: doc._id,
+          title: doc.title,
+          description: doc.description,
+          price: doc.price,
+          quantity: doc.quantity,
+          image: doc.image
+        }
+      })
+    };
+    res.status(200).json(response);
+  }).catch(err => {
+    console.log(err);
+    res.status(500).json({
+      error: err
+    })
+  });
+}
+
+
+exports.product_create_product = (req, res, next) => {
+  console.log(req.file);
+  var product = new Product({
+    _id: new mongoose.Types.ObjectId(),
+    title: req.body.title,
+    description: req.body.description,
+    price: req.body.price,
+    quantity: req.body.quantity,
+    image: req.file.filename
+  });
+  product.save().then(result => {
+      res.status(200).json({
+        message: 'product saved successfully',
+        createdProduct: result
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        Error: err
+      });
+    });
+
+}
+
+
+exports.product_get_one = (req, res, next) => {
+  var id = req.params.productId;
+  Product.findById(id).select('_id title description price quantity image').exec().then(doc => {
+    console.log(doc);
+    if (doc) {
+      res.status(200).json({
+        Product: doc
+      });
+    } else {
+      res.status(404).json({
+        error: 'No Records found for that ID'
+      })
+    }
+  }).catch(err => {
+    console.log(err);
+    res.status(500).json({
+      error: err
+    })
+  });
+}
+
+
+
+exports.product_update_one = (req, res, next) => {
+  console.log(req.file)
+ var id = req.params.productId;
+ let product = {
+    title: req.body.title,
+    description: req.body.description,
+    price: req.body.price,
+    quantity: req.body.quantity
+ }
+ if(req.file != undefined) {
+  product.image = req.file.filename
+ }
+ Product.updateOne({
+     _id: id
+   }, {
+     $set: product
+   })
+   .exec()
+   .then(doc => {
+     res.status(200).json({
+       message: 'Product successfully Updated',
+
+     });
+   }).catch(err => {
+     console.log(err);
+     res.status(500).json({
+       error: err
+     });
+   });
+}
+
+
+
+exports.product_delete_one = (req, res, next) => {
+ var id = req.params.productId;
+ Product.remove({
+     _id: id
+   })
+   .exec()
+   .then(doc => {
+     res.status(200).json({
+       Message: 'Product successfully deleted'
+     });
+   }).catch(err => {
+     console.log(err);
+     res.status(500).json({
+       error: err
+     });
+   });
+}

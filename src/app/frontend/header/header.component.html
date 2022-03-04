@@ -1,0 +1,59 @@
+<header class="home">
+    <div class="container">
+        <div class="header__wrap">
+            <div class="brand-logo">
+                <a routerLink="/" routerLinkActive="active">
+                    <img src="../../../assets/images/logo.svg" width="97" height="94" alt="faktury Logo"/>
+                </a>
+            </div>
+            <div class="navigation">
+                <ul>
+                    <li><a href="../../../assets/images/faktury-whitepaper.pdf" target="_blank">Whitepaper</a></li>
+                    <li><a routerLink="/">FAQs</a></li>
+                    <li><a routerLink="/">Swap</a></li>
+                    <li><a routerLink="/">About</a></li>
+                    <li><a  routerLink="/auction" routerLinkActive="active">Auction</a></li>
+                    <li><a routerLink="/shop" routerLinkActive="active">Shop</a></li>
+                    <li><a routerLink="/">Metalink</a></li>
+                    <li>
+                        <div class="nav__m__buttons">
+                            <div class="ctaa" *ngIf="(auth.isAuthenticated$ | async) === false">
+                                <a class="btn__anchor" (click)="auth.loginWithRedirect()">Login</a>
+                            </div>
+                            <div class="ctaa" *ngIf="(auth.isAuthenticated$ | async) === false">
+                                <a class="btn__anchor" (click)="auth.loginWithRedirect()">Sign Up</a>
+                            </div>
+                            <div class="cta">
+                                <a href="javascript:" class="connect__btn">Connect Wallet</a>
+                            </div>
+
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="header__button">
+                <div class="nav__buttons">
+                    <div class="ctaa" *ngIf="(auth.isAuthenticated$ | async) === false">
+                        <a class="btn__anchor" (click)="auth.loginWithRedirect()">Login</a>
+                    </div> 
+                    <div class="ctaa" *ngIf="(auth.isAuthenticated$ | async) === false">
+                        <a class="btn__anchor" (click)="auth.loginWithRedirect()">Sign Up</a>
+                    </div> 
+                    <div class="cta">
+                        <a href="javascript:void(0)" class="connect__btn" *ngIf="auth.isAuthenticated$ | async">Connect Wallet</a>
+                    </div>
+                    <div class="head__image" *ngIf="auth.isAuthenticated$ | async">
+                        <a href="javascript:void(0)" (click)="clickEvent()"><img src="../../../assets/images/head-image.svg"></a>
+                        <div class="head__menu" [ngClass]="status ? 'block' : 'none'" >
+                            <li><a routerLink="/collection" (click)="clickEvent()">Profile <img src="../../../assets/images/acount-small.png"/></a></li>
+                            <li (click)="logout()"><a>Logout <img src="../../../assets/images/logout.png"/></a></li>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="toogle-wrap">
+                <div class="toggle-menu"><a href="javascript:void(0)"><span></span><span></span><span></span><span></span></a></div>
+            </div>
+        </div>
+    </div>
+</header>

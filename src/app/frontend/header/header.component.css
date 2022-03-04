@@ -1,0 +1,51 @@
+.banner--section {
+    padding: 4.68em 0 9em 0;
+    position: relative;
+}
+.banner--section:after {
+    content: '';
+    position: absolute;
+    height: 36%;
+    width: 100%;
+    background: #61FA0A;
+    bottom: 0;
+    z-index: -1;
+}
+
+.ctaa a { 
+    cursor: pointer;
+    text-decoration:underline;
+}
+.head__menu li a { 
+    cursor: pointer;
+}
+
+.block {
+    display: block;
+    opacity: 1;
+    transition: visibility 0s linear 0s, opacity 1000ms;
+}
+
+.none {
+    display: none;
+    opacity: 0;
+    transition: visibility 0s linear 1000ms, opacity 1000ms;
+}
+
+.navigation ul li a {
+    font-size: 1em;
+    line-height: 1.5em;
+    font-weight: 500;
+    color: #2B2B2B;
+    transition: .5s;
+    text-decoration: none;
+}
+.navigation ul li a:hover {
+    color: #61FA0A;
+}
+.navigation ul li {
+    margin-right: 3.12em;
+}
+.navigation ul li:last-child {
+    margin-right: 0em;
+}

@@ -1,0 +1,55 @@
+<main>
+
+    <div class="login--section">
+        <div class="form__head">
+        <div class="form__content">
+             <div class="form__image">
+                 <img src="../../../assets/images/faktury-img.png">
+             </div>
+            <div class="form__text">
+                <p>Login Fren</p>
+            </div>
+        </div>
+        </div>
+        <form class="login__form" [formGroup]="userForm">
+            <div class="form-group">
+                <label for="text">Email or User Name</label>
+                <input type="text" id="text" placeholder="Dummy321@gamil.com"
+                formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': f['email'].touched && f['email'].errors }">
+                <span *ngIf="f['email'].touched && f['email'].errors" class="invalid-feedback">
+                    <span *ngIf="f['email'].errors['required']">Email is required</span>
+                    <span *ngIf="f['email'].errors['email']">Email must be a valid email address</span>
+                </span>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="password" id="password" placeholder="*********"
+                formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': f['password'].touched && f['password'].errors }">
+                <span *ngIf="f['password'].touched && f['password'].errors" class="invalid-feedback">
+                    <span *ngIf="f['password'].errors['required']">Password is required</span>
+                    <span *ngIf="f['password'].errors['minlength']">
+                      Password must be at least 8 characters
+                    </span>
+                </span>
+            </div>
+            <div class="checkbox">
+                <div class="login__checkbox">
+                    <input class="styled-checkbox" id="styled-checkbox-1" type="checkbox" value="value1">
+                    <label for="styled-checkbox-1">Remember Password</label>
+                </div>
+                <div class="checkbox__text">
+                    <a href="javascript:;">Forgot Password</a>
+                </div>
+            </div>
+            <div class="login__button">
+                <a href="javascript:;">Login</a>
+            </div>
+            <div class="login__google">
+                <button (click)="auth.loginWithRedirect()"><img src="../../../assets/images/login-google.png"></button>
+            </div>
+            <div class="login__bottom">
+                <p>Dont have an account <a routerLink="/signup" routerLinkActive="active">Sign Up</a></p>
+            </div>
+        </form>
+    </div>
+</main>

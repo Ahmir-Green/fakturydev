@@ -1,0 +1,107 @@
+<main>
+    <section class="login--section signup--section">
+        <div class="form__head">
+        <div class="form__content">
+             <div class="form__image">
+                 <img src="../../../assets/images/faktury-img.png">
+             </div>
+            <div class="form__text">
+                <p>Sign Up Fren</p>
+            </div>
+        </div>
+        </div>
+        <form class="login__form" [formGroup]="form">
+            <div class="form__wrap">
+                <div class="form-group width">
+                    <label for="f-name">First Name</label>
+                    <input type="text" id="f-name" placeholder="Ahmir" class="form-control" formControlName="firstName"
+                    [ngClass]="{ 'is-invalid': f['firstName'].touched && f['firstName'].errors }">
+                  <span *ngIf="f['firstName'].touched && f['firstName'].errors?.['required']" class="invalid-feedback">
+                    First Name is required
+                  </span>
+                  <span *ngIf="f['firstName'].errors?.['minlength']" class="invalid-feedback">First Name must be at least 3 characters
+                    long.</span>
+                </div>
+                <div class="form-group width">
+                    <label for="l-name">Last Name</label>
+                    <input type="text" id="l-name" placeholder="Green" class="form-control" formControlName="lastName"
+                    [ngClass]="{ 'is-invalid': f['lastName'].touched && f['lastName'].errors }">
+                  <span *ngIf="f['lastName'].touched && f['lastName'].errors?.['required']" class="invalid-feedback">
+                    Last Name is required
+                  </span>
+                  <span *ngIf="f['lastName'].errors?.['minlength']" class="invalid-feedback">Last Name must be at least 3 characters
+                    long.</span>
+                </div>
+                <div class="form-group width">
+                    <label for="u-name">Set A User Name</label>
+                    <input type="text" id="u-name" placeholder="Ahmir Green" class="form-control" formControlName="userName"
+                    [ngClass]="{ 'is-invalid': f['userName'].touched && f['userName'].errors }">
+                  <span *ngIf="f['userName'].touched && f['userName'].errors?.['required']" class="invalid-feedback">
+                    UserName is required
+                  </span>
+                  <span *ngIf="f['userName'].errors?.['minlength']" class="invalid-feedback">User Name must be at least 4 characters
+                    long.</span>
+                </div>
+                <div class="form-group width">
+                    <label for="number">Phone Number</label>
+                    <input type="tel" id="number" maxlength="11" placeholder="+92479266597" 
+                    formControlName="phone" class="form-control" placeholder="Enter Your phone Number" 
+                    [ngClass]="{ 'is-invalid': f['phone'].touched && f['phone'].errors }">
+                    <span *ngIf="f['phone'].touched && f['phone'].errors?.['required']" class="invalid-feedback">
+                        phone is required
+                      </span>
+                      <span *ngIf="f['phone'].errors?.['minlength']" class="invalid-feedback">Phone Number must be 10 characters long
+                        long.</span>
+                        <span *ngIf="f['phone'].touched && f['phone'].errors?.['pattern']" class="invalid-feedback">
+                            Your Phone pattern is wrong. e.g(11111111111)
+                          </span>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" id="email" placeholder="Dummy321@gamil.com"
+                    formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': f['email'].touched && f['email'].errors }">
+                <span *ngIf="f['email'].touched && f['email'].errors" class="invalid-feedback">
+                    <span *ngIf="f['email'].errors['required']">Email is required</span>
+                    <span *ngIf="f['email'].errors['email']">Email must be a valid email address</span>
+                </span>
+                </div>
+                <div class="form-group width">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control password" id="password" placeholder="*********"
+                    formControlName="password"
+                    [ngClass]="{ 'is-invalid': f['password'].touched && f['password'].errors }"/>
+                <span  *ngIf="f['password'].touched && f['password'].errors" class="invalid-feedback ">
+                    <span *ngIf="f['password'].errors['required']">Password is required</span>
+                    <span *ngIf="f['password'].errors['minlength']">
+                    Password must be at least 8 characters
+                    </span>
+                </span>
+                </div>
+                <div class="form-group width">
+                    <label for="c-password">Confirm Password</label>
+                    <input type="password" class="password" id="c-password" placeholder="*********"
+                    formControlName="confirmPassword"
+                    class="form-control"
+                    [ngClass]="{ 'is-invalid': f['confirmPassword'].touched && f['confirmPassword'].errors }"/>
+                    <span *ngIf="f['confirmPassword'].touched && f['confirmPassword'].errors"class="invalid-feedback">
+                    <span *ngIf="f['confirmPassword'].errors['required']">
+                    Confirm Password is required
+                    </span>
+                    <span *ngIf="f['confirmPassword'].errors['matching']">
+                    Confirm Password does not match
+                    </span>
+                    </span>
+                </div>
+            </div>
+            <div class="login__button">
+                <a>Get Started</a>
+            </div>
+            <div class="login__google">
+                <a><img src="../../../assets/images/login-google.png"></a>
+            </div>
+            <div class="login__bottom">
+                <p>Already have an account <a routerLink="/login" routerLinkActive="active">Login</a></p>
+            </div>
+        </form>
+    </section>
+</main>

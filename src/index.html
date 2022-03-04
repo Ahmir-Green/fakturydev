@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Faktury</title>
+  <base href="/">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=0"/>
+  <meta name="description" content="An exclusive streetwear brand that can be worn in the Metaverse and IRL."/>
+
+
+  <style>
+      .loader-first {position: fixed; left: 0; top: 0; width: 100%; height: 100%; z-index: 9999; background: #000; display: flex; flex-flow: column; justify-content: center; text-align: center;}
+      .loader-first p {margin-top: 1em; font-size: 20px; font-weight: bold; line-height: 28px;}
+      @media (min-width: 767px) {
+          .loader-first div {width: 150px; height: 150px; margin: 0 auto;}
+      }
+      .alert-warnning {position: fixed;  top: 0; left: 0; z-index: 999999; display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; font-size: 20px;
+          text-transform: uppercase; text-align: center; line-height: 1.5em; font-weight: 700; color: #fff; background: #000; overflow: hidden;}
+      .alert-warnning p {position: absolute; left: 50%; top: 50%; font-size: 18px; transform: translate(-50%, -50%);}
+  </style>
+
+  <link rel="icon" href="./assets/images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&family=Red+Hat+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="./assets/css/vendors/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="./assets/css/vendors/bootstrap-select.min.css" rel="stylesheet" type="text/css">
+  <link href="./assets/css/vendors/swiper.min.css" rel="stylesheet" type="text/css">
+  <link href="./assets/css/vendors/fancybox.css" rel="stylesheet" type="text/css">
+  <link href="./assets/css/vendors/aos.css" rel="stylesheet" type="text/css">
+  <!-- <link rel="stylesheet" href="./styles.css"> -->
+  <!-- <link href="./assets/css/custom.min.css" rel="stylesheet" type="text/css"> -->
+
+</head>
+<body style="
+    font-size: 16px;
+    font-weight: 300;
+    color: #01214a;
+    text-align: left;
+    font-family: 'Poppins', sans-serif;
+">
+  <div id="portrait-warnning" class="alert-warnning" style="display: none"><p>For an optimal experience please<br> rotate your device to portrait mode</p></div>
+ 
+<div class="loader-first">
+    <div>
+        <img src="./assets/images/logo.svg" alt="Loader">
+    </div>
+</div>
+  <app-root></app-root>
+
+  <!-- Call on All Page -->
+<script src="./assets/js/vendors/a-jquery.js"></script>
+<script src="./assets/js/vendors/popper.min.js"></script>
+<script src="./assets/js/vendors/c-jquery.inview.min.js"></script>
+<script src="./assets/js/vendors/g-bootstrap.min.js"></script>
+<script src="./assets/js/vendors/b-css_browser_selector.js"></script>
+<script src="./assets/js/vendors/f-fancybox.js"></script>
+<script src="./assets/js/vendors/d-swiper.min.js"></script>
+<script src="./assets/js/vendors/aos.js"></script>
+
+<!-- custom Javascript for UI -->
+
+
+<script src="./assets/js/custom.js"></script>
+<script>
+    AOS.init({
+        offset: 10,
+    });
+</script>
+</body>
+</html>
