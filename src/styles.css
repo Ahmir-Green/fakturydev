@@ -1,7 +1,7 @@
 @font-face {
     font-family: 'post_no_bills_jaffnasemibold';
-    src: url('../fonts/postnobillsjaffna-semibold-webfont.woff2') format('woff2'),
-    url('../fonts/postnobillsjaffna-semibold-webfont.woff') format('woff');
+    src: url('/src/assets/fonts/postnobillsjaffna-semibold-webfont.woff2') format('woff2'),
+    url('/src/assets/fonts/postnobillsjaffna-semibold-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 
