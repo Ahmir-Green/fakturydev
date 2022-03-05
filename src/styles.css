@@ -1,11 +1,11 @@
-/* @font-face {
+@font-face {
     font-family: 'post_no_bills_jaffnasemibold';
     src: url('../fonts/postnobillsjaffna-semibold-webfont.woff2') format('woff2'),
     url('../fonts/postnobillsjaffna-semibold-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 
-} */
+}
 :focus {
     outline: 0
 }
@@ -19,12 +19,12 @@ body {
     text-align: left;
     font-family: 'Poppins', sans-serif;
 }
-/* @media (max-width:1400px) and (min-width:1300px) and (min-height:900px) {
+@media (max-width:1400px) and (min-width:1300px) and (min-height:900px) {
     body {
         font-size: 11.485px
     }
-} */
-/* @media (max-width:1025px) {
+}
+@media (max-width:1025px) {
     body {
         font-size: 12px;
         overflow-x: hidden
@@ -40,7 +40,7 @@ body {
     h1 {
         font-size: 2.5em
     }
-} */
+}
 h2 {
     font-size: 3.2em;
     line-height: 1.1;
@@ -54,11 +54,11 @@ h3 {
     color: #fff;
     font-weight: 600;
 }
-/* @media (max-width:767px) {
+@media (max-width:767px) {
     h3 {
         font-size: 1.25em
     }
-} */
+}
 h4 {
     font-size: 1.5625em
 }
@@ -91,7 +91,7 @@ p{
     color: #fff;
     line-height: 2em;
 }
-/* @media (min-width:767px) {
+@media (min-width:767px) {
     .container {
         padding: 0 3em
     }
@@ -105,17 +105,17 @@ p{
     .container {
         padding: 0 10%;
     }
-} */
+}
 .block, .section {
     position: relative;
     padding: 7em 0;
     overflow: hidden
 }
-/* @media (max-width:767px) {
+@media (max-width:767px) {
     .block, .section {
         padding: 3em 0
     }
-} */
+}
 input[type=number] {
     -moz-appearance: textfield
 }
@@ -144,12 +144,12 @@ button {
 button:focus {
     outline: 0
 }
-/* @media (max-width:767px) {
+@media (max-width:767px) {
     .btn__anchor {
         font-size: .9em;
         cursor: pointer;
     }
-} */
+}
 .btn__anchor:hover {
     /*color: #fff;
     background: #E34F43;*/
@@ -260,32 +260,32 @@ header.active:after {
     top: 0
 }
 
-/* @media (max-width:767px) {
+@media (max-width:767px) {
     header {
         display: flex;
         align-items: center
     }
-} */
+}
 .navigation ul a {
     transition: .4s;
     font-size: 1.15em;
 }
-/* @media (max-width:767px) {
+@media (max-width:767px) {
     .navigation ul a {
         transition: none
     }
-} */
+}
 .navigation ul a:hover {
     transition: .1s;
     color: #E34F43;
 }
-/* @media (max-width:767px) {
+@media (max-width:767px) {
     .cta {
         margin-right: -2em;
         cursor: pointer;
     }
-} */
-/* @media (max-width:767px) {
+}
+@media (max-width:767px) {
     .navigation {
         width: 100%;
         position: fixed;
@@ -294,17 +294,17 @@ header.active:after {
         top: 0;
         background: #023C93;
         padding: 14em 0;
-        z-index: 99; */
+        z-index: 99;
         /*visibility: hidden;*/
         /*opacity: 0;*/
-        /* transition: .7s
-    } */
-    /* .navigation.active {
+        transition: .7s
+    }
+    .navigation.active {
         /*visibility: visible;*/
         /*opacity: 1*/
-        /* left: 0;
-    } 
- } */ 
+        left: 0;
+    }
+}
 .navigation ul {
     padding: 0;
     margin: 0;
@@ -314,7 +314,7 @@ header.active:after {
 .navigation ul a.active {
     color: #fa9450
 }
-/* @media screen and (max-width:767px) {
+@media screen and (max-width:767px) {
     .navigation {
         width: 100%
     }
@@ -348,7 +348,7 @@ header.active:after {
     .toogle-wrap {
         display: flex
     }
-} */
+}
 
 .home {
     padding-top: 1.5em;
@@ -2367,7 +2367,7 @@ to {
 
 
 
-/* @media (max-width:1100px){
+@media (max-width:1100px){
 .navigation {
     padding-left: 0em;
 }
@@ -3093,4 +3093,4 @@ ul.footer__links {
     right: 10.1em;
     top: 11em;
 }
-} */
+}
