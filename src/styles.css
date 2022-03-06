@@ -597,7 +597,7 @@ video {
 .vision__head{
     width: 50%;
     height: 100%;
-    background: url(/src/assets/images/vision-head-bg.png) no-repeat;
+    background: url(../src/assets/images/vision-head-bg.png) no-repeat;
     background-size: cover;
     background-position: center;
 }
@@ -615,7 +615,7 @@ video {
 .vision__text {
     width: 50%;
     height: 100%;
-    background: url(/src/assets/images/vision-text-bg.png) no-repeat;
+    background: url(../src/assets/images/vision-text-bg.png) no-repeat;
     background-size: cover;
     background-position: center;
     padding: 0 10.93em;
@@ -711,7 +711,7 @@ video {
 }
 .flight--section {
     padding: 7.5em 0;
-    background: url(/src/assets/images/flight-bg.png) no-repeat;
+    background: url(../src/assets/images/flight-bg.png) no-repeat;
     background-size: cover;
     background-position: center;
 }
@@ -763,7 +763,7 @@ video {
 .flight__content:after {
     content: '';
     position: absolute;
-    background: url(/src/assets/images/flight-after.png) no-repeat;
+    background: url(../src/assets/images/flight-after.png) no-repeat;
     background-size: cover;
     background-position: center;
     width: 17.81em;
@@ -773,7 +773,7 @@ video {
 }
 .flight__wrap .flight__content:last-child:after{content: normal}
 .buy--section{
-    background: url(/src/assets/images/buy-bg.png) no-repeat;
+    background: url(../src/assets/images/buy-bg.png) no-repeat;
     background-size: cover;
     background-position: center;
     padding: 7.31em 0;
@@ -1008,7 +1008,7 @@ video {
     color: #A6A6A6;
 }
 .gang--section {
-    background: url(/src/assets/images/gang-bg.jpg) no-repeat;
+    background: url(../src/assets/images/gang-bg.jpg) no-repeat;
     background-size: cover;
     background-position: center;
     padding: 8.12em 0;
@@ -1064,7 +1064,7 @@ video {
 .gang__limg:after {
     content: '';
     position: absolute;
-    background: url(/src/assets/images/gang-image-after.svg) no-repeat;
+    background: url(../src/assets/images/gang-image-after.svg) no-repeat;
     right: -3.6em;
     z-index: 1;
     top: 1.2em;
@@ -1286,7 +1286,7 @@ button.d-flex.align-items-center.justify-content-between.btn.btn-link {
     border-radius: 5px;
     padding: 1.37em 0 0.93em 1.25em;
     resize: none;
-    margin-bottom: 3.52em;
+    margin-bottom: 1.52em;
     color: #707070!important;
     line-height: 1.87em;
     font-size: 1em;
@@ -1314,7 +1314,7 @@ button.d-flex.align-items-center.justify-content-between.btn.btn-link {
 }
 .business--section{
     padding: 3.43em 0;
-    background: url(/src/assets/images/business-bg.png) no-repeat;
+    background: url(../src/assets/images/business-bg.png) no-repeat;
     background-size: cover;
     background-position: center;
 }
@@ -1476,7 +1476,7 @@ button.d-flex.align-items-center.justify-content-between.btn.btn-link {
 
 .login--section {
     padding: 10.62em 0 7.62em 0;
-    background: url(/src/assets/images/login-bg.png) no-repeat;
+    background: url(../src/assets/images/login-bg.png) no-repeat;
     background-size: cover;
     background-position: center;
 }
@@ -1650,7 +1650,7 @@ button.d-flex.align-items-center.justify-content-between.btn.btn-link {
 .signup--section {
     height: auto;
     padding: 10.62em 0 7.62em 0;
-    background: url(/src/assets/images/signup-bg.png) no-repeat;
+    background: url(../src/assets/images/signup-bg.png) no-repeat;
     background-size: cover;
     background-position: center;
 }
@@ -1677,7 +1677,7 @@ button.d-flex.align-items-center.justify-content-between.btn.btn-link {
 
 .shop--section {
     padding: 9.25em 0 6.25em 0;
-    background: url(/src/assets/images/shop.png) no-repeat;
+    background: url(../src/assets/images/shop.png) no-repeat;
     background-size: cover;
     background-position: top;
 }
@@ -1774,7 +1774,7 @@ button.d-flex.align-items-center.justify-content-between.btn.btn-link {
 }
 .auction--section {
     padding: 9.25em 0 6.25em 0;
-    background: url(/src/assets/images/auction-bg.png) no-repeat;
+    background: url(../src/assets/images/auction-bg.png) no-repeat;
     background-size: cover;
     background-position: center;
 }
@@ -2062,7 +2062,7 @@ button.d-flex.align-items-center.justify-content-between.btn.btn-link {
     text-align: center;
 }
 .swiper-button-next, .swiper-container-rtl .swiper-button-prev {
-    background: url(/src/assets/images/box-arrow.svg) no-repeat;
+    background: url(../src/assets/images/box-arrow.svg) no-repeat;
     width: 2.37em;
     height: 2.37em;
     background-size: cover;
@@ -2071,7 +2071,7 @@ button.d-flex.align-items-center.justify-content-between.btn.btn-link {
     left: auto;
 }
 .swiper-button-prev, .swiper-container-rtl .swiper-button-next {
-    background: url(/src/assets/images/box-arrow2.svg) no-repeat;
+    background: url(../src/assets/images/box-arrow2.svg) no-repeat;
     background-size: cover;
     width: 2.37em;
     height: 2.37em;
@@ -2114,7 +2114,7 @@ a.showBtn {
 a.showBtn:after {
     content: "";
     position: absolute;
-    background: url(/src/assets/images/description-arrow.svg) no-repeat;
+    background: url(../src/assets/images/description-arrow.svg) no-repeat;
     background-position: center;
     width: 1em;
     height: 1.5em;

@@ -432,21 +432,42 @@
         <h2>Contact Us</h2>
         <!--<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>-->
         </div>
-        <form class="contact__form">
+        <form class="contact__form" [formGroup]="form" (submit)="contactUs()">
             <div class="form-group">
                 <label for="name">Name</label>
-                <input type="text" id="name" placeholder="Ahmir Green">
+                <input type="text" id="name" placeholder="Ahmir Green" class="form-control"
+                formControlName="name" [ngClass]="{ 'is-invalid': f['name'].touched && f['name'].errors }">
+                <span *ngIf="f['name'].touched && f['name'].errors?.['required']" class="invalid-feedback"> Name
+                  is required</span>
+                <span *ngIf="f['name'].touched && f['name'].errors?.['pattern']" class="invalid-feedback">Please enter
+                  a valid name</span>
+                  <span *ngIf="f['name'].touched && f['name'].errors?.['minlength']" class="invalid-feedback">First Name
+                    should be 3 character long</span>
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="text" id="email" placeholder="Dummy321@gamil.com">
+                <input type="text" id="email" placeholder="Dummy321@gamil.com" class="form-control"
+                formControlName="email" [ngClass]="{ 'is-invalid': f['email'].touched && f['email'].errors }">
+                <span *ngIf="f['email'].touched && f['email'].errors?.['required']" class="invalid-feedback">Email is
+                  required</span>
+                <span *ngIf="f['email'].touched && f['email'].errors?.['pattern']" class="invalid-feedback">Please enter a valid
+                  Email
+                </span>
             </div>
             <div class="form-group">
                 <label class="text__label">Message</label>
-                <textarea class="form-control" placeholder="Write your text here..." name="message" id="message"></textarea>
+                <textarea class="form-control" placeholder="Write your text here..."
+                id="message" formControlName="message"
+                [ngClass]="{ 'is-invalid': f['message'].touched && f['message'].errors }"></textarea>
+                <span *ngIf="f['message'].touched && f['message'].errors?.['required']" class="invalid-feedback">Message is
+                  required</span>
+                <span *ngIf="f['message'].touched && f['message'].errors?.['pattern']" class="invalid-feedback">Please enter a valid
+                  Message
+                </span>
+                <span *ngIf="f['message'].touched && f['message'].errors?.['minlength']" class="invalid-feedback">Message should be 3 character long</span>
             </div>
             <div class="contact__form__btn">
-                <a href="javascript:;">Send</a>
+                <a href="javascript:;" type="submit" (submit)="contactUs()">Send</a>
             </div>
         </form>
     </section>
