@@ -47,18 +47,35 @@
                         </div>
                     </div>
                     <div class="auction__box__form" *ngIf="show">
-                        <form class="auction__form">
+                        <form class="auction__form" [formGroup]="form" (submit)="auctionForm()">
                             <div class="form-group">
-                                <input type="text" id="xrp__address" placeholder="XRP Address">
+                                <input type="text" id="xrp__address" placeholder="XRP Address"
+                                class="form-control"
+                                formControlName = "address" [ngClass]="{ 'is-invalid': f['address'].touched && f['address'].errors }">
+                                <span *ngIf="f['address'].touched && f['address'].errors?.['required']" class="invalid-feedback"> 
+                                XRP Address is required</span>
                             </div>
                             <div class="form-group">
-                                <input type="text" id="email__address" placeholder="Email Address">
+                                <input type="text" id="email__address" placeholder="Email Address"
+                                class="form-control" placeholder="Email Address"
+                                formControlName = "email" [ngClass]="{ 'is-invalid': f['email'].touched && f['email'].errors }">
+                                <span *ngIf="f['email'].touched && f['email'].errors?.['required']" class="invalid-feedback">Email is
+                                    required</span>
+                                <span *ngIf="f['email'].touched && f['email'].errors?.['pattern']" class="invalid-feedback">Please enter a valid
+                                    Email
+                                </span>
                             </div>
                             <div class="form-group">
-                                <input type="text" id="bid__fak" placeholder="Bid in FAK">
+                                <input type="number" id="bid__fak" placeholder="Bid in FAK" class="form-control"
+                                formControlName = "fakBid" [ngClass]="{ 'is-invalid': f['fakBid'].touched && f['fakBid'].errors }">
+                                <span *ngIf="f['fakBid'].touched && f['fakBid'].errors?.['required']" class="invalid-feedback">
+                                    Bid in FAK is required</span>
                             </div>
                             <div class="form-group">
-                                <input type="text" id="bid__xrp" placeholder="Bid in XRP">
+                                <input type="number" id="bid__xrp" placeholder="Bid in XRP" class="form-control"
+                                formControlName = "xrpBid" [ngClass]="{ 'is-invalid': f['xrpBid'].touched && f['xrpBid'].errors }">
+                                <span *ngIf="f['xrpBid'].touched && f['xrpBid'].errors?.['required']" class="invalid-feedback">
+                                    Bid in XRP is required</span>
                             </div>
                             <div class="auction__checkbox">
                                 <input class="styled-checkbox" id="styled-checkbox-1" type="checkbox" value="value1">
@@ -66,7 +83,7 @@
                             </div>
                         </form>
                         <div class="submit__btn">
-                            <a href="javascript:;">Submit</a>
+                            <a href="javascript:;" (click)="auctionForm()">Submit</a>
                         </div>
                     </div>
                 </div>

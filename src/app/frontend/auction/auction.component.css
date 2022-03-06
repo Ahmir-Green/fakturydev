@@ -1,0 +1,4 @@
+.form-control.is-invalid:focus, .was-validated .form-control:invalid:focus {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.25rem rgba(240, 218, 220, 0);
+}
