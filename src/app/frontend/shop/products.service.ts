@@ -15,7 +15,7 @@ export class ProductService {
     private toastr: ToastrService) { }
 
   // Define API
-  apiURL = 'http://localhost:3000';
+  apiURL = 'http://localhost:3000/api';
 
 
   // save product to db

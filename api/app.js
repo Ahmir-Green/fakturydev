@@ -41,7 +41,7 @@ app.use((req, res, next) => {
 
 
 // products routes
-app.use('/products', ProductRoute)
+app.use('/api/products', ProductRoute)
 
 app.use((req, res, next) => {
   var error = new Error('The page u request is not found');
