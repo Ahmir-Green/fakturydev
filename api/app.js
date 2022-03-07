@@ -8,9 +8,8 @@ require('dotenv').config();
 
 // importing routes
 const ProductRoute = require('./routes/product.routes')
-
 mongoose
-  .connect(process.env.MONGO)
+  .connect(process.env.MONGO_CONNECTION)
   .then(() => {
     console.log("Connected to Faktury Db!");
   })
