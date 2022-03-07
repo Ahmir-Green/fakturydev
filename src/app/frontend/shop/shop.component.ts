@@ -2,6 +2,7 @@ import { Component,ElementRef, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Product } from "./product.modal";
 import { ProductService } from "./products.service";
+import { CheckoutService } from './checkout.service';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '@auth0/auth0-angular';
 
@@ -14,8 +15,8 @@ export class ShopComponent implements OnInit {
 
 private $modal: any;
 
-baseUrl = 'http://localhost:3000/';
-imageBaseUrl = 'http://localhost:3000/images/'
+baseUrl = 'https://abcportal.ml/';
+imageBaseUrl = 'https://abcportal.ml/images/'
 productForm!: FormGroup;
 imageSrc: string = '';
 imageUrl: any;
@@ -23,11 +24,15 @@ submitted = false;
 products: any;
 showProductDes: any = {};
 formTitle: string = 'Add Product';
+paymentHandler: any = null;
+success: boolean = false
+failure:boolean = false
 
-constructor(private productService: ProductService, private toastr: ToastrService, public auth: AuthService){}
+constructor(private productService: ProductService, private toastr: ToastrService, 
+            public auth: AuthService, private checkout: CheckoutService){}
 
   ngOnInit() {
-
+    this.invokeStripe();
     //Add Product form validations
     this.productForm = new FormGroup({
     _id: new FormControl(''),
@@ -40,6 +45,53 @@ constructor(private productService: ProductService, private toastr: ToastrServic
     this.loadProducts()
   }
 
+  makePayment(amount: number) {
+    const paymentHandler = (<any>window).StripeCheckout.configure({
+      key: 'pk_test_PqR8Oy50z90tAdw9a1tkFG9S',
+      locale: 'auto',
+      token: function (stripeToken: any) {
+        console.log(stripeToken);
+        paymentstripe(stripeToken);
+      },
+    });
+
+    const paymentstripe = (stripeToken: any) => {
+      this.checkout.makePayment(stripeToken).subscribe((data: any) => {
+        console.log(data);
+        if (data.data === "success") {
+          this.success = true
+        }
+        else {
+          this.failure = true
+        }
+      });
+    };
+
+    paymentHandler.open({
+      name: 'Faktury',
+      amount: amount * 100,
+    });
+  }
+
+  invokeStripe() {
+    if (!window.document.getElementById('stripe-script')) {
+      const script = window.document.createElement('script');
+      script.id = 'stripe-script';
+      script.type = 'text/javascript';
+      script.src = 'https://checkout.stripe.com/checkout.js';
+      script.onload = () => {
+        this.paymentHandler = (<any>window).StripeCheckout.configure({
+          key: 'pk_test_PqR8Oy50z90tAdw9a1tkFG9S',
+          locale: 'auto',
+          token: function (stripeToken: any) {
+            console.log(stripeToken);
+          },
+        });
+      };
+
+      window.document.body.appendChild(script);
+    }
+  }
   // Get all products list
   loadProducts() {
     return this.productService.getPosts().subscribe((data: any) => {

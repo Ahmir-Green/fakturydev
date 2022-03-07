@@ -40,7 +40,7 @@
                             <a href="javascript:;" id="dropdownBasic1" ngbDropdownToggle>Buy Now  </a>
                             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
                                 <button ngbDropdownItem class="paymentBtn">Pay with Xumm</button>
-                                <button ngbDropdownItem class="paymentBtn">Pay with Bolt</button>
+                                <button ngbDropdownItem class="paymentBtn" (click)="makePayment(product.price)">Pay with Stripe</button>
                               </div>
                         </div>
                     </div>

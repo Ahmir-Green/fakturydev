@@ -15,13 +15,12 @@ export class ProductService {
     private toastr: ToastrService) { }
 
   // Define API
-  apiURL = 'http://localhost:3000/api';
+  apiURL = 'https://abcportal.ml/api';
 
 
   // save product to db
   addProduct(data: any)
     {
-      console.log(data)
       return this.http.post(`${this.apiURL}/products/`, data)
         .subscribe((res: any) => {
           this.toastr.success(res.message);
