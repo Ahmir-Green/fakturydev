@@ -44,9 +44,7 @@ app.use((req, res, next) => {
 app.use('/api/products', ProductRoute)
 
 app.use((req, res, next) => {
-  var error = new Error('The page u request is not found');
-  error.status = 404;
-  next(error);
+  res.sendFile(path.join(__dirname, "angular", "index.html"));
 });
 
 module.exports = app;
