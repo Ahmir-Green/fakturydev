@@ -85,3 +85,13 @@ button:not(disabled){
     border-radius: 9px;
     margin-top: 2px;
 }
+
+.productPrice {
+    color: #61fa0a;
+    font-size: 13px;
+}
+
+.imageStyling {
+    height: auto; 
+    width: 100px;
+}

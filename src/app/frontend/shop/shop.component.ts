@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Product } from "./product.modal";
 import { ProductService } from "./products.service";
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-shop',
@@ -23,7 +24,7 @@ products: any;
 showProductDes: any = {};
 formTitle: string = 'Add Product';
 
-constructor(private productService: ProductService, private toastr: ToastrService){}
+constructor(private productService: ProductService, private toastr: ToastrService, public auth: AuthService){}
 
   ngOnInit() {
 

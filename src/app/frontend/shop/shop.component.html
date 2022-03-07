@@ -24,7 +24,7 @@
                     </div>
                     <div class="shop__box__desc">
                         <h3>{{product.title}}</h3>
-                        <span>$ {{product.price}}</span>
+                        <span class="productPrice">$ {{product.price}}.00</span>
                         <div class="show__cont">
                             <a class="showBtn" (click)="showProductDes[i] = !showProductDes[i]">Description</a>
                             <div class="hideme" *ngIf="showProductDes[i]">
@@ -59,7 +59,7 @@
         
     </section><br>
     <div class="buy__btn text-center mb-5">
-        <a  data-bs-toggle="modal" data-bs-target="#exampleModal2" (click)="changeTitle('Add Product')" href="javascript:;">Add Product</a>
+        <a  data-bs-toggle="modal" data-bs-target="#exampleModal2" (click)="changeTitle('Add Product')" href="javascript:;" *ngIf="auth.isAuthenticated$ | async">Add Product</a>
     </div>
       
 <!-- add Product form -->
@@ -90,7 +90,7 @@
                       <span *ngIf="f['image'].errors['required']">Image is required</span>
                    </span> -->
                 </div>
-                <img [src]="imageSrc" *ngIf="imageSrc" style="height: 100px; width:100px" class="mb-2">
+                <img [src]="imageSrc" *ngIf="imageSrc" class="mb-2 imageStyling">
                 <div class="form-group">
                     <label for="exampleInputPassword1" class="form-label">Description</label>
                     <input type="text" formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': f['description'].touched && f['description'].errors }" id="inputPassword4">
