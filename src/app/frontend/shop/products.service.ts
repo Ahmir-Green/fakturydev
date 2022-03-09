@@ -38,7 +38,6 @@ export class ProductService {
 
   // delete product from db
   deletePost(productId: string) {
-    console.log(productId)
     this.http
       .delete(`${this.apiURL}/products/` + productId)
       .subscribe((data: any) => {
