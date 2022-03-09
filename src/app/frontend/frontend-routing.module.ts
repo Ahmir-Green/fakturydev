@@ -11,6 +11,7 @@ import { PrivacyComponent } from './privacy/privacy.component';
 import { ShopComponent } from './shop/shop.component';
 import { SignupComponent } from './signup/signup.component';
 import { UserCollectionComponent } from './user-collection/user-collection.component';
+import { ThankYouComponent } from './thank-you/thank-you.component';
 
 const routes: Routes = [
   {
@@ -41,6 +42,10 @@ const routes: Routes = [
         {
           path: 'shop',
           component: ShopComponent
+        },
+        {
+          path: 'thank-you',
+          component: ThankYouComponent
         },
         {
           path: 'privacy',

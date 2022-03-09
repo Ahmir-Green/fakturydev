@@ -18,6 +18,7 @@ import { DisclaimerComponent } from './disclaimer/disclaimer.component';
 import { ShopComponent } from './shop/shop.component';
 import { ToastrModule } from 'ngx-toastr';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ThankYouComponent } from './thank-you/thank-you.component';
 
 
 
@@ -33,7 +34,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     PrivacyComponent,
     AuctionComponent,
     DisclaimerComponent,
-    ShopComponent
+    ShopComponent,
+    ThankYouComponent
   ],
   imports: [
     CommonModule,
