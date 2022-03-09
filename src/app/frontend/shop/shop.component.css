@@ -95,3 +95,8 @@ button:not(disabled){
     height: auto; 
     width: 100px;
 }
+
+.actionsButton li,a {
+    list-style-type: none;
+    text-decoration: none;
+}
