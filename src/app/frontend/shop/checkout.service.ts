@@ -7,11 +7,12 @@ import { Observable } from 'rxjs';
 })
 export class CheckoutService {
 
+  // base url
+  baseUrl: string = "https://abcportal.ml/api/checkout/"
+  
   constructor(private http: HttpClient) { }
   
-  makePayment(stripeToken: any): Observable<any>{
-    const url = "http://localhost:3000/checkout/"
-
-    return this.http.post<any>(url,{token:stripeToken})
+  makePayment(data: any): Observable<any>{
+    return this.http.post<any>(this.baseUrl,{data})
   }
 }
