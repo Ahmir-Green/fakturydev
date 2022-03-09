@@ -43,9 +43,9 @@
                         <a href="javascript:void(0)" class="connect__btn" *ngIf="auth.isAuthenticated$ | async">Connect Wallet</a>
                     </div>
                     <div class="head__image" *ngIf="auth.isAuthenticated$ | async">
-                        <a href="javascript:void(0)" (click)="clickEvent()"><img src="../../../assets/images/head-image.svg"></a>
+                        <a href="javascript:void(0)" (click)="hideElement()"><img src="../../../assets/images/head-image.svg"></a>
                         <div class="head__menu" [ngClass]="status ? 'block' : 'none'" >
-                            <li><a routerLink="/collection" (click)="clickEvent()">Profile <img src="../../../assets/images/acount-small.png"/></a></li>
+                            <li><a routerLink="/collection" (click)="hideElement()">Profile <img src="../../../assets/images/acount-small.png"/></a></li>
                             <li (click)="logout()"><a>Logout <img src="../../../assets/images/logout.png"/></a></li>
                         </div>
                     </div>

@@ -21,7 +21,7 @@ export class HeaderComponent implements OnInit {
   }
 
   status: boolean = false;
-  clickEvent(){
+  hideElement(){
     this.status = !this.status;       
   }
 
