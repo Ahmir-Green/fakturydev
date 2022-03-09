@@ -1488,10 +1488,10 @@ button.d-flex.align-items-center.justify-content-between.btn.btn-link {
     height:  8.53em;
     margin: 0 auto;
 }
-.form__text p{
+.form__text h3{
     color: #707070;
     text-align: center;
-    font-size:  1em;
+    font-size:  1.5em;
     line-height: 1.93em;
 }
 .login__form {
