@@ -70,12 +70,12 @@ constructor(private productService: ProductService, private toastr: ToastrServic
   }
 
   ngAfterViewInit() {
-    
-  }
-
-  ngAfterViewChecked() {
     this.initiateCardElement();
   }
+
+  // ngAfterViewChecked() {
+  //  this.initiateCardElement();
+  // }
 
   async initiateCardElement()  {
     this.stripe = await loadStripe('pk_test_PqR8Oy50z90tAdw9a1tkFG9S');
