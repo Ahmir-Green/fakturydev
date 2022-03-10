@@ -21,7 +21,10 @@ export class OrderService {
     {
       return this.http.post(`${this.apiURL}/orders/`, data)
         .subscribe((res: any) => {
-          this.toastr.success(res.message);
+          if (res.message) {
+            this.toastr.success(res.message);
+            this.router.navigate(['thank-you'])
+          }
         })
     }
 }

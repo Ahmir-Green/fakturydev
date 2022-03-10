@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component,ElementRef, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component,ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Product } from "./product.modal";
 import { ProductService } from "./products.service";
@@ -41,6 +41,8 @@ cardHandler = this.onChange.bind(this);
 cardError = true;
 productTitle: any;
 productPrice: any;
+@ViewChild('cardInfo') cardElement: HTMLElement;
+
 
 constructor(private productService: ProductService, private toastr: ToastrService,
             private router: Router, public auth: AuthService, private checkout: CheckoutService, 
@@ -68,6 +70,10 @@ constructor(private productService: ProductService, private toastr: ToastrServic
   }
 
   ngAfterViewInit() {
+    
+  }
+
+  ngAfterViewChecked() {
     this.initiateCardElement();
   }
 
@@ -89,10 +95,12 @@ constructor(private productService: ProductService, private toastr: ToastrServic
         },
       };
 
-      this.card = await elements.create('card');
-      await this.card.mount(document.getElementById('card-info'));
+      this.card = elements.create('card');
+      this.card.mount('#card-info');
       this.card.addEventListener('change', this.cardHandler);
   }
+
+
   async createStripeToken(value:any) {
     const {token, error} = await this.stripe.createToken(this.card);
     if (token) {
@@ -105,7 +113,7 @@ constructor(private productService: ProductService, private toastr: ToastrServic
 
   
 
-
+  
   paymentstripe(data: any, value: any) {
     this.checkout.makePayment(data).subscribe((data: any) => {
       if (data.data === "success") {
@@ -125,8 +133,7 @@ constructor(private productService: ProductService, private toastr: ToastrServic
         
         setTimeout(()=>{                
           this.resetForm();
-        }, 2000);
-        this.router.navigate(['thank-you'])
+        }, 1000);
         }
       else {
         this.failure = true
@@ -221,9 +228,10 @@ constructor(private productService: ProductService, private toastr: ToastrServic
       formData.append('quantity', this.productForm.get('quantity')?.value);
       formData.append('price', this.productForm.get('price')?.value);
       this.productService.updateProduct(id, formData);
+      $('#exampleModal2').modal('hide');
       setTimeout(()=>{                
         this.resetForm();
-      }, 2000);
+      }, 1000);
   }
 
   resetForm() {
