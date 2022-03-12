@@ -8,8 +8,9 @@ require('dotenv').config();
 
 // importing routes
 const ProductRoute = require('./routes/product.routes')
+const AuctionsRoute = require('./routes/auction.routes')
 mongoose
-  .connect(process.env.MONGO_CONNECTION)
+  .connect(process.env.MONGO)
   .then(() => {
     console.log("Connected to Faktury Db!");
   })
@@ -42,6 +43,7 @@ app.use((req, res, next) => {
 
 // products routes
 app.use('/api/products', ProductRoute)
+app.use('/api/auctions', AuctionsRoute)
 
 app.use((req, res, next) => {
   res.sendFile(path.join(__dirname, "angular", "index.html"));
