@@ -12,8 +12,9 @@ const ProductRoute = require('./routes/product.routes')
 const OrderRoute = require('./routes/order.routes')
 const UserRoute = require('./routes/user.routes')
 
+const AuctionsRoute = require('./routes/auction.routes')
 mongoose
-  .connect(process.env.MONGO_CONNECTION)
+  .connect(process.env.MONGO)
   .then(() => {
     console.log("Connected to Faktury Db!");
   })
@@ -84,6 +85,7 @@ app.post('/api/checkout', async(req, res) => {
   }
 })
 
+app.use('/api/auctions', AuctionsRoute)
 
 app.use((req, res, next) => {
   res.sendFile(path.join(__dirname, "angular", "index.html"));
