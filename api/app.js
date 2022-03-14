@@ -10,6 +10,7 @@ const stripe = require("stripe")("sk_test_tTrzkmwUUKzaOb1DBrnwIq6m");
 // importing routes
 const ProductRoute = require('./routes/product.routes')
 const OrderRoute = require('./routes/order.routes')
+const UserRoute = require('./routes/user.routes')
 
 mongoose
   .connect(process.env.MONGO_CONNECTION)
@@ -47,6 +48,8 @@ app.use((req, res, next) => {
 app.use('/api/products', ProductRoute)
 // orders routes
 app.use('/api/orders', OrderRoute)
+// users routes
+app.use('/api/users', UserRoute);
 
 app.post('/api/checkout', async(req, res) => {
   try {
