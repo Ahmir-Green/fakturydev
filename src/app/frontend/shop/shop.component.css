@@ -100,3 +100,14 @@ button:not(disabled){
     list-style-type: none;
     text-decoration: none;
 }
+
+.modal-body h6 {
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.modalProductPrice {
+    color: #61fa0a;
+    font-size: 13px;
+    margin-left: 10px;
+}
