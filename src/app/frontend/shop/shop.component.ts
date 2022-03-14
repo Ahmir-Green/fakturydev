@@ -10,6 +10,7 @@ import { Utils } from 'src/utils';
 import {loadStripe, Stripe} from '@stripe/stripe-js';
 import { OrderService } from './order.service';
 import { Router } from '@angular/router';
+import { UserService } from './user.service';
 //import * as $ from 'jquery';
 declare var $ : any;
 
@@ -42,15 +43,25 @@ cardError = true;
 productTitle: any;
 productPrice: any;
 @ViewChild('cardInfo') cardElement: HTMLElement;
+userEmail: string;
+userId: any;
+userRole: any;
 
 
-constructor(private productService: ProductService, private toastr: ToastrService,
+constructor(private productService: ProductService, private userService: UserService, private toastr: ToastrService,
             private router: Router, public auth: AuthService, private checkout: CheckoutService, 
             private el: ElementRef,private cd: ChangeDetectorRef, private orderService: OrderService){ }
 
 
   
-   async ngOnInit() {
+  ngOnInit() {
+    this.auth.user$.subscribe(user => {
+      if (user) {
+        this.userEmail = user.email;
+        this.getUserData(user.email)
+      }
+    });
+
     //Add Product form validations
     this.productForm = new FormGroup({
     _id: new FormControl(''),
@@ -61,6 +72,7 @@ constructor(private productService: ProductService, private toastr: ToastrServic
     quantity: new FormControl('', [Validators.required])
     });
 
+    //Add Stripe form validations
     this.stripeForm = new FormGroup({
       _id: new FormControl(''),
       billingAddress: new FormControl('', [Validators.required]),
@@ -71,6 +83,13 @@ constructor(private productService: ProductService, private toastr: ToastrServic
 
   ngAfterViewInit() {
     this.initiateCardElement();
+  }
+
+  getUserData(id: string) {
+    this.userService.getUser(id).subscribe((res: any) => {
+      this.userId = res.User._id;
+      this.userRole = res.User.role;
+    });
   }
 
   // ngAfterViewChecked() {
@@ -95,8 +114,10 @@ constructor(private productService: ProductService, private toastr: ToastrServic
         },
       };
 
-      this.card = elements.create('card');
-      this.card.mount('#card-info');
+      this.card = await elements.create('card', {style: cardStyle});
+      
+      // Add an instance of the card Element into the `card-element` <div>.
+      this.card.mount('#card-element');
       this.card.addEventListener('change', this.cardHandler);
   }
 
@@ -119,7 +140,7 @@ constructor(private productService: ProductService, private toastr: ToastrServic
       if (data.data === "success") {
         this.success = true
         let orderObj = {
-          userId: "a8df76as89df7as89df7asd",
+          userId: this.userId,
           product: this.productTitle,
           price: this.productPrice,
           billingAddress: value.billingAddress,
@@ -228,18 +249,17 @@ constructor(private productService: ProductService, private toastr: ToastrServic
       formData.append('quantity', this.productForm.get('quantity')?.value);
       formData.append('price', this.productForm.get('price')?.value);
       this.productService.updateProduct(id, formData);
-      $('#exampleModal2').modal('hide');
-      setTimeout(()=>{                
-        this.resetForm();
-      }, 1000);
+      $('#exampleModal2').modal('hide');          
+      this.resetForm();
   }
 
   resetForm() {
     this.productForm.reset();
     this.stripeForm.reset();
     this.changeTitle('Add Product');
-    this.loadProducts();
     this.imageSrc = '';
+    this.loadProducts();
+    
   }
 
   onFileChange(event:any) {
@@ -269,5 +289,11 @@ constructor(private productService: ProductService, private toastr: ToastrServic
   clickEvent(title, price) {
     this.productTitle = title;
     this.productPrice = price
+  }
+
+  buyProduct() {
+    if (this.userEmail == undefined) {
+      this.toastr.warning("You need to login to access this functionality.");
+    }
   }
 }
