@@ -25,7 +25,7 @@ private stripe: Stripe
 private $modal: any;
 
 baseUrl = 'https://abcportal.ml/api';
-imageBaseUrl = 'https://abcportal.ml/api/images/'
+imageBaseUrl = 'https://abcportal.ml/images/'
 productForm!: FormGroup;
 stripeForm!: FormGroup;
 imageSrc: string = '';
@@ -107,7 +107,7 @@ constructor(private productService: ProductService, private userService: UserSer
             fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
             fontSmoothing: 'antialiased',
             '::placeholder': {
-                color: '#aab7c4',
+                color: '#2B2B2B',
             },
         },
         invalid: {
