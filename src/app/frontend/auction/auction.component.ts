@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '@auth0/auth0-angular';
+import { ToastrService } from 'ngx-toastr';
 import { Auction } from './auction.modal';
 import { AuctionService } from './auctions.service';
 
@@ -11,9 +12,11 @@ import { AuctionService } from './auctions.service';
 })
 export class AuctionComponent implements OnInit {
 
+  //baseUrl = 'https//localhost:3000/api';
+  imageBaseUrl = 'https//localhost:3000/api/images/';
   auctionForm!: FormGroup;
   bidForm!: FormGroup;
-  showProductDes: any = {};
+  showAuctionDes: any = {};
   formTitle: string = 'Add Auction';
   auctions:any;
   imageUrl: any;
@@ -23,11 +26,11 @@ export class AuctionComponent implements OnInit {
   videoSrc: string = '';
 
   
-  constructor(public auth: AuthService,public auctionService: AuctionService) { }
+  constructor(public auth: AuthService,public auctionService: AuctionService, public toastr: ToastrService) { }
 
   ngOnInit(): void {
       var emailPattern = "^[a-zA-Z]{1}[a-zA-Z0-9.\-_]*@[a-zA-Z]{1}[a-zA-Z.-]*[a-zA-Z]{1}[.][a-zA-Z]{2,}$";
-
+      this.loadAucitons();
       // this.auctionForm = new FormGroup({
       //   address : new FormControl('', [Validators.required]),
       //   email: new FormControl('',    [Validators.required,
@@ -59,7 +62,7 @@ export class AuctionComponent implements OnInit {
   }
   resetForm() {
     this.auctionForm.reset();
-    this.changeTitle('Add Product');
+    this.changeTitle('Add Auction');
     this.loadAucitons();
     this.imageSrc = '';
   }
@@ -119,4 +122,22 @@ export class AuctionComponent implements OnInit {
       this.auctions = data.Auction;
     });
   }
+  removeAuction(postId: string) {
+    this.auctionService.deletePost(postId);
+    this.toastr.success('Auction Successfully Deleted.');
+    this.loadAucitons();
+}
+
+//update auction
+updateAuction(auction: Auction) {
+  console.log(auction)
+  this.imageSrc = this.imageBaseUrl + auction.image;
+  this.auctionForm.patchValue({
+    _id: auction._id,
+    title: auction.title,
+    description: auction.description,
+    video: auction.video,
+  });
+  this.changeTitle('Update Auction'); ;
+}
 }
