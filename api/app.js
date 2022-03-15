@@ -13,8 +13,9 @@ const OrderRoute = require('./routes/order.routes')
 const UserRoute = require('./routes/user.routes')
 const checkoutRoute = require('./routes/checkout.routes')
 
+const AuctionsRoute = require('./routes/auction.routes')
 mongoose
-  .connect(process.env.MONGO_CONNECTION)
+  .connect(process.env.MONGO)
   .then(() => {
     console.log("Connected to Faktury Db!");
   })
@@ -54,6 +55,7 @@ app.use('/api/users', UserRoute);
 // stripe routes
 app.use('/api/checkout', checkoutRoute)
 
+app.use('/api/auctions', AuctionsRoute)
 
 app.use((req, res, next) => {
   res.sendFile(path.join(__dirname, "angular", "index.html"));

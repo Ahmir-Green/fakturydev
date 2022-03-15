@@ -47,7 +47,7 @@
                         </div>
                     </div>
                     <div class="auction__box__form" *ngIf="show">
-                        <form class="auction__form" [formGroup]="form" (submit)="auctionForm()">
+                        <form class="auction__form" [formGroup]="bidForm" (submit)="bidsForm()">
                             <div class="form-group">
                                 <input type="text" id="xrp__address" placeholder="XRP Address"
                                 class="form-control"
@@ -83,7 +83,7 @@
                             </div>
                         </form>
                         <div class="submit__btn">
-                            <a href="javascript:;" (click)="auctionForm()">Submit</a>
+                            <a href="javascript:;" (click)="bidsForm()">Submit</a>
                         </div>
                     </div>
                 </div>
@@ -286,4 +286,60 @@
             </div>
         </div>
     </section>
+    <br>
+    <div class="buy__btn text-center mb-5">
+        <a  data-bs-toggle="modal" data-bs-target="#auctionModal" (click)="changeTitle('Add Auction')" href="javascript:;">Add Auction</a>
+    </div>
+      
+<!-- add auction form -->
+<div class="modal fade" id="auctionModal" tabindex="-1" aria-labelledby="auctionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="auctionModalLabel">{{formTitle}}</h6>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="resetForm()"></button>
+        </div>
+        <div class="modal-body">
+            <form class="login__form" [formGroup]="auctionForm" >
+  
+                    <div class="form-group">
+                        <input type="hidden" formControlName="_id" class="form-control">
+                        <label for="f-name">Title</label>
+                        <input type="text" id="f-name" class="form-control" formControlName="title"
+                        [ngClass]="{ 'is-invalid': f['title'].touched && f['title'].errors }">
+                      <span *ngIf="f['title'].touched && f['title'].errors?.['required']" class="invalid-feedback">
+                        Title is required
+                      </span>
+                    </div>
+                <div class="form-group">
+                    <label for="images" class="form-label">Image</label>
+                    <input type="file" formControlName="image" name="image" class="form-control" (change)="onFileChange($event)" >
+                    <!-- [ngClass]="{ 'is-invalid': f['image'].touched && f['image'].errors }" id="images"> -->
+                    <!-- <span *ngIf="f['image'].touched && f['image'].errors" class="invalid-feedback">
+                      <span *ngIf="f['image'].errors['required']">Image is required</span>
+                   </span> -->
+                </div>
+                <img [src]="imageSrc" *ngIf="imageSrc" class="mb-2 imageStyling">
+                <div class="form-group">
+                    <label for="videos" class="form-label">Video</label>
+                    <input type="file" formControlName="video" name="video" class="form-control" (change)="onVideoChange($event)" >
+                    <!-- [ngClass]="{ 'is-invalid': f['image'].touched && f['image'].errors }" id="images"> -->
+                    <!-- <span *ngIf="f['image'].touched && f['image'].errors" class="invalid-feedback">
+                      <span *ngIf="f['image'].errors['required']">Image is required</span>
+                   </span> -->
+                </div>
+                <video [src]="videoSrc" *ngIf="videoSrc" class="mb-2 imageStyling"></video>
+                <div class="form-group">
+                    <label for="exampleInputPassword1" class="form-label">Description</label>
+                    <input type="text" formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': f['description'].touched && f['description'].errors }" id="inputPassword4">
+                    <span *ngIf="f['description'].touched && f['description'].errors" class="invalid-feedback">
+                      <span *ngIf="f['description'].errors['required']">Title is required</span>
+                   </span>
+                  </div>
+                  <button [hidden]="!auctionForm.valid" class="submit_button"(click)="formTitle=='Add Auction'? onSubmit(auctionForm.value) : onUpdate()">Submit</button>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </main>
