@@ -41,7 +41,7 @@ router.get('/', auctionController.auction_gets_all);
 
 router.post('/', upload.single('image'), auctionController.auction_create_auction);
 
-router.get('/:auctionId', auctionController.abuction_get_one);
+router.get('/:auctionId', auctionController.auction_get_one);
 
 router.patch('/:auctionId',upload.single('image'), auctionController.auction_update_one);
 
