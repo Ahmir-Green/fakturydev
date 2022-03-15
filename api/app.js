@@ -11,11 +11,11 @@ require('dotenv').config();
 const ProductRoute = require('./routes/product.routes')
 const OrderRoute = require('./routes/order.routes')
 const UserRoute = require('./routes/user.routes')
-const checkoutRoute = require('./routes/checkout.routes')
+const CheckoutRoute = require('./routes/checkout.routes')
 
 const AuctionsRoute = require('./routes/auction.routes')
 mongoose
-  .connect(process.env.MONGO)
+  .connect(process.env.MONGO_CONNECTION)
   .then(() => {
     console.log("Connected to Faktury Db!");
   })
@@ -53,7 +53,7 @@ app.use('/api/orders', OrderRoute)
 // users routes
 app.use('/api/users', UserRoute);
 // stripe routes
-app.use('/api/checkout', checkoutRoute)
+app.use('/api/checkout', CheckoutRoute)
 
 app.use('/api/auctions', AuctionsRoute)
 
