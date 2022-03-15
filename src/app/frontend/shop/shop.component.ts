@@ -82,7 +82,9 @@ constructor(private productService: ProductService, private userService: UserSer
   }
 
   ngAfterViewInit() {
-    this.initiateCardElement();
+    setTimeout(()=>{
+      this.initiateCardElement();
+    }, 3000);
   }
 
   getUserData(id: string) {
@@ -259,6 +261,9 @@ constructor(private productService: ProductService, private userService: UserSer
     this.changeTitle('Add Product');
     this.imageSrc = '';
     this.loadProducts();
+    setTimeout(()=>{
+      this.initiateCardElement();
+    }, 1000);
     
   }
 
