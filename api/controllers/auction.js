@@ -27,30 +27,33 @@ exports.auction_gets_all = (req, res, next) => {
 
 
 exports.auction_create_auction = (req, res, next) => {
-  console.log("file",req.file);
-  console.log("Body",req.body);
- 
-  var auction = new Auction({
-    _id: new mongoose.Types.ObjectId(),
-    title: req.body.title,
-    description: req.body.description,
-    // video: req.file.video,
-    image: req.file.image
-  });
-  auction.save().then(result => {
-      res.status(200).json({
-        message: 'auction saved successfully',
-        createdAuction: result
-      });
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(500).json({
-        Error: err
-      });
+  console.log("___________________________________________")
+    console.log("file",req.file);
+  console.log("___________________________________________")
+    console.log("Body",req.body);
+   
+    var auction = new Auction({
+      _id: new mongoose.Types.ObjectId(),
+      title: req.body.title,
+      description: req.body.description,
+      video: req.body.video,
+      image: req.body.image
+      
     });
-
-}
+    auction.save().then(result => {
+        res.status(200).json({
+          message: 'auction saved successfully',
+          createdAuction: result
+        });
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(500).json({
+          Error: err
+        });
+      });
+  
+  }
 
 
 exports.auction_get_one = (req, res, next) => {

@@ -3,6 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '@auth0/auth0-angular';
 import { Auction } from './auction.modal';
 import { AuctionService } from './auctions.service';
+declare var $ : any;
+
 
 @Component({
   selector: 'app-auction',
@@ -10,6 +12,9 @@ import { AuctionService } from './auctions.service';
   styleUrls: ['./auction.component.css']
 })
 export class AuctionComponent implements OnInit {
+
+  baseUrl = 'https://abcportal.ml/api';
+  imageBaseUrl = 'https://abcportal.ml/images/'
 
   auctionForm!: FormGroup;
   bidForm!: FormGroup;
@@ -44,6 +49,7 @@ export class AuctionComponent implements OnInit {
         description: new FormControl('', [Validators.required]),
         video: new FormControl('', [Validators.required])
         });
+        this.loadAuctions()
   }
   // convenience getter for easy access to Registration fields
   get f() { return this.auctionForm.controls; }
@@ -52,7 +58,9 @@ export class AuctionComponent implements OnInit {
 
   show: boolean = false;
   clickEvent(){
-    this.show = true;       
+    this.show = true;
+    // $(".box__offer").css("display", "none");
+       
   }
   changeTitle(value: string) {
     this.formTitle = value;
@@ -60,7 +68,7 @@ export class AuctionComponent implements OnInit {
   resetForm() {
     this.auctionForm.reset();
     this.changeTitle('Add Product');
-    this.loadAucitons();
+    this.loadAuctions();
     this.imageSrc = '';
   }
   bidsForm(){
@@ -79,9 +87,8 @@ export class AuctionComponent implements OnInit {
         formData.append('title', this.auctionForm.get('title')?.value);
         formData.append('image',  this.imageUrl)
         formData.append('description', this.auctionForm.get('description')?.value);
-        formData.append('image', this.videoUrl);
+        formData.append('video', this.videoUrl);
         //formData.append('price', this.auctionForm.get('price')?.value);
-
         this.auctionService.addAuction(formData);
         setTimeout(()=>{                
           this.resetForm();
@@ -114,7 +121,7 @@ export class AuctionComponent implements OnInit {
       };
     }  
   }
-  loadAucitons() {
+  loadAuctions() {
     return this.auctionService.getPosts().subscribe((data: any) => {
       this.auctions = data.Auction;
     });
