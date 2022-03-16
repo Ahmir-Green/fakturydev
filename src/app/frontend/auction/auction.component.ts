@@ -13,7 +13,7 @@ import { AuctionService } from './auctions.service';
 export class AuctionComponent implements OnInit {
 
   //baseUrl = 'https//localhost:3000/api';
-  imageBaseUrl = 'https//localhost:3000/api/images/';
+  imageBaseUrl = 'http//localhost:3000/api/public/';
   auctionForm!: FormGroup;
   bidForm!: FormGroup;
   showAuctionDes: any = {};
@@ -82,7 +82,7 @@ export class AuctionComponent implements OnInit {
         formData.append('title', this.auctionForm.get('title')?.value);
         formData.append('image',  this.imageUrl)
         formData.append('description', this.auctionForm.get('description')?.value);
-        formData.append('image', this.videoUrl);
+        formData.append('video', this.videoUrl);
         //formData.append('price', this.auctionForm.get('price')?.value);
 
         this.auctionService.addAuction(formData);

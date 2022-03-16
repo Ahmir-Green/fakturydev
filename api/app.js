@@ -5,6 +5,9 @@ const app = express();
 var morgan = require('morgan')
 const bodyParser = require('body-parser');
 require('dotenv').config();
+var cors = require('cors')
+
+
 
 // importing routes
 const ProductRoute = require('./routes/product.routes')
@@ -19,7 +22,7 @@ mongoose
     console.log("Connection failed!");
   });
 
-
+  app.use(cors())
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());

@@ -34,8 +34,8 @@ exports.auction_create_auction = (req, res, next) => {
     _id: new mongoose.Types.ObjectId(),
     title: req.body.title,
     description: req.body.description,
-    video: req.file.video,
-    image: req.file.image
+    video: req.body.video,
+    image: req.body.image
   });
   auction.save().then(result => {
       res.status(200).json({

@@ -21,7 +21,7 @@ export class AuctionService {
   // save auction to db
   addAuction(data: any)
     {
-      return this.http.post(`${this.apiURL}/auctions/`, data)
+      return this.http.post(`${this.apiURL}/auctions`, data)
         .subscribe((res: any) => {
           this.toastr.success(res.message);
         })
