@@ -800,6 +800,16 @@ video {
     font-weight: 400;
     margin: 0;
 }
+.buy__head__button{
+    display: flex;
+    align-items: center;
+}
+.buy__head__btn {
+    margin-right:0.93em ;
+}
+.buy__head__btn:last-child{
+     margin-right:0;
+}
 .buy__head__btn a {
     padding: 0.81em 3.12em;
     border: 1px solid #61FA0A;
@@ -810,6 +820,7 @@ video {
     font-weight: 700;
     text-decoration: none;
     transition: .5s;
+    text-transform: uppercase;
 }
 .buy__head__btn a:hover{
     background: #61FA0A;
@@ -2349,6 +2360,10 @@ to {
 .head__content__icon {
     width: 2.25em;
     height: 2.25em;
+    margin-right:  0.93em;
+}
+.head__content__icon:last-child{
+    margin-right: 0;
 }
 .collection__head__box p{
     color: #000000;
