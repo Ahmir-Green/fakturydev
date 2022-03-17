@@ -46,6 +46,7 @@ productPrice: any;
 userEmail: string;
 userId: any;
 userRole: any;
+productId: any;
 
 
 constructor(private productService: ProductService, private userService: UserService, private toastr: ToastrService,
@@ -143,6 +144,7 @@ constructor(private productService: ProductService, private userService: UserSer
         this.success = true
         let orderObj = {
           userId: this.userId,
+          productId: this.productId,
           product: this.productTitle,
           price: this.productPrice,
           billingAddress: value.billingAddress,

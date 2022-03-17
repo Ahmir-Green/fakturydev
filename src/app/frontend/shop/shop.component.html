@@ -27,7 +27,7 @@
                     </div>
                     <div class="shop__box__bottom" *ngIf="userRole !== 'Admin'">
                         <div class="shop__count">
-                            <p>{{product.quantity}} of 10,000</p>
+                            <p>1 of {{product.quantity}}</p>
                         </div>
                         <div ngbDropdown class="buy__btn">
                             <a href="javascript:;" id="dropdownBasic1" (click)="buyProduct()" ngbDropdownToggle>Buy Now  </a>
@@ -127,7 +127,7 @@
                     <label for="exampleInputPassword1" class="form-label">Description</label>
                     <input type="text" formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': f['description'].touched && f['description'].errors }" id="inputPassword4">
                     <span *ngIf="f['description'].touched && f['description'].errors" class="invalid-feedback">
-                      <span *ngIf="f['description'].errors['required']">Title is required</span>
+                      <span *ngIf="f['description'].errors['required']">Description is required</span>
                    </span>
                   </div>
                   <div class="form-group">
