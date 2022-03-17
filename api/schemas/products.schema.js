@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const postSchema = mongoose.Schema({
+const productSchema = mongoose.Schema({
   _id : mongoose.Schema.Types.ObjectId,
   title: { type: String, required: true },
   description: { type: String },
@@ -10,4 +10,4 @@ const postSchema = mongoose.Schema({
 },
 {versionKey: false });
 
-module.exports = mongoose.model('product', postSchema);
+module.exports = mongoose.model('Product', productSchema);
