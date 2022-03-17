@@ -2,7 +2,7 @@ var Auction = require('../schemas/auctions.schema');
 var mongoose = require('mongoose');
 
 exports.auction_gets_all = (req, res, next) => {
-  Auction.find().select('_id title description video bids image').exec().then(doc => {
+  Auction.find().select('_id title description file').exec().then(doc => {
     var response = {
       count: doc.length,
       Auction: doc.map(doc => {
@@ -10,9 +10,8 @@ exports.auction_gets_all = (req, res, next) => {
           _id: doc._id,
           title: doc.title,
           description: doc.description,
-          video: doc.video,
-          bids: doc.bids,
-          image: doc.image
+          file: doc.file,
+          bids: doc.bid
         }
       })
     };
@@ -27,17 +26,12 @@ exports.auction_gets_all = (req, res, next) => {
 
 
 exports.auction_create_auction = (req, res, next) => {
-  console.log("___________________________________________")
-    console.log("file",req.file);
-  console.log("___________________________________________")
-    console.log("Body",req.body);
    
     var auction = new Auction({
       _id: new mongoose.Types.ObjectId(),
       title: req.body.title,
       description: req.body.description,
-      video: req.body.video,
-      image: req.body.image
+      file: req.file.originalname
       
     });
     auction.save().then(result => {

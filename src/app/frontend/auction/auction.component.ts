@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '@auth0/auth0-angular';
+import { UserService } from '../shop/user.service';
 import { Auction } from './auction.modal';
 import { AuctionService } from './auctions.service';
 declare var $ : any;
@@ -21,11 +22,14 @@ export class AuctionComponent implements OnInit {
   showProductDes: any = {};
   formTitle: string = 'Add Auction';
   auctions:any;
-  imageUrl: any;
+  fileUrl: any;
   videoUrl:any;
   submitted = false;
-  imageSrc: string = '';
+  fileSrc: string = '';
   videoSrc: string = '';
+  userRole: any;
+  userEmail: string;
+  userId: any;
 
   
   constructor(public auth: AuthService,public auctionService: AuctionService) { }
@@ -45,9 +49,8 @@ export class AuctionComponent implements OnInit {
       this.auctionForm = new FormGroup({
         _id: new FormControl(''),
         title: new FormControl('', [Validators.required]),
-        image: new FormControl(''),
-        description: new FormControl('', [Validators.required]),
-        video: new FormControl('', [Validators.required])
+        file: new FormControl('', [Validators.required]),
+        description: new FormControl('')
         });
         this.loadAuctions()
   }
@@ -69,7 +72,7 @@ export class AuctionComponent implements OnInit {
     this.auctionForm.reset();
     this.changeTitle('Add Product');
     this.loadAuctions();
-    this.imageSrc = '';
+    this.fileSrc = '';
   }
   bidsForm(){
 
@@ -85,10 +88,8 @@ export class AuctionComponent implements OnInit {
       if(this.submitted) {
         const formData = new FormData();
         formData.append('title', this.auctionForm.get('title')?.value);
-        formData.append('image',  this.imageUrl)
+        formData.append('file',  this.fileUrl)
         formData.append('description', this.auctionForm.get('description')?.value);
-        formData.append('video', this.videoUrl);
-        //formData.append('price', this.auctionForm.get('price')?.value);
         this.auctionService.addAuction(formData);
         setTimeout(()=>{                
           this.resetForm();
@@ -100,24 +101,11 @@ export class AuctionComponent implements OnInit {
 
     if(event.target.files && event.target.files.length) {
       const file:File = event.target.files[0];
-      this.imageUrl = file
+      this.fileUrl = file
       reader.readAsDataURL(file);
 
       reader.onload = () => {
-        this.imageSrc = reader.result as string;
-      };
-    }  
-  }
-  onVideoChange(event: any){
-    const reader = new FileReader();
-
-    if(event.target.files && event.target.files.length) {
-      const file:File = event.target.files[0];
-      this.videoUrl = file
-      reader.readAsDataURL(file);
-
-      reader.onload = () => {
-        this.videoSrc = reader.result as string;
+        this.fileSrc = reader.result as string;
       };
     }  
   }

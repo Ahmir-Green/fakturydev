@@ -2,3 +2,116 @@
     border-color: #dc3545;
     box-shadow: 0 0 0 0.25rem rgba(240, 218, 220, 0);
 }
+
+.submit_button {
+    background: #111914;
+    border-radius: 10px;
+    padding: 0.81em 1.37em;
+    font-size: 1em;
+    line-height: 1.5em;
+    font-weight: 700;
+    color: #61FA0A;
+    transition: .5s;
+}
+.submit_button:hover {
+    background: #61FA0A;
+    color: #fff;
+}
+.login__form {
+    width: 100%;
+    margin: 0 auto;
+}
+
+
+.modal-footer {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+    padding: 0;
+    border-top: 1px solid #e9ecef;
+}
+.modal-footer {
+    display: flex;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0;
+    border-top: 1px solid #dee2e6;
+    border-bottom-right-radius: calc(0.3rem - 1px);
+    border-bottom-left-radius: calc(0.3rem - 1px);
+}
+
+button:not(disabled){
+    cursor: pointer
+}
+.buy__btn a{
+    text-decoration: none;
+}
+
+.hideme p {
+    font-size: 1.125em;
+    color: black;
+    line-height: 2em;
+}
+.action__btn a {
+    background: #111914;
+    border-radius: 10px;
+    padding: 0.81em 2.37em;
+    font-size: 1em;
+    line-height: 1.5em;
+    font-weight: 700;
+    color: #61FA0A;
+    transition: .5s;
+    display: inline-block;
+    text-decoration: none;
+}
+.action__btn a:hover {
+    background: #61FA0A;
+    color: #fff;
+}
+
+.paymentBtn {
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    line-height: 1em;
+    font-weight: 500;
+    color: #2B2B2B;
+    transition: .5s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.dropdown-menu.show {
+    border-radius: 9px;
+    margin-top: 2px;
+}
+
+.productPrice {
+    color: #61fa0a;
+    font-size: 13px;
+}
+
+.imageStyling {
+    height: auto; 
+    width: 100px;
+}
+
+.actionsButton li,a {
+    list-style-type: none;
+    text-decoration: none;
+}
+
+.modal-body h6 {
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.modalProductPrice {
+    color: #61fa0a;
+    font-size: 13px;
+    margin-left: 10px;
+}
