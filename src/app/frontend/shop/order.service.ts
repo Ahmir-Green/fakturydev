@@ -27,4 +27,8 @@ export class OrderService {
           }
         })
     }
+
+    getOrder(id:string) {
+      return this.http.get(`${this.apiURL}/orders/${id}`)
+    }
 }
