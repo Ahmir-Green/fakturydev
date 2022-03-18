@@ -38,7 +38,6 @@ export class AuctionService {
 
   // delete auction from db
   deletePost(auctionId: string) {
-    console.log(auctionId)
     this.http
       .delete(`${this.apiURL}/auctions/` + auctionId)
       .subscribe((data: any) => {

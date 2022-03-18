@@ -4,6 +4,9 @@ import { AuthService } from '@auth0/auth0-angular';
 import { UserService } from '../shop/user.service';
 import { Auction } from './auction.modal';
 import { AuctionService } from './auctions.service';
+import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
+import { Utils } from 'src/utils';
 declare var $ : any;
 
 
@@ -32,7 +35,7 @@ export class AuctionComponent implements OnInit {
   userId: any;
 
   
-  constructor(public auth: AuthService,public auctionService: AuctionService) { }
+  constructor(public auth: AuthService,public auctionService: AuctionService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
       var emailPattern = "^[a-zA-Z]{1}[a-zA-Z0-9.\-_]*@[a-zA-Z]{1}[a-zA-Z.-]*[a-zA-Z]{1}[.][a-zA-Z]{2,}$";
@@ -77,7 +80,43 @@ export class AuctionComponent implements OnInit {
   bidsForm(){
 
   }
-  onUpdate(){}
+
+  //update auction
+  updateAuction(auction: Auction) {
+    this.fileSrc = this.imageBaseUrl + auction.file;
+    this.auctionForm.patchValue({
+      _id: auction._id,
+      title: auction.title,
+      description: auction.description
+    });
+    this.changeTitle('Update Auction'); ;
+  }
+
+  // delete Auction
+  removeAuction(auctionId: string) {
+    Swal.fire(Utils.swalConfig()).then(result => {
+      if (result.value && result.value === true) {
+      this.auctionService.deletePost(auctionId);
+      Utils.showSwalLoader();
+      this.toastr.success('Auction Successfully Deleted.');
+      this.loadAuctions();
+      Utils.closeSwalLoader();
+      }
+    });
+      
+  }
+
+  onUpdate(){
+    let id = this.auctionForm.value._id;
+      const formData = new FormData();
+      formData.append('title', this.auctionForm.get('title')?.value);
+      formData.append('file', this.fileUrl)
+      formData.append('description', this.auctionForm.get('description')?.value);
+      this.auctionService.updateAuction(id, formData);
+      this.loadAuctions();
+      $('#auctionModal').modal('hide');          
+      this.resetForm();
+  }
   onSubmit(value: Auction){
     this.submitted = true;
       // stop here if form is invalid
@@ -91,9 +130,11 @@ export class AuctionComponent implements OnInit {
         formData.append('file',  this.fileUrl)
         formData.append('description', this.auctionForm.get('description')?.value);
         this.auctionService.addAuction(formData);
-        setTimeout(()=>{                
-          this.resetForm();
-        }, 2000);
+         // Close the stripe modal dialog window
+      $('#auctionModal').modal('hide');
+      setTimeout(()=>{                
+        this.resetForm();
+      }, 1000);
       }
   }
   onFileChange(event: any){

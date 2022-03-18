@@ -253,6 +253,7 @@ constructor(private productService: ProductService, private userService: UserSer
       formData.append('quantity', this.productForm.get('quantity')?.value);
       formData.append('price', this.productForm.get('price')?.value);
       this.productService.updateProduct(id, formData);
+      this.loadProducts();
       $('#exampleModal2').modal('hide');          
       this.resetForm();
   }

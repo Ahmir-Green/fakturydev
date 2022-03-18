@@ -17,6 +17,7 @@
                               </video>
                         </div>
                     </div>
+                    <h6 class="auctionTitle">{{auction.title}}</h6>
                     <div class="wrapper">
                         <div class="countdown-container" class="countdown-container">
                             <h5>Time Remaing :</h5>
@@ -92,7 +93,17 @@
                             <a href="javascript:;" (click)="bidsForm()">Submit</a>
                         </div>
                     </div>
+                    <br>
+                    <div class="actionsButton" *ngIf="(auth.isAuthenticated$ | async) && userRole == 'Admin'">
+                        <li>
+                            <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#auctionModal"(click)=" updateAuction(auction)" >Update</a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" style="color: red" (click)="removeAuction(auction._id)">Delete</a>
+                        </li>
+                    </div>
                 </div>
+                
             </div>
         </div>
     </section>

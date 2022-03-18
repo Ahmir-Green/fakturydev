@@ -115,3 +115,17 @@ button:not(disabled){
     font-size: 13px;
     margin-left: 10px;
 }
+
+.auctionTitle {
+    font-size: 1rem;
+    padding: 10px;
+    margin: auto;
+    text-align: center;
+}
+
+.actionsButton li,a {
+    list-style-type: none;
+    text-decoration: none;
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
