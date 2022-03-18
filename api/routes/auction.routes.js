@@ -29,8 +29,8 @@ router.post('/', upload.single('file'), auctionController.auction_create_auction
 
 // router.get('/:auctionId', auctionController.auction_get_one);
 
-// router.patch('/:auctionId',upload.single('image'), auctionController.auction_update_one);
+router.patch('/:auctionId',upload.single('file'), auctionController.auction_update_one);
 
-// router.delete('/:auctionId', auctionController.auction_delete_one);
+router.delete('/:auctionId', auctionController.auction_delete_one);
        
 module.exports = router;
