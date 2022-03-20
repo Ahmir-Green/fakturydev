@@ -19,6 +19,7 @@ import { ShopComponent } from './shop/shop.component';
 import { ToastrModule } from 'ngx-toastr';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ThankYouComponent } from './thank-you/thank-you.component';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 
 
@@ -45,7 +46,8 @@ import { ThankYouComponent } from './thank-you/thank-you.component';
     ReactiveFormsModule,
     HttpClientModule,
     ToastrModule,
-    NgbModule
+    NgbModule,
+    BsDatepickerModule.forRoot(),
   ]
 })
 export class FrontendModule { }

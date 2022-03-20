@@ -13,8 +13,9 @@ const ProductRoute = require('./routes/product.routes')
 const OrderRoute = require('./routes/order.routes')
 const UserRoute = require('./routes/user.routes')
 const CheckoutRoute = require('./routes/checkout.routes')
-
+const BidRoute = require('./routes/bids.routes')
 const AuctionsRoute = require('./routes/auction.routes')
+
 mongoose
   .connect(process.env.MONGO_CONNECTION)
   .then(() => {
@@ -55,8 +56,10 @@ app.use('/api/orders', OrderRoute)
 app.use('/api/users', UserRoute);
 // stripe routes
 app.use('/api/checkout', CheckoutRoute)
-
+// auctions routes
 app.use('/api/auctions', AuctionsRoute)
+// bids routes
+app.use('/api/bids', BidRoute)
 
 app.use((req, res, next) => {
   res.sendFile(path.join(__dirname, "angular", "index.html"));

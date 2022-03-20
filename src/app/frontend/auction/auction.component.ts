@@ -7,6 +7,7 @@ import { AuctionService } from './auctions.service';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import { Utils } from 'src/utils';
+import { BidService } from './bid.service';
 declare var $ : any;
 
 
@@ -22,7 +23,7 @@ export class AuctionComponent implements OnInit {
 
   auctionForm!: FormGroup;
   bidForm!: FormGroup;
-  showProductDes: any = {};
+  showAuctionForm: any = {};
   formTitle: string = 'Add Auction';
   auctions:any;
   fileUrl: any;
@@ -33,54 +34,89 @@ export class AuctionComponent implements OnInit {
   userRole: any;
   userEmail: string;
   userId: any;
+  isFormShown: boolean;
+
+  // countdown testing
+  days: number;
+  hours: number;
+  mins: number;
+  secs: number;
 
   
-  constructor(public auth: AuthService,public auctionService: AuctionService, private toastr: ToastrService) { }
+  constructor(public auth: AuthService,public auctionService: AuctionService, 
+    private toastr: ToastrService, private userService: UserService, private bidService: BidService) { }
 
   ngOnInit(): void {
+
+    this.auth.user$.subscribe(user => {
+      if (user) {
+        this.getUserData(user.email)
+      }
+    });
       var emailPattern = "^[a-zA-Z]{1}[a-zA-Z0-9.\-_]*@[a-zA-Z]{1}[a-zA-Z.-]*[a-zA-Z]{1}[.][a-zA-Z]{2,}$";
 
-      // this.auctionForm = new FormGroup({
-      //   address : new FormControl('', [Validators.required]),
-      //   email: new FormControl('',    [Validators.required,
-      //                                   Validators.email,
-      //                                   Validators.pattern(emailPattern)]),
-      //   xrpBid: new FormControl('', [Validators.required]),
-      //   fakBid: new FormControl('', [Validators.required])
-      // })
+      this.bidForm = new FormGroup({
+        address : new FormControl('', [Validators.required]),
+        email: new FormControl('',    [Validators.required,
+                                        Validators.email,
+                                        Validators.pattern(emailPattern)]),
+        xrpBid: new FormControl('', [Validators.required]),
+        fakBid: new FormControl('', [Validators.required])
+      })
 
       this.auctionForm = new FormGroup({
         _id: new FormControl(''),
         title: new FormControl('', [Validators.required]),
         file: new FormControl('', [Validators.required]),
-        description: new FormControl('')
+        description: new FormControl(''),
+        expiryTime: new FormControl('')
         });
         this.loadAuctions()
   }
-  // convenience getter for easy access to Registration fields
+  // convenience getter for easy access to auctionFrom fields
   get f() { return this.auctionForm.controls; }
+  
+  // convenience getter for easy access to bidFrom fields
+  get g() { return this.bidForm.controls; }
   
 
 
-  show: boolean = false;
-  clickEvent(){
-    this.show = true;
+    toggleShow() {
+
+      this.isFormShown = ! this.isFormShown;
+      
+      }
     // $(".box__offer").css("display", "none");
        
-  }
   changeTitle(value: string) {
     this.formTitle = value;
   }
   resetForm() {
     this.auctionForm.reset();
+    this.bidForm.reset();
     this.changeTitle('Add Product');
     this.loadAuctions();
     this.fileSrc = '';
   }
-  bidsForm(){
+  bidsForm(bidForm, id){
+      // stop here if form is invalid
+      if (this.bidForm.invalid) {
+          this.toastr.warning('please fill this form');
+      }  else {
+        bidForm.auctionId = id
+        this.bidService.addBid(bidForm)
+        setTimeout(()=>{         
+          this.resetForm();
+        }, 1000);
+      }
 
   }
 
+  getUserData(id: string) {
+    this.userService.getUser(id).subscribe((res: any) => {
+      this.userRole = res.User.role;
+    });
+  }
   //update auction
   updateAuction(auction: Auction) {
     this.fileSrc = this.imageBaseUrl + auction.file;
@@ -97,10 +133,12 @@ export class AuctionComponent implements OnInit {
     Swal.fire(Utils.swalConfig()).then(result => {
       if (result.value && result.value === true) {
       this.auctionService.deletePost(auctionId);
+      setTimeout(()=>{                
+      this.loadAuctions();
       Utils.showSwalLoader();
       this.toastr.success('Auction Successfully Deleted.');
-      this.loadAuctions();
       Utils.closeSwalLoader();
+      }, 1000);
       }
     });
       
@@ -113,9 +151,12 @@ export class AuctionComponent implements OnInit {
       formData.append('file', this.fileUrl)
       formData.append('description', this.auctionForm.get('description')?.value);
       this.auctionService.updateAuction(id, formData);
-      this.loadAuctions();
+      setTimeout(()=>{                
+        this.loadAuctions();
       $('#auctionModal').modal('hide');          
       this.resetForm();
+      }, 1000);
+      
   }
   onSubmit(value: Auction){
     this.submitted = true;
@@ -127,7 +168,8 @@ export class AuctionComponent implements OnInit {
       if(this.submitted) {
         const formData = new FormData();
         formData.append('title', this.auctionForm.get('title')?.value);
-        formData.append('file',  this.fileUrl)
+        formData.append('file',  this.fileUrl);
+        formData.append('expiryTime', this.auctionForm.get('expiryTime')?.value)
         formData.append('description', this.auctionForm.get('description')?.value);
         this.auctionService.addAuction(formData);
          // Close the stripe modal dialog window
@@ -153,6 +195,20 @@ export class AuctionComponent implements OnInit {
   loadAuctions() {
     return this.auctionService.getPosts().subscribe((data: any) => {
       this.auctions = data.Auction;
+
+      const x = setInterval(() => {
+        let date = new Date().getTime();
+        let date2 = new Date(this.auctions[7].expiryTime).getTime();
+        let distance = date2 - date;
+        this.days = Math.floor(distance / (1000 * 60 * 60 * 24 ));
+        this.hours = Math.floor((distance % (1000 * 60 * 60 * 24 )) / (1000 * 60 * 60));
+        this.mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        this.secs = Math.floor((distance % (1000 * 60 )) / (1000));
+        if (distance < 0) {
+          this.days = this.hours = this.mins = this.secs = 0
+            clearInterval(x)
+        }
+        }, 1000)
     });
   }
 }

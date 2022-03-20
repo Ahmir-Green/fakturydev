@@ -1962,7 +1962,7 @@ video {
     border: 1px solid #2A2A2A;
     background: #f1fcea;
 }
-.submit__btn a {
+.submit__btn button {
     background: #111914;
     border-radius: 10px;
     padding: 0.81em 0;
@@ -1976,7 +1976,7 @@ video {
     transition: .5s;
     text-decoration: none;
 }
-.submit__btn a:hover {
+.submit__btn button:hover {
     background: #61FA0A;
     color: #fff;
 }

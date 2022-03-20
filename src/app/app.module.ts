@@ -12,6 +12,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { AuthModule } from '@auth0/auth0-angular';
 import { environment as env } from "../environments/environment";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    BsDatepickerModule.forRoot(),
     ToastrModule.forRoot({
       timeOut: 2000
     }),

@@ -6,6 +6,7 @@ const auctionSchema = mongoose.Schema({
   title: { type: String, required: true },
   description: { type: String },
   file: { type: String },
+  expiryTime: { type: Date },
   bids:[{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Bid'

@@ -1,16 +1,16 @@
 const mongoose = require('mongoose');
-const auction= require('./auctions.schema')
 
-const postSchema = mongoose.Schema({
+const bidSchema = mongoose.Schema({
   _id : mongoose.Schema.Types.ObjectId,
-  user_id: { type: String },
-  bid_date: { type: Date },
-  amount: { type: String },
-  is_winner:{type: Boolean}, 
-  auctions:[{
+  auctionId:{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Auction'
-}],
+  },
+  address: { type: String },
+  email: { type: String },
+  xrpBid:{type: Number},
+  fakBid: {type: Number}, 
+  
 });
 
-module.exports = mongoose.model('bid', postSchema);
+module.exports = mongoose.model('bid', bidSchema);
