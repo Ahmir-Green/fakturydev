@@ -2032,7 +2032,12 @@ video {
     font-size: 65px;
 }
 
+.auctionExpiryClass {
+    width: 100%;
+    color: red;
+    text-align: center;
 
+}
 
 
 @keyframes ticker{0%{transform:translateZ(0);visibility:visible}to{transform:translate3d(-100%,0,0)}}
@@ -2212,6 +2217,10 @@ width: 2rem;
 }
 article.countdown div {
     width: 30%;
+    text-align: center;
+}
+article.countdown div.auctionExpiryClass {
+    width: 100%;
     text-align: center;
 }
 .new, .old, .current {

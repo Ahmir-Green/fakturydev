@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class CheckoutService {
 
   // base url
-  baseUrl: string = "https://www.faktury.dev/api/checkout/"
+  baseUrl: string = "https://abcportal.ml/api/checkout/"
   
   constructor(private http: HttpClient) { }
   

@@ -15,7 +15,7 @@ export class ProductService {
     private toastr: ToastrService) { }
 
   // Define API
-  apiURL = 'https://www.faktury.dev/api';
+  apiURL = 'https://abcportal.ml/api';
 
 
   // save product to db

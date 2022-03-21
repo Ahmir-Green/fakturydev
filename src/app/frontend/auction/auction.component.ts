@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import { Utils } from 'src/utils';
 import { BidService } from './bid.service';
+import { setTime } from 'ngx-bootstrap/chronos/utils/date-setters';
 declare var $ : any;
 
 
@@ -18,8 +19,8 @@ declare var $ : any;
 })
 export class AuctionComponent implements OnInit {
 
-  baseUrl = 'https://www.faktury.dev/api';
-  imageBaseUrl = 'https://www.faktury.dev/images/'
+  baseUrl = 'https://abcportal.ml/api';
+  imageBaseUrl = 'https://abcportal.ml/images/'
 
   auctionForm!: FormGroup;
   bidForm!: FormGroup;
@@ -37,10 +38,10 @@ export class AuctionComponent implements OnInit {
   isFormShown: boolean;
 
   // countdown testing
-  days: number;
-  hours: number;
-  mins: number;
-  secs: number;
+  // days: number;
+  // hours: number;
+  // mins: number;
+  // secs: number;
 
   
   constructor(public auth: AuthService,public auctionService: AuctionService, 
@@ -67,9 +68,9 @@ export class AuctionComponent implements OnInit {
       this.auctionForm = new FormGroup({
         _id: new FormControl(''),
         title: new FormControl('', [Validators.required]),
-        file: new FormControl('', [Validators.required]),
+        file: new FormControl(''),
         description: new FormControl(''),
-        expiryTime: new FormControl('')
+        expiryTime: new FormControl('', [Validators.required])
         });
         this.loadAuctions()
   }
@@ -195,20 +196,39 @@ export class AuctionComponent implements OnInit {
   loadAuctions() {
     return this.auctionService.getPosts().subscribe((data: any) => {
       this.auctions = data.Auction;
-
-      const x = setInterval(() => {
-        let date = new Date().getTime();
-        let date2 = new Date(this.auctions[7].expiryTime).getTime();
-        let distance = date2 - date;
-        this.days = Math.floor(distance / (1000 * 60 * 60 * 24 ));
-        this.hours = Math.floor((distance % (1000 * 60 * 60 * 24 )) / (1000 * 60 * 60));
-        this.mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        this.secs = Math.floor((distance % (1000 * 60 )) / (1000));
-        if (distance < 0) {
-          this.days = this.hours = this.mins = this.secs = 0
-            clearInterval(x)
-        }
-        }, 1000)
+      setTimeout(() => {
+        this.auctions = this.auctions.map((a) => {
+          return {
+            ...a,
+            timer: this.auctionCountdownTimer(a.expiryTime)
+          }
+        })
+      }, 1000)
     });
+  }
+  auctionCountdownTimer (timer) {
+    let days = 0, hours = 0, mins = 0,  secs = 0;
+    let date = new Date().getTime();
+    let date2 = new Date(timer).getTime();
+    let diff = date2 - date;
+    days = Math.floor(diff / (1000 * 60 * 60 * 24 ));
+    hours = Math.floor((diff % (1000 * 60 * 60 * 24 )) / (1000 * 60 * 60));
+    mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    secs = Math.floor((diff % (1000 * 60 )) / (1000));
+    if (diff <= 0) {
+      return `<div class="auctionExpiryClass"> Expired </div>`
+    }
+    return `<div class="js-days" class="number">
+    <span class="current">${days}</span></div>
+    <div class="js-hours" class="number">
+    <span class="current">${hours}</span></div>
+    <div class="sub__min">
+        <div class="js-minutes" class="number">
+        <span class="current">${mins}</span></div>
+        <div class="dotts">:</div>
+        <div class="js-seconds" class="number">
+        <span class="current">${secs}</span></div>
+    </div>`
+      
   }
 }

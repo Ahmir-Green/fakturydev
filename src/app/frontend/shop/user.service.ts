@@ -13,7 +13,7 @@ export class UserService {
     private toastr: ToastrService) { }
     
     // Define API
-    apiURL = 'https://www.faktury.dev/api';
+    apiURL = 'https://abcportal.ml/api';
 
     getUser(email:string) {
       return this.http.get(`${this.apiURL}/users/${email}`)

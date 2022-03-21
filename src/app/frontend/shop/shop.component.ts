@@ -24,8 +24,8 @@ export class ShopComponent implements OnInit {
 private stripe: Stripe
 private $modal: any;
 
-baseUrl = 'https://www.faktury.dev/api';
-imageBaseUrl = 'https://www.faktury.dev/images/'
+baseUrl = 'https://abcportal.ml/api';
+imageBaseUrl = 'https://abcportal.ml/images/'
 productForm!: FormGroup;
 stripeForm!: FormGroup;
 imageSrc: string = '';

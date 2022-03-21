@@ -15,7 +15,7 @@ export class AuctionService {
     private toastr: ToastrService) { }
 
   // Define API
-  apiURL = 'https://www.faktury.dev/api';
+  apiURL = 'https://abcportal.ml/api';
 
 
   // save auction to db
