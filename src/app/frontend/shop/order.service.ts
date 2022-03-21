@@ -13,7 +13,7 @@ export class OrderService {
     private toastr: ToastrService) { }
 
   // base url
-  apiURL = 'https://abcportal.ml/api';
+  apiURL = 'https://www.faktury.dev/api';
 
 
   // save order to db
