@@ -19,8 +19,8 @@ declare var $ : any;
 })
 export class AuctionComponent implements OnInit {
 
-  baseUrl = 'http://localhost:3000/api';
-  imageBaseUrl = 'http://localhost:3000/images/'
+  baseUrl = 'https://www.faktury.dev/api';
+  imageBaseUrl = 'https://www.faktury.dev/images/'
 
   auctionForm!: FormGroup;
   bidForm!: FormGroup;
