@@ -25,4 +25,28 @@ exports.bids_create = (req, res, next) => {
         });
       });
   
-  }
+}
+
+exports.bids_gets_all = (req, res, next) => {
+  Bid.find().select('_id auctionId email address xrpBid fakBid').exec().then(doc => {
+    var response = {
+      count: doc.length,
+      Bids: doc.map(doc => {
+        return {
+          _id: doc._id,
+          auctionId: doc.auctionId,
+          email: doc.email,
+          address: doc.address,
+          xrpBid: doc.xrpBid,
+          fakBid: doc.fakBid
+        }
+      })
+    };
+    res.status(200).json(response);
+  }).catch(err => {
+    console.log(err);
+    res.status(500).json({
+      error: err
+    })
+  });
+}

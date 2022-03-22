@@ -104,8 +104,9 @@
         </div>
     </section>
     <br>
-    <div class="buy__btn text-center mb-5">
-        <a  data-bs-toggle="modal" data-bs-target="#auctionModal" (click)="changeTitle('Add Auction')" href="javascript:;" *ngIf="(auth.isAuthenticated$ | async) && userRole == 'Admin'">Add Auction</a>
+    <div class="buy__btn text-center mb-5" *ngIf="(auth.isAuthenticated$ | async) && userRole == 'Admin'">
+        <a  data-bs-toggle="modal" data-bs-target="#auctionModal" (click)="changeTitle('Add Auction')" href="javascript:;">Add Auction</a>
+        <a  data-toggle="modal" data-target="#myModal" href="javascript:;">View Bids</a>
     </div>
       
 <!-- add auction form -->
@@ -146,6 +147,48 @@
             </form>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Bids Modal -->
+  <div class="modal" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+  
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">All Bids</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+  
+        <!-- Modal body -->
+        <div class="modal-body">
+            <table class="table text-center table-bordered">
+                <thead>
+                    <tr>
+                    <th>AuctionId</th>
+                    <th>Email</th>
+                    <th>XrpBid</th>
+                    <th>FakBid</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let bid of bids; let i = index">
+                    <td>{{bid.auctionId}}</td>
+                    <td>{{bid.email}}</td>
+                    <td>{{bid.xrpBid}}</td>
+                    <td>{{bid.fakBid}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+  
+     </div>
     </div>
   </div>
 </main>

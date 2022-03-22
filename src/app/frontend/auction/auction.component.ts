@@ -19,14 +19,15 @@ declare var $ : any;
 })
 export class AuctionComponent implements OnInit {
 
-  baseUrl = 'https://abcportal.ml/api';
-  imageBaseUrl = 'https://abcportal.ml/images/'
+  baseUrl = 'http://localhost:3000/api';
+  imageBaseUrl = 'http://localhost:3000/images/'
 
   auctionForm!: FormGroup;
   bidForm!: FormGroup;
   showAuctionForm: any = {};
   formTitle: string = 'Add Auction';
   auctions:any;
+  bids: any;
   fileUrl: any;
   videoUrl:any;
   submitted = false;
@@ -36,6 +37,7 @@ export class AuctionComponent implements OnInit {
   userEmail: string;
   userId: any;
   isFormShown: boolean;
+  offerDisabled: boolean = false;
 
   // countdown testing
   // days: number;
@@ -73,6 +75,7 @@ export class AuctionComponent implements OnInit {
         expiryTime: new FormControl('', [Validators.required])
         });
         this.loadAuctions()
+        this.loadBids();
   }
   // convenience getter for easy access to auctionFrom fields
   get f() { return this.auctionForm.controls; }
@@ -216,6 +219,7 @@ export class AuctionComponent implements OnInit {
     mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
     secs = Math.floor((diff % (1000 * 60 )) / (1000));
     if (diff <= 0) {
+      this.offerDisabled = true
       return `<div class="auctionExpiryClass"> Expired </div>`
     }
     return `<div class="js-days" class="number">
@@ -230,5 +234,11 @@ export class AuctionComponent implements OnInit {
         <span class="current">${secs}</span></div>
     </div>`
       
+  }
+
+  loadBids() {
+    return this.bidService.getBids().subscribe((data: any) => {
+      this.bids = data.Bids;
+    });
   }
 }

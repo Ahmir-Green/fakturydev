@@ -13,7 +13,7 @@ export class BidService {
     private toastr: ToastrService) { }
 
   // Define API
-  apiURL = 'https://abcportal.ml/api';
+  apiURL = 'https://www.faktury.dev/api';
 
 
   // save bids to db
@@ -25,4 +25,9 @@ export class BidService {
           this.toastr.success(res.message);
         })
     }
+    // HttpClient API get() method => Fetch All Bids
+    getBids() {
+    return this.http.get(`${this.apiURL}/bids/`)
+
+  }
 }
