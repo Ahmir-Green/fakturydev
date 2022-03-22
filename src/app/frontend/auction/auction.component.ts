@@ -8,7 +8,6 @@ import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import { Utils } from 'src/utils';
 import { BidService } from './bid.service';
-import { setTime } from 'ngx-bootstrap/chronos/utils/date-setters';
 declare var $ : any;
 
 
@@ -37,13 +36,6 @@ export class AuctionComponent implements OnInit {
   userEmail: string;
   userId: any;
   isFormShown: boolean;
-  offerDisabled: boolean = false;
-
-  // countdown testing
-  // days: number;
-  // hours: number;
-  // mins: number;
-  // secs: number;
 
   
   constructor(public auth: AuthService,public auctionService: AuctionService, 
@@ -75,7 +67,6 @@ export class AuctionComponent implements OnInit {
         expiryTime: new FormControl('', [Validators.required])
         });
         this.loadAuctions()
-        this.loadBids();
   }
   // convenience getter for easy access to auctionFrom fields
   get f() { return this.auctionForm.controls; }
@@ -127,9 +118,17 @@ export class AuctionComponent implements OnInit {
     this.auctionForm.patchValue({
       _id: auction._id,
       title: auction.title,
+      expiryTime: new Date(auction.expiryTime),
       description: auction.description
     });
     this.changeTitle('Update Auction'); ;
+  }
+
+  //get auction bid
+  getBid(auctionId: string) {
+    this.bidService.getOneBid(auctionId).subscribe((data: any) => {
+      this.bids = data.Bid;
+    });
   }
 
   // delete Auction
@@ -152,6 +151,7 @@ export class AuctionComponent implements OnInit {
     let id = this.auctionForm.value._id;
       const formData = new FormData();
       formData.append('title', this.auctionForm.get('title')?.value);
+      formData.append('expiryTime', this.auctionForm.get('expiryTime')?.value);
       formData.append('file', this.fileUrl)
       formData.append('description', this.auctionForm.get('description')?.value);
       this.auctionService.updateAuction(id, formData);
@@ -218,8 +218,7 @@ export class AuctionComponent implements OnInit {
     hours = Math.floor((diff % (1000 * 60 * 60 * 24 )) / (1000 * 60 * 60));
     mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
     secs = Math.floor((diff % (1000 * 60 )) / (1000));
-    if (diff <= 0) {
-      this.offerDisabled = true
+    if (diff < 0) {
       return `<div class="auctionExpiryClass"> Expired </div>`
     }
     return `<div class="js-days" class="number">

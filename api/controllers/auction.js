@@ -81,8 +81,7 @@ exports.auction_update_one = (req, res, next) => {
  let auction = {
     title: req.body.title,
     description: req.body.description,
-    video: req.body.video,
-    bids: req.body.bids
+    expiryTime: req.body.expiryTime
  }
  if(req.file != undefined) {
   auction.image = req.file.filename

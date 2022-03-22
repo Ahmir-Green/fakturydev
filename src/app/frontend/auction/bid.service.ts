@@ -28,6 +28,9 @@ export class BidService {
     // HttpClient API get() method => Fetch All Bids
     getBids() {
     return this.http.get(`${this.apiURL}/bids/`)
-
-  }
+    }
+    // get bid by id
+    getOneBid(auctionId: string) {
+      return this.http.get(`${this.apiURL}/bids/` + auctionId)
+    }
 }

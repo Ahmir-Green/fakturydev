@@ -50,3 +50,25 @@ exports.bids_gets_all = (req, res, next) => {
     })
   });
 }
+
+exports.bids_get_one = (req, res, next) => {
+  console.log(req.params.auctionId)
+  var auctionId = req.params.auctionId;
+  Bid.find(({ auctionId: auctionId })).select('_id auctionId email xrpBid fakBid').exec().then(doc => {
+    console.log(doc);
+    if (doc) {
+      res.status(200).json({
+        Bid: doc
+      });
+    } else {
+      res.status(404).json({
+        error: 'No Records found for that Auction ID'
+      })
+    }
+  }).catch(err => {
+    console.log(err);
+    res.status(500).json({
+      error: err
+    })
+  });
+}

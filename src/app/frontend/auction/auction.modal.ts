@@ -3,4 +3,5 @@ export class Auction {
     title!: string;
     description!: string;
     file!: string;
+    expiryTime!: any;
   }

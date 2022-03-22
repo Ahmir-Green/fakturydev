@@ -100,11 +100,6 @@ button:not(disabled){
     width: 100px;
 }
 
-.actionsButton li,a {
-    list-style-type: none;
-    text-decoration: none;
-}
-
 .modal-body h6 {
     display: inline-block;
     margin-bottom: 20px;
@@ -124,8 +119,25 @@ button:not(disabled){
 }
 
 .actionsButton li,a {
-    list-style-type: none;
+    list-style-type: disc;
     text-decoration: none;
     margin-left: 5px;
     margin-bottom: 5px;
+    /* display: inline-block; */
+    margin: auto;
 }
+
+ul {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    list-style-type: none;
+    margin-bottom: 10px;
+}
+.table-bordered {
+     border: none; 
+}
+table {
+    font-size: 13px;
+}
+

@@ -1798,12 +1798,21 @@ button.d-flex.align-items-center.justify-content-between.btn.btn-link {
     overflow: hidden;
     margin: 0;
 }
-video {
+.auctionVideo {
     min-width: 100%;
     min-height: auto;
     padding: 0;
 }
-
+td .form-group input {
+    /* width: 100%; */
+    padding: 1.37em 0 0.93em 1.25em;
+    color: #707070;
+    line-height: 1.87em;
+    font-size: 1em;
+    border: 1px solid #2A2A2A;
+    border-radius: 5px;
+    background: transparent;
+}
 .auction__image > img {
     display: block;
     position: absolute;
