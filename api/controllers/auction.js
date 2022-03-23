@@ -54,7 +54,7 @@ exports.auction_create_auction = (req, res, next) => {
 
 exports.auction_get_one = (req, res, next) => {
   var id = req.params.auctionId;
-  Auction.findById(id).select('_id title description video bids image').exec().then(doc => {
+  Auction.findById(id).select('_id title description file bids expiryTime').exec().then(doc => {
     console.log(doc);
     if (doc) {
       res.status(200).json({
@@ -76,7 +76,6 @@ exports.auction_get_one = (req, res, next) => {
 
 
 exports.auction_update_one = (req, res, next) => {
-  console.log(req.file)
  var id = req.params.auctionId;
  let auction = {
     title: req.body.title,
@@ -84,7 +83,7 @@ exports.auction_update_one = (req, res, next) => {
     expiryTime: req.body.expiryTime
  }
  if(req.file != undefined) {
-  auction.image = req.file.filename
+  auction.file = req.file.filename
  }
  Auction.updateOne({
      _id: id
