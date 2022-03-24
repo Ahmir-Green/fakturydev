@@ -1,7 +1,7 @@
 export const environment = {
   production: false,
-  domain: "dev-fwbgmky5.us.auth0.com",
-  clientId: "bow1dX1H6ljxreG5U8FkIs9plUsQs6bd",
+  domain: "dev-r3w1d3v5.us.auth0.com",
+  clientId: "4L4WEhn4Z4zd1jGyggajRJwGxQaygzHi",
   redirectUrl: window.location.origin
 };
 
