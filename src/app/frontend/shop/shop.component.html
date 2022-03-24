@@ -32,8 +32,10 @@
                         <div ngbDropdown class="buy__btn">
                             <a href="javascript:;" id="dropdownBasic1" (click)="buyProduct()" ngbDropdownToggle>Buy Now  </a>
                             <div ngbDropdownMenu aria-labelledby="dropdownBasic1" *ngIf="userEmail && userEmail !== undefined">
-                                <button ngbDropdownItem class="paymentBtn">Pay with Xumm</button>
-                                <button ngbDropdownItem class="paymentBtn" data-bs-toggle="modal" data-bs-target="#stripeModal" (click)="clickEvent(product.title, product.price)" >Pay with Stripe</button>
+                            <form target="_blank">
+                                <button ngbDropdownItem class="paymentBtn" onclick="javascript:window.open('https://xumm.app/detect/request:rG3qGSDskfbFmiftWFBXMroJUSSjmGrADE?amount=1079.097874', '_blank');">Pay with Xumm</button>
+                            </form>
+                            <button ngbDropdownItem class="paymentBtn" data-bs-toggle="modal" data-bs-target="#stripeModal" (click)="clickEvent(product.title, product.price)" >Pay with Stripe</button>
                             </div>
                             <!-- Stripe form -->
                             <div class="modal fade" id="stripeModal" tabindex="-1" aria-labelledby="stripeModalLabel" aria-hidden="true">
