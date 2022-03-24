@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import { Utils } from 'src/utils';
 import { BidService } from './bid.service';
 declare var $ : any;
+import * as _ from 'lodash';
 
 
 @Component({
@@ -200,6 +201,7 @@ export class AuctionComponent implements OnInit {
     Utils.showSwalLoader();
     return this.auctionService.getPosts().subscribe((data: any) => {
       this.auctions = data.Auction;
+      this.auctions = _.orderBy(this.auctions, 'expiryTime', 'desc');
       setTimeout(() => {
         this.auctions = this.auctions.map((a) => {
           Utils.closeSwalLoader();
