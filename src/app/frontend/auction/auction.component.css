@@ -141,3 +141,7 @@ table {
     font-size: 13px;
 }
 
+.auctionExpired {
+    cursor: not-allowed;
+    pointer-events: all !important;
+  }

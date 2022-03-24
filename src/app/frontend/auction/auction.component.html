@@ -43,7 +43,7 @@
                     </div>
                     <div class="box__offer" *ngIf="userRole !== 'Admin' && !showAuctionForm[i]">
                         <div class="offer__btn">
-                            <a href="javascript:;" (click)="showAuctionForm[i] = !showAuctionForm[i]">OFFER</a>
+                            <a href="javascript:;"  [ngClass]="{'auctionExpired': auction.timer.includes('Expired')}" (click)="auction.timer.includes('Expired') ? '' : showAuctionForm[i] = !showAuctionForm[i]">OFFER</a>
                         </div>
                     </div>
                     <div class="auction__box__form" *ngIf="showAuctionForm[i]">
