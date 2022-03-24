@@ -183,8 +183,10 @@ constructor(private productService: ProductService, private userService: UserSer
   }
   // Get all products list
   loadProducts() {
+    Utils.showSwalLoader();
     return this.productService.getPosts().subscribe((data: any) => {
       this.products = data.Product;
+      Utils.closeSwalLoader();
     });
   }
 

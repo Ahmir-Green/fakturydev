@@ -148,7 +148,7 @@ export class AuctionComponent implements OnInit {
   }
 
   onUpdate(){
-    let id = this.auctionForm.value._id;
+      let id = this.auctionForm.value._id;
       const formData = new FormData();
       formData.append('title', this.auctionForm.get('title')?.value);
       formData.append('expiryTime', this.auctionForm.get('expiryTime')?.value);
@@ -197,10 +197,12 @@ export class AuctionComponent implements OnInit {
     }  
   }
   loadAuctions() {
+    Utils.showSwalLoader();
     return this.auctionService.getPosts().subscribe((data: any) => {
       this.auctions = data.Auction;
       setTimeout(() => {
         this.auctions = this.auctions.map((a) => {
+          Utils.closeSwalLoader();
           return {
             ...a,
             timer: this.auctionCountdownTimer(a.expiryTime)
