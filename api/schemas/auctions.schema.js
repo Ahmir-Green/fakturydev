@@ -7,9 +7,18 @@ const auctionSchema = mongoose.Schema({
   description: { type: String },
   file: { type: String },
   expiryTime: { type: Date },
+  status: { 
+    type: String, 
+    enum : ['active', 'purchased'],
+    default: 'active' 
+  },
   bids:[{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Bid'
+    userId: { type: mongoose.Schema.Types.ObjectId, ref : 'User' },
+    address: { type: String },
+    email: { type: String },
+    xrpBid:{type: Number},
+    fakBid: {type: Number},
+    is_approved: { type: Number, default: 0}
   }],
 },{versionKey: false });
 

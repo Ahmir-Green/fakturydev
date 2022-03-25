@@ -4,4 +4,6 @@ export class Auction {
     description!: string;
     file!: string;
     expiryTime!: any;
+    bids: any;
+    status: string;
   }

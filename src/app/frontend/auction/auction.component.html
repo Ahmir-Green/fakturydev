@@ -42,10 +42,14 @@
                         </div>
                     </div>
                     <div class="box__offer" *ngIf="userRole !== 'Admin' && !showAuctionForm[i]">
-                        <div class="offer__btn">
-                            <a href="javascript:;"  [ngClass]="{'auctionExpired': auction.timer.includes('Expired')}" (click)="auction.timer.includes('Expired') ? '' : showAuctionForm[i] = !showAuctionForm[i]">OFFER</a>
+                        <div class="offer__btn" *ngIf="auction.status == 'active'">
+                            <a href="javascript:;"  [ngClass]="{'auctionExpired': auction.timer.includes('Expired')}" (click)="auction.timer.includes('Expired') || isLoggedIn() ? '' : showAuctionForm[i] = !showAuctionForm[i]">OFFER</a>
+                        </div>
+                        <div class="offer__btn" *ngIf="auction.status == 'purchased'" >
+                            <a href="javascript:;" class="auctionExpired">PURCHASED</a>
                         </div>
                     </div>
+                    
                     <div class="auction__box__form" *ngIf="showAuctionForm[i]">
                         <form class="auction__form" [formGroup]="bidForm">
                             <div class="form-group">
@@ -56,14 +60,8 @@
                               </span>
                             </div>
                             <div class="form-group">
-                                <input type="email" id="email__address"  placeholder="Email Address"
-                                class="form-control" placeholder="Email Address" formControlName = "email"
-                                [ngClass]="{ 'is-invalid': g['email'].touched && g['email'].errors }">
-                                <span *ngIf="g['email'].touched && g['email'].errors?.['required']" class="invalid-feedback">Email is
-                                    required</span>
-                                <span *ngIf="g['email'].touched && g['email'].errors?.['pattern']" class="invalid-feedback">Please enter a valid
-                                    Email
-                                </span>
+                                <input type="email" id="email__address" readonly [(ngModel)]="userEmail"
+                                class="form-control" placeholder="Email Address" formControlName = "email">
                             </div>
                             <div class="form-group">
                                 <input type="number" id="bid__fak" placeholder="Bid in FAK" class="form-control" formControlName = "fakBid" 
@@ -85,7 +83,7 @@
                             </div>
                         </form>
                         <div class="submit__btn">
-                            <button (click)="bidsForm(bidForm.value, auction._id)">Submit</button>
+                            <button (click)="bidsForm(auction._id, bidForm.value)">Submit</button>
 
                         </div>
                     </div>
@@ -95,12 +93,66 @@
                             <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#auctionModal"(click)=" updateAuction(auction)" >Update</a>
                         </li>
                         <li>
-                            <a href="javascript:;" style="color: red" (click)="removeAuction(auction._id)">Delete</a>
+                            <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#myModal" (click)="getBid(auction._id)">View Bids</a>
                         </li>
                         <li>
-                            <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#myModal" (click)="getBid(auction._id)">View Bid</a>
+                            <a href="javascript:;" style="color: red" (click)="removeAuction(auction._id)">Delete</a>
                         </li>
                     </ul>
+                      <!-- Bids Modal -->
+                    <div class="modal fade" id="myModal">
+                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                    
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                            <h4 class="modal-title">All Bids</h4>
+                            <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
+                            </div>
+                    
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <table class="table text-center" *ngIf="bids && bids.length > 0; else noThings">
+                                    <thead>
+                                        <tr>
+                                        <th>AuctionId</th>
+                                        <th>Email</th>
+                                        <th>XrpBid</th>
+                                        <th>FakBid</th>
+                                        <th>Edit</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let bid of bids; let i = index" >
+                                        <td>{{auction._id}}</td>
+                                        <td>{{bid.email}}</td>
+                                        <td>{{bid.xrpBid}}</td>
+                                        <td>{{bid.fakBid}}</td>
+                                        <td>
+                                            <ul>
+                                                <li>
+                                                    <a (click)="editBid(bids[i], auction)" class="a_btn">Approve ?</a>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <ng-template #noThings>
+                                    <div class="text-center">
+                                        No Bids
+                                    </div>
+                                </ng-template>
+                            </div>
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                            </div>
+                    
+                        </div>
+                        </div>
+                    </div>
                 </div>
                 
             </div>
@@ -152,50 +204,4 @@
     </div>
   </div>
 
-  <!-- Bids Modal -->
-  <div class="modal fade" id="myModal">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-      <div class="modal-content">
-  
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title">All Bids</h4>
-          <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
-        </div>
-  
-        <!-- Modal body -->
-        <div class="modal-body">
-            <table class="table text-center" *ngIf="bids && bids.length > 0; else noThings">
-                <thead>
-                    <tr>
-                    <th>AuctionId</th>
-                    <th>Email</th>
-                    <th>XrpBid</th>
-                    <th>FakBid</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let bid of bids; let i = index" >
-                    <td>{{bid.auctionId}}</td>
-                    <td>{{bid.email}}</td>
-                    <td>{{bid.xrpBid}}</td>
-                    <td>{{bid.fakBid}}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <ng-template #noThings>
-                <div class="text-center">
-                    No Bids
-                </div>
-            </ng-template>
-        </div>
-
-        <!-- Modal footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-        </div>
-  
-     </div>
-    </div>
-  </div>
 </main>

@@ -46,6 +46,7 @@ export class AuctionComponent implements OnInit {
 
     this.auth.user$.subscribe(user => {
       if (user) {
+        this.userEmail = user.email;
         this.getUserData(user.email)
       }
     });
@@ -89,17 +90,18 @@ export class AuctionComponent implements OnInit {
   }
   resetForm() {
     this.auctionForm.reset();
+    this.ngOnInit()
     this.bidForm.reset();
     this.changeTitle('Add Product');
-    this.loadAuctions();
+    // this.loadAuctions();
     this.fileSrc = '';
   }
-  bidsForm(bidForm, id){
+  bidsForm(id, bidForm){
       // stop here if form is invalid
       if (this.bidForm.invalid) {
           this.toastr.warning('please fill this form');
       }  else {
-        bidForm.auctionId = id
+        bidForm.auctionId = id;
         this.bidService.addBid(bidForm)
         setTimeout(()=>{         
           this.resetForm();
@@ -110,6 +112,7 @@ export class AuctionComponent implements OnInit {
 
   getUserData(id: string) {
     this.userService.getUser(id).subscribe((res: any) => {
+      this.userId = res.User._id;
       this.userRole = res.User.role;
     });
   }
@@ -144,9 +147,37 @@ export class AuctionComponent implements OnInit {
       Utils.closeSwalLoader();
       }, 1000);
       }
-    });
-      
+    });  
   }
+
+    // approve Bid
+    editBid(auction, bid) {
+      Swal.fire(Utils.updateConfig()).then(result => {
+        if (result.value && result.value === true) {
+          let auctionId = bid._id
+          let data = {
+            title: bid.title,
+            description: bid.description,
+            expiryTime: bid.expiryTime,
+            file: bid.file,
+            address: auction.address,
+            email: auction.email,
+            xrpBid: auction.xrpBid,
+            fakBid: auction.fakBid,
+            userId: this.userId,
+            is_approved : 1,
+            status : 'purchased'
+          }
+        this.auctionService.updateAuction(auctionId, data);
+        setTimeout(()=>{
+        $('#myModal').modal('hide');                
+        Utils.showSwalLoader();
+        this.loadAuctions();
+        Utils.closeSwalLoader();
+        }, 1000);
+        }
+      });  
+    }
 
   onUpdate(){
       let id = this.auctionForm.value._id;
@@ -201,6 +232,9 @@ export class AuctionComponent implements OnInit {
     Utils.showSwalLoader();
     return this.auctionService.getPosts().subscribe((data: any) => {
       this.auctions = data.Auction;
+      if (this.auctions.length <= 0) {
+        Utils.closeSwalLoader()
+      }
       this.auctions = _.orderBy(this.auctions, 'expiryTime', 'desc');
       setTimeout(() => {
         this.auctions = this.auctions.map((a) => {
@@ -237,6 +271,16 @@ export class AuctionComponent implements OnInit {
         <span class="current">${secs}</span></div>
     </div>`
       
+  }
+
+  isLoggedIn() {
+    if (this.userEmail == undefined) {
+      this.toastr.warning("You need to login to access this functionality.");
+      return true;
+    } else {
+      return false
+    }
+    
   }
 
   loadBids() {

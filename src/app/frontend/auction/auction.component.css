@@ -145,3 +145,22 @@ table {
     cursor: not-allowed;
     pointer-events: all !important;
   }
+
+  .a_btn {
+    background: #111914;
+    border-radius: 10px;
+    padding: 5px;
+    font-size: 12px;
+    line-height: 1.5em;
+    font-weight: 500;
+    color: #61FA0A;
+    transition: .5s;
+    }
+    .a_btn:hover {
+        cursor: pointer;
+    }
+
+    a:not([href]):not([tabindex]) {
+        color: #61FA0A;
+        text-decoration: none;
+    }

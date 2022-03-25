@@ -2,7 +2,7 @@ var Auction = require('../schemas/auctions.schema');
 var mongoose = require('mongoose');
 
 exports.auction_gets_all = (req, res, next) => {
-  Auction.find().select('_id title description file expiryTime').exec().then(doc => {
+  Auction.find().select('_id title description file expiryTime bids status').exec().then(doc => {
     var response = {
       count: doc.length,
       Auction: doc.map(doc => {
@@ -12,7 +12,9 @@ exports.auction_gets_all = (req, res, next) => {
           description: doc.description,
           file: doc.file,
           bids: doc.bid,
-          expiryTime: doc.expiryTime
+          expiryTime: doc.expiryTime,
+          bids: doc.bids,
+          status: doc.status
         }
       })
     };
@@ -27,14 +29,14 @@ exports.auction_gets_all = (req, res, next) => {
 
 
 exports.auction_create_auction = (req, res, next) => {
-   
-    var auction = new Auction({
+
+  var auction = new Auction({
       _id: new mongoose.Types.ObjectId(),
       title: req.body.title,
       description: req.body.description,
       expiryTime: req.body.expiryTime,
       file: req.file.originalname
-      
+
     });
     auction.save().then(result => {
         res.status(200).json({
@@ -54,7 +56,7 @@ exports.auction_create_auction = (req, res, next) => {
 
 exports.auction_get_one = (req, res, next) => {
   var id = req.params.auctionId;
-  Auction.findById(id).select('_id title description file bids expiryTime').exec().then(doc => {
+  Auction.findById(id).select('_id title description file bids expiryTime status').exec().then(doc => {
     console.log(doc);
     if (doc) {
       res.status(200).json({
@@ -80,10 +82,24 @@ exports.auction_update_one = (req, res, next) => {
  let auction = {
     title: req.body.title,
     description: req.body.description,
-    expiryTime: req.body.expiryTime
+    expiryTime: req.body.expiryTime,
  }
  if(req.file != undefined) {
   auction.file = req.file.filename
+ }
+ if (req.body.status == 'purchased') {
+   auction.status = req.body.status,
+   auction.title = req.body.title,
+   auction.description = req.body.description,
+   auction.expiryTime = req.body.expiryTime,
+   auction.bids = {
+    //  userId: req.body.userId,
+     email: req.body.email,
+     address: req.body.address,
+     xrpBid: req.body.xrpBid,
+     fakBid : req.body.fakBid,
+     is_approved: req.body.is_approved
+   }
  }
  Auction.updateOne({
      _id: id
@@ -93,7 +109,7 @@ exports.auction_update_one = (req, res, next) => {
    .exec()
    .then(doc => {
      res.status(200).json({
-       message: 'Auction successfully Updated',
+       message: 'Successfully Updated',
 
      });
    }).catch(err => {

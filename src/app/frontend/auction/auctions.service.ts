@@ -45,8 +45,8 @@ export class AuctionService {
   }
 
   // HttpClient API get() method => Fetch All Auctions
-  getPosts(): Observable<Auction> {
-    return this.http.get<Auction>(`${this.apiURL}/auctions/`)
+  getPosts() {
+    return this.http.get(`${this.apiURL}/auctions/`)
 
   }
 }
