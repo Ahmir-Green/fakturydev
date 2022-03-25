@@ -7,6 +7,7 @@ exports.bids_create = (req, res, next) => {
     var bid = new Bid({
       _id: new mongoose.Types.ObjectId(),
       auctionId: req.body.auctionId,
+      address: req.body.address,
       email: req.body.email,
       xrpBid: req.body.xrpBid,
       fakBid: req.body.fakBid
@@ -54,8 +55,7 @@ exports.bids_gets_all = (req, res, next) => {
 exports.bids_get_one = (req, res, next) => {
   console.log(req.params.auctionId)
   var auctionId = req.params.auctionId;
-  Bid.find(({ auctionId: auctionId })).select('_id auctionId email xrpBid fakBid').exec().then(doc => {
-    console.log(doc);
+  Bid.find(({ auctionId: auctionId })).select('_id auctionId email xrpBid fakBid address').exec().then(doc => {
     if (doc) {
       res.status(200).json({
         Bid: doc
@@ -66,7 +66,6 @@ exports.bids_get_one = (req, res, next) => {
       })
     }
   }).catch(err => {
-    console.log(err);
     res.status(500).json({
       error: err
     })

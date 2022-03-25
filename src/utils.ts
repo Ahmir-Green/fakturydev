@@ -42,6 +42,18 @@ export class Utils {
     };
   }
 
+  static updateConfig(): SweetAlertOptions {
+    return {
+      title: "Approve Bid",
+      text: "Are you sure you want to approve this bid?",
+      icon: 'warning',
+      showCancelButton: true,
+      focusCancel: true,
+      confirmButtonText: "Confirm",
+      cancelButtonText: "Cancel"
+    };
+  }
+
   static removeCategory(): SweetAlertOptions {
     return {
       title: "Remove Category",
