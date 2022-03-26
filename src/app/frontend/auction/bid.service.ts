@@ -1,7 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { catchError, retry } from 'rxjs/operators'
+import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,11 +22,18 @@ export class BidService {
   addBid(data: any)
     {
       // console.log(data)
-      return this.http.post(`${this.apiURL}/bids/`, data)
-        .subscribe((res: any) => {
-          this.toastr.success(res.message);
-        })
+      return this.http.post(`${this.apiURL}/bids/`, data).pipe(
+        catchError(this.handleError)
+        );
     }
+    handleError(err){
+      if (err instanceof HttpErrorResponse) {
+
+      } else {
+
+      }
+      return throwError(err);
+      }
     // HttpClient API get() method => Fetch All Bids
     getBids() {
     return this.http.get(`${this.apiURL}/bids/`)

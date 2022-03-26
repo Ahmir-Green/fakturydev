@@ -146,6 +146,11 @@ table {
     pointer-events: all !important;
   }
 
+  .auctionPurchasedClass{
+    cursor: not-allowed;
+    pointer-events: all !important;
+    color: blue
+  }
   .a_btn {
     background: #111914;
     border-radius: 10px;

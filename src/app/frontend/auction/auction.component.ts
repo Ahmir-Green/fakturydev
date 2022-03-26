@@ -102,10 +102,14 @@ export class AuctionComponent implements OnInit {
           this.toastr.warning('please fill this form');
       }  else {
         bidForm.auctionId = id;
-        this.bidService.addBid(bidForm)
+        this.bidService.addBid(bidForm).subscribe((res: any) => {
+          this.toastr.success(res.message);
+        }, err => {
+          this.toastr.error(err.error.message);
+        })
         setTimeout(()=>{         
           this.resetForm();
-        }, 1000);
+        });
       }
 
   }
@@ -241,13 +245,13 @@ export class AuctionComponent implements OnInit {
           Utils.closeSwalLoader();
           return {
             ...a,
-            timer: this.auctionCountdownTimer(a.expiryTime)
+            timer: this.auctionCountdownTimer(a.expiryTime, a.status)
           }
         })
       }, 1000)
     });
   }
-  auctionCountdownTimer (timer) {
+  auctionCountdownTimer (timer, status) {
     let days = 0, hours = 0, mins = 0,  secs = 0;
     let date = new Date().getTime();
     let date2 = new Date(timer).getTime();
@@ -258,6 +262,9 @@ export class AuctionComponent implements OnInit {
     secs = Math.floor((diff % (1000 * 60 )) / (1000));
     if (diff < 0) {
       return `<div class="auctionExpiryClass"> Expired </div>`
+    }
+    if (status == 'purchased') {
+      return `<div class="auctionPurchasedClass"> Purchased </div>`
     }
     return `<div class="js-days" class="number">
     <span class="current">${days}</span></div>

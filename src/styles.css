@@ -2045,6 +2045,11 @@ td .form-group input {
     width: 100%;
     color: red;
     text-align: center;
+}
+.auctionPurchasedClass {
+    width: 100%;
+    color: blue;
+    text-align: center;
 
 }
 
@@ -2231,6 +2236,11 @@ article.countdown div {
 article.countdown div.auctionExpiryClass {
     width: 100%;
     text-align: center;
+}
+article.countdown div.auctionPurchasedClass {
+    width: 100%;
+    text-align: center;
+
 }
 .new, .old, .current {
     color: #2A2A2A;
