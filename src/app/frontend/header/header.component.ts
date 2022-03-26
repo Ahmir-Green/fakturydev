@@ -3,6 +3,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 
 // Import the AuthService type from the SDK
 import { AuthService } from '@auth0/auth0-angular';
+declare var $ : any;
 
 @Component({
   selector: 'app-header',
@@ -23,6 +24,16 @@ export class HeaderComponent implements OnInit {
   status: boolean = false;
   hideElement(){
     this.status = !this.status;       
+  }
+
+  addNavigationClass() {
+    $('.toggle-menu').toggleClass('open');
+    $('.navigation').toggleClass('active');
+  }
+
+  removeNavigationClass() {
+    $('.navigation').removeClass('active');
+    $('.toggle-menu').removeClass('open');
   }
 
 }

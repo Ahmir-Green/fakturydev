@@ -8,13 +8,13 @@
             </div>
             <div class="navigation">
                 <ul>
-                    <li><a href="https://faktury.gitbook.io/whitepaper/" target="_blank">Whitepaper</a></li>
-                    <li><a routerLink="/">FAQs</a></li>
-                    <li><a routerLink="/">Swap</a></li>
-                    <li><a routerLink="/">About</a></li>
-                    <li><a  routerLink="/auction" routerLinkActive="active">Auction</a></li>
-                    <li><a routerLink="/shop" routerLinkActive="active">Shop</a></li>
-                    <li><a href="https://lnk.bio/faktury.dev" target="_blank">Metalink</a></li>
+                    <li><a href="https://faktury.gitbook.io/whitepaper/" target="_blank" (click)="removeNavigationClass()">Whitepaper</a></li>
+                    <li><a routerLink="/" (click)="removeNavigationClass()">FAQs</a></li>
+                    <li><a routerLink="/" (click)="removeNavigationClass()">Swap</a></li>
+                    <li><a routerLink="/" (click)="removeNavigationClass()">About</a></li>
+                    <li><a  routerLink="/auction" routerLinkActive="active" (click)="removeNavigationClass()">Auction</a></li>
+                    <li><a routerLink="/shop" routerLinkActive="active" (click)="removeNavigationClass()">Shop</a></li>
+                    <li><a href="https://lnk.bio/faktury.dev" target="_blank" (click)="removeNavigationClass()">Metalink</a></li>
                     <li>
                         <div class="nav__m__buttons">
                             <div class="ctaa" *ngIf="(auth.isAuthenticated$ | async) === false">
@@ -52,7 +52,7 @@
                 </div>
             </div>
             <div class="toogle-wrap">
-                <div class="toggle-menu"><a href="javascript:void(0)"><span></span><span></span><span></span><span></span></a></div>
+                <div class="toggle-menu" (click)="addNavigationClass()"><a href="javascript:void(0)"><span></span><span></span><span></span><span></span></a></div>
             </div>
         </div>
     </div>
