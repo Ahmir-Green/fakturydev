@@ -12,7 +12,7 @@ const auctionSchema = mongoose.Schema({
     enum : ['active', 'purchased'],
     default: 'active' 
   },
-  bids:[{
+  winner:[{
     userId: { type: mongoose.Schema.Types.ObjectId, ref : 'User' },
     address: { type: String },
     email: { type: String },

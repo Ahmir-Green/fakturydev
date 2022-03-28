@@ -102,6 +102,7 @@ export class AuctionComponent implements OnInit {
           this.toastr.warning('please fill this form');
       }  else {
         bidForm.auctionId = id;
+        bidForm.userId = this.userId
         this.bidService.addBid(bidForm).subscribe((res: any) => {
           this.toastr.success(res.message);
         }, err => {
@@ -155,20 +156,20 @@ export class AuctionComponent implements OnInit {
   }
 
     // approve Bid
-    editBid(auction, bid) {
+    editBid(bid, auction) {
       Swal.fire(Utils.updateConfig()).then(result => {
         if (result.value && result.value === true) {
-          let auctionId = bid._id
+          let auctionId = bid.auctionId
           let data = {
-            title: bid.title,
-            description: bid.description,
-            expiryTime: bid.expiryTime,
-            file: bid.file,
-            address: auction.address,
-            email: auction.email,
-            xrpBid: auction.xrpBid,
-            fakBid: auction.fakBid,
-            userId: this.userId,
+            title: auction.title,
+            description: auction.description,
+            expiryTime: auction.expiryTime,
+            file: auction.file,
+            address: bid.address,
+            email: bid.email,
+            xrpBid: bid.xrpBid,
+            fakBid: bid.fakBid,
+            userId: bid.userId,
             is_approved : 1,
             status : 'purchased'
           }
@@ -279,6 +280,11 @@ export class AuctionComponent implements OnInit {
     </div>`
       
   }
+
+  obscureEmail = email => {
+    const [name, domain] = email.split("@");
+    return `${name[0]}${new Array(name.length).join("*")}@${domain}`;
+  };
 
   isLoggedIn() {
     if (this.userEmail == undefined) {

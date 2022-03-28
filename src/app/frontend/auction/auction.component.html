@@ -26,17 +26,17 @@
                         </div>
                     </div>
                     <div class="auction__box__main">
-                        <div class="highest__bid">
+                        <div class="highest__bid" *ngIf="auction.winner && auction.winner.length > 0">
                             <div class="bid__text">
-                                <p>Highest Bid By :</p>
+                                <p>Winner is :</p>
                             </div>
                             <div class="bid__desc">
                                 <div class="desc__image">
                                     <img src="../../../assets/images/bid-desc.svg">
                                 </div>
                                 <div class="desc__text">
-                                    <p>carryan@gmail.com</p>
-                                    <p>Amount = 300 XRP</p>
+                                    <p>{{obscureEmail(auction.winner[0].email)}}</p>
+                                    <p>Amount = {{auction.winner[0].xrpBid}} XRP</p>
                                 </div>
                             </div>
                         </div>
@@ -124,7 +124,7 @@
                                     </thead>
                                     <tbody>
                                         <tr *ngFor="let bid of bids; let i = index" >
-                                        <td>{{auction._id}}</td>
+                                        <td>{{bid.auctionId}}</td>
                                         <td>{{bid.email}}</td>
                                         <td>{{bid.xrpBid}}</td>
                                         <td>{{bid.fakBid}}</td>
