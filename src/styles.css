@@ -312,7 +312,7 @@ header.active:after {
     display: flex;
 }
 .navigation ul a.active {
-    color: #fa9450
+    /* color: #fa9450 */
 }
 @media screen and (max-width:767px) {
     .navigation {
