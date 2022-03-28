@@ -17,10 +17,10 @@
                     <li><a href="https://lnk.bio/faktury.dev" target="_blank" (click)="removeNavigationClass()">Metalink</a></li>
                     <li>
                         <div class="nav__m__buttons">
-                            <div class="ctaa" *ngIf="(auth.isAuthenticated$ | async) === false">
+                            <div class="cta" *ngIf="(auth.isAuthenticated$ | async) === false">
                                 <a class="btn__anchor" (click)="auth.loginWithRedirect()">Login</a>
                             </div>
-                            <div class="ctaa" *ngIf="(auth.isAuthenticated$ | async) === false">
+                            <div class="cta" *ngIf="(auth.isAuthenticated$ | async) === false">
                                 <a class="btn__anchor" (click)="auth.loginWithRedirect()">Sign Up</a>
                             </div>
                             <div class="cta">

@@ -82,14 +82,14 @@
                         </div>
                         </div>
                     </div>
-                    <div class="actionsButton" *ngIf="(auth.isAuthenticated$ | async) && userRole == 'Admin'">
+                    <ul class="actionsButton" *ngIf="(auth.isAuthenticated$ | async) && userRole == 'Admin'">
                         <li>
                             <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#exampleModal2" (click)="updateProduct(product)">Update</a>
                         </li>
-                        <li>
-                            <a href="javascript:;" style="color: red" (click)="removeProduct(product._id)">Delete</a>
+                        <li style="margin-left: auto;color: red">
+                            <a href="javascript:;" (click)="removeProduct(product._id)">Delete</a>
                         </li>
-                    </div>
+                    </ul>
                 </div>
             </div>
         </div>

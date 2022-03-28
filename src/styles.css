@@ -387,6 +387,7 @@ header.active .header__wrap {
     font-weight: 500;
     color: #2B2B2B;
     transition: .5s;
+    text-decoration: none
 }
 .navigation ul li a:hover {
     color: #61FA0A;
@@ -1406,8 +1407,13 @@ button.d-flex.align-items-center.justify-content-between.btn.btn-link {
     display: block;
     border: 1px solid red;
     width: 100%;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 }
+
+/* .deleteBtnClass {
+    margin-left: auto;
+    color: red
+} */
 .hideme {
     top: 3em;
     padding: 0.8em 0.8em;
@@ -2661,10 +2667,11 @@ video {
         display: none;
     }
 .navigation ul li a {
-    font-size: 1.5em;
+    font-size: 16px;
     line-height: 1.5em;
     font-weight: 700;
     font-family: 'Poppins';
+    text-decoration: none;
 }
 .toggle-menu a span {
     background: #000;
@@ -2954,7 +2961,7 @@ ul.footer__links {
     display: none;
 }
 .nav__m__buttons .connect__btn {
-    color: #61FA0A;
+    color: #61FA0A!important  ;
     transition: .5s;
 }
 

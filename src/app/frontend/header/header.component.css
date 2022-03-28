@@ -32,10 +32,10 @@
     transition: visibility 0s linear 1000ms, opacity 1000ms;
 }
 
-.navigation ul li a {
-    font-size: 1em;
+/* .navigation ul li a {
+    font-size: 16px;
     line-height: 1.5em;
-    font-weight: 500;
+    font-weight: 700;
     color: #2B2B2B;
     transition: .5s;
     text-decoration: none;
@@ -48,4 +48,4 @@
 }
 .navigation ul li:last-child {
     margin-right: 0em;
-}
+} */

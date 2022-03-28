@@ -96,9 +96,11 @@ button:not(disabled){
     width: 100px;
 }
 
-.actionsButton li,a {
-    list-style-type: none;
+.actionsButton li, .actionsButton a {
+    list-style-type: disc;
     text-decoration: none;
+    margin-left: 12px;
+    margin-bottom: 5px;
 }
 
 .modal-body h6 {
@@ -110,4 +112,12 @@ button:not(disabled){
     color: #61fa0a;
     font-size: 13px;
     margin-left: 10px;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    list-style-type: none;
+    margin-bottom: 10px;
 }
