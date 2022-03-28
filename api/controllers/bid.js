@@ -15,10 +15,12 @@ exports.bids_create = (req, res, next) => {
       var bid = new Bid({
         _id: new mongoose.Types.ObjectId(),
         auctionId: req.body.auctionId,
+        userId: req.body.userId,
         address: req.body.address,
         email: req.body.email,
         xrpBid: req.body.xrpBid,
-        fakBid: req.body.fakBid
+        fakBid: req.body.fakBid,
+        createdAt: new Date()
         
       });
       bid.save().then(result => {
@@ -39,13 +41,14 @@ exports.bids_create = (req, res, next) => {
 }
 
 exports.bids_gets_all = (req, res, next) => {
-  Bid.find().select('_id auctionId email address xrpBid fakBid').exec().then(doc => {
+  Bid.find().select('_id auctionId userId email address xrpBid fakBid').exec().then(doc => {
     var response = {
       count: doc.length,
       Bids: doc.map(doc => {
         return {
           _id: doc._id,
           auctionId: doc.auctionId,
+          userId: doc.userId,
           email: doc.email,
           address: doc.address,
           xrpBid: doc.xrpBid,
@@ -65,7 +68,7 @@ exports.bids_gets_all = (req, res, next) => {
 exports.bids_get_one = (req, res, next) => {
   console.log(req.params.auctionId)
   var auctionId = req.params.auctionId;
-  Bid.find(({ auctionId: auctionId })).select('_id auctionId email xrpBid fakBid address').exec().then(doc => {
+  Bid.find(({ auctionId: auctionId })).select('_id auctionId userId email xrpBid fakBid address').exec().then(doc => {
     if (doc) {
       res.status(200).json({
         Bid: doc

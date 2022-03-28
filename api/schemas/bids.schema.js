@@ -6,10 +6,15 @@ const bidSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Auction'
   },
+  userId: { 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref : 'User' 
+  },
   address: { type: String },
   email: { type: String },
   xrpBid:{type: Number},
   fakBid: {type: Number}, 
+  createdAt: {type: Date}
   
 });
 
