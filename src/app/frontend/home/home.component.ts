@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -9,7 +10,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class HomeComponent implements OnInit {
 
   form!: FormGroup;
-  constructor() { }
+  constructor(private route:ActivatedRoute) { }
 
   ngOnInit(): void {
     var namePattern = '^(?! )[A-Za-z ]*(?<! )$';
@@ -26,6 +27,16 @@ export class HomeComponent implements OnInit {
       message: new FormControl('', [Validators.required,
                                     Validators.pattern(messagePattern),
                                     Validators.minLength(3)])
+    })
+
+ 
+  }
+
+  ngAfterViewInit():void{
+    this.route.params.subscribe(data=>{
+      if(data['id']){
+        document.getElementById(data["id"]).scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
+      }
     })
   }
 

@@ -24,6 +24,11 @@ const routes: Routes = [
           component: HomeComponent,
         },
         {
+          path: 'Home/:id',
+          pathMatch: 'full',
+          component: HomeComponent,
+        },
+        {
           path: 'login',
           component: LoginComponent
         },

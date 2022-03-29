@@ -1,5 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 // Import the AuthService type from the SDK
 import { AuthService } from '@auth0/auth0-angular';
@@ -12,7 +13,7 @@ declare var $ : any;
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(public auth: AuthService, @Inject(DOCUMENT) private doc: Document) { }
+  constructor(public auth: AuthService, @Inject(DOCUMENT) private doc: Document, private router:Router) { }
 
   ngOnInit(): void {
   }
@@ -34,6 +35,10 @@ export class HeaderComponent implements OnInit {
   removeNavigationClass() {
     $('.navigation').removeClass('active');
     $('.toggle-menu').removeClass('open');
+  }
+
+  navigate(name){
+    this.router.navigate(['/Home',name]);
   }
 
 }
