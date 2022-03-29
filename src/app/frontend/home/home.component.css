@@ -36,8 +36,8 @@
         left: 11em;
     }
     .gang__limg:after {
-        right: 10.1em;
-        top: 11em;
+        right: 50%;
+        top: 8em;
     }
 }
 /* .banner--section .container {

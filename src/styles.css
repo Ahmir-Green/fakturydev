@@ -237,6 +237,10 @@ button:focus {
 header.border-div {
     position: fixed;
 }
+.buy__head__button{
+    display: flex;
+    align-items: center;
+}
 /*header:after {
     content: "";
     position: absolute;
@@ -314,6 +318,16 @@ header.active:after {
 .navigation ul a.active {
     /* color: #fa9450 */
 }
+@media (max-width: 767px) {
+    .buy__head__button {
+        display: block;
+        align-items: center;
+        }
+        .buy__head__btn {
+            margin:50px auto;
+        }
+}
+
 @media screen and (max-width:767px) {
     .navigation {
         width: 100%
@@ -801,10 +815,7 @@ video {
     font-weight: 400;
     margin: 0;
 }
-.buy__head__button{
-    display: flex;
-    align-items: center;
-}
+
 .buy__head__btn {
     margin-right:0.93em ;
 }
@@ -2884,8 +2895,8 @@ video {
 }
 .gang__limg:after {
     transform: rotate(90deg);
-    right: 10.5em;
-    top: 12em;
+    right: 50%;
+    top: 55%;
     height: 22em;
 }
 .gang__list {
@@ -3165,7 +3176,7 @@ ul.footer__links {
     left: 11em;
 }
 .gang__limg:after {
-    right: 10.1em;
-    top: 11em;
+    right: 50%;
+    top: 8em;
 }
 }
