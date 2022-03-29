@@ -35,7 +35,7 @@
                             <form target="_blank">
                                 <button ngbDropdownItem class="paymentBtn" onclick="javascript:window.open('https://xumm.app/detect/request:rG3qGSDskfbFmiftWFBXMroJUSSjmGrADE?amount=1079.097874', '_blank');">Pay with Xumm</button>
                             </form>
-                            <button ngbDropdownItem class="paymentBtn" data-bs-toggle="modal" data-bs-target="#stripeModal" (click)="clickEvent(product.title, product.price)" >Pay with Stripe</button>
+                            <button ngbDropdownItem class="paymentBtn" data-bs-toggle="modal" data-bs-target="#stripeModal" (click)="clickEvent(product.title, product.price, product.isDigital)" >Pay with Stripe</button>
                             </div>
                             <!-- Stripe form -->
                             <div class="modal fade" id="stripeModal" tabindex="-1" aria-labelledby="stripeModalLabel" aria-hidden="true">
@@ -49,15 +49,10 @@
                                     <h6 class="modal-title"> {{productTitle}}</h6>
                                     <h6 class="modal-title" class="modalProductPrice"> ($ {{productPrice}}.00)</h6>
                                     <form class="login__form" [formGroup]="stripeForm" (ngSubmit)="createStripeToken(stripeForm.value)" id="payment-form">
-                        
-                                            <div class="form-group">
+                                            <div class="form-group" *ngIf="!isDigital">
                                                 <!-- <input type="hidden" formControlName="_id" class="form-control"> -->
                                                 <label for="f-name">Shipping Address</label>
-                                                <input type="text" id="f-name" class="form-control" formControlName="shippingAddress"
-                                                [ngClass]="{ 'is-invalid': g['shippingAddress'].touched && g['shippingAddress'].errors }">
-                                                <span *ngIf="g['shippingAddress'].touched && g['shippingAddress'].errors?.['required']" class="invalid-feedback">
-                                                    Shipping Address is required
-                                                </span>
+                                                <input type="text" id="f-name" class="form-control" formControlName="shippingAddress">
                                             </div>
                                             <div class="form-group">
                                                 <input type="hidden" formControlName="_id" class="form-control">
@@ -86,8 +81,8 @@
                         <li>
                             <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#exampleModal2" (click)="updateProduct(product)">Update</a>
                         </li>
-                        <li style="margin-left: auto;color: red">
-                            <a href="javascript:;" (click)="removeProduct(product._id)">Delete</a>
+                        <li style="margin-left: auto">
+                            <a href="javascript:;" style="color: red" (click)="removeProduct(product._id)">Delete</a>
                         </li>
                     </ul>
                 </div>
@@ -146,6 +141,10 @@
                   <span *ngIf="f['quantity'].touched && f['quantity'].errors?.['required']" class="invalid-feedback">
                     Quantity is required
                   </span>
+                </div>
+                <div class="auction__checkbox mb-2">
+                    <input class="styled-checkbox mr-1" formControlName="isDigital" id="styled-checkbox-1" type="checkbox">
+                    <label for="styled-checkbox-1">is Digital ?</label>
                 </div>
                   <button [hidden]="!productForm.valid" class="submit_button"(click)="formTitle=='Add Product'? onSubmit(productForm.value) : onUpdate()">Submit</button>
             </form>

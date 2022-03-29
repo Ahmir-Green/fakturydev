@@ -1,4 +1,4 @@
-const stripe = require("stripe")("sk_test_tTrzkmwUUKzaOb1DBrnwIq6m");
+const stripe = require("stripe")("sk_test_51KbR9HKtlpexRaBxrFowAi5oKQd7leOYgaXdlR2LymSeMHamiX7MMFuAKAPLETnSgJrMY2CxVzuCEifnswZIPaXi00bprPh0y7");
 
 exports.recive_payment = async(req, res) => {
     try {

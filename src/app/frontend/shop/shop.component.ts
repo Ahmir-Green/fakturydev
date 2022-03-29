@@ -47,6 +47,7 @@ userEmail: string;
 userId: any;
 userRole: any;
 productId: any;
+isDigital: boolean;
 
 
 constructor(private productService: ProductService, private userService: UserService, private toastr: ToastrService,
@@ -70,14 +71,15 @@ constructor(private productService: ProductService, private userService: UserSer
     image: new FormControl(''),
     description: new FormControl('', [Validators.required]),
     price: new FormControl('', [Validators.required]),
-    quantity: new FormControl('', [Validators.required])
+    quantity: new FormControl('', [Validators.required]),
+    isDigital: new FormControl(false)
     });
 
     //Add Stripe form validations
     this.stripeForm = new FormGroup({
       _id: new FormControl(''),
       billingAddress: new FormControl('', [Validators.required]),
-      shippingAddress: new FormControl('', [Validators.required]),
+      shippingAddress: new FormControl(''),
       });
     this.loadProducts()
   }
@@ -100,7 +102,7 @@ constructor(private productService: ProductService, private userService: UserSer
   // }
 
   async initiateCardElement()  {
-    this.stripe = await loadStripe('pk_test_PqR8Oy50z90tAdw9a1tkFG9S');
+    this.stripe = await loadStripe('pk_test_51KbR9HKtlpexRaBxyd7dlTu7bBRfU9UIlWzc55TD4llUmO7FeLIqXtq13J2MiSNuEfPJlql6gT2NxuVsNKu8ujXF00UqliCIal');
       const elements = this.stripe.elements();
       const cardStyle = {
         base: {
@@ -139,6 +141,7 @@ constructor(private productService: ProductService, private userService: UserSer
 
   
   paymentstripe(data: any, value: any) {
+    Utils.showSwalLoader();
     this.checkout.makePayment(data).subscribe((data: any) => {
       if (data.data === "success") {
         this.success = true
@@ -155,13 +158,15 @@ constructor(private productService: ProductService, private userService: UserSer
         this.orderService.saveOrder(orderObj);
         // Close the stripe modal dialog window
         $('#stripeModal').modal('hide');
-        
+
         setTimeout(()=>{                
           this.resetForm();
-        }, 1000);
+        });
+        Utils.closeSwalLoader();
         }
       else {
         this.failure = true
+        Utils.closeSwalLoader();
       }
     });
   };
@@ -212,7 +217,8 @@ constructor(private productService: ProductService, private userService: UserSer
       title: product.title,
       description: product.description,
       quantity: product.quantity,
-      price: product.price
+      price: product.price,
+      isDigital: product.isDigital
     });
     this.changeTitle('Update Product'); ;
   }
@@ -236,6 +242,7 @@ constructor(private productService: ProductService, private userService: UserSer
       formData.append('description', this.productForm.get('description')?.value);
       formData.append('quantity', this.productForm.get('quantity')?.value);
       formData.append('price', this.productForm.get('price')?.value);
+      formData.append('isDigital', this.productForm.get('isDigital')?.value);
 
       this.productService.addProduct(formData);
       // Close the stripe modal dialog window
@@ -254,6 +261,7 @@ constructor(private productService: ProductService, private userService: UserSer
       formData.append('description', this.productForm.get('description')?.value);
       formData.append('quantity', this.productForm.get('quantity')?.value);
       formData.append('price', this.productForm.get('price')?.value);
+      formData.append('isDigital', this.productForm.get('isDigital')?.value);
       this.productService.updateProduct(id, formData);
       this.loadProducts();
       $('#exampleModal2').modal('hide');          
@@ -296,9 +304,10 @@ constructor(private productService: ProductService, private userService: UserSer
     this.cd.detectChanges();
   }
 
-  clickEvent(title, price) {
+  clickEvent(title, price, isDigital) {
     this.productTitle = title;
     this.productPrice = price
+    this.isDigital = isDigital
   }
 
   buyProduct() {
