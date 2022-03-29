@@ -5,4 +5,5 @@ export class Product {
     image!: string;
     quantity!: number;
     price!: number;
+    isDigital!: boolean;
   }
