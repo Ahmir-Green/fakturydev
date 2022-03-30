@@ -9,9 +9,9 @@
             <div class="navigation">
                 <ul>
                     <li><a href="https://faktury.gitbook.io/whitepaper/" target="_blank" (click)="removeNavigationClass()">Whitepaper</a></li>
-                    <li><a (click)="navigate('faqs')">FAQs</a></li>
-                    <li><a routerLink="/" (click)="removeNavigationClass()">Swap</a></li>
-                    <li><a routerLink="/" (click)="removeNavigationClass()">About</a></li>
+                    <li><a (click)="navigate('faqs')" class="navigateClass">FAQs</a></li>
+                    <li><a (click)="navigate('swap')" class="navigateClass">Swap</a></li>
+                    <li><a (click)="navigate('about')" class="navigateClass">About</a></li>
                     <li><a  routerLink="/auction" routerLinkActive="active" (click)="removeNavigationClass()">Auction</a></li>
                     <li><a routerLink="/shop" routerLinkActive="active" (click)="removeNavigationClass()">Shop</a></li>
                     <li><a href="https://lnk.bio/faktury.dev" target="_blank" (click)="removeNavigationClass()">Metalink</a></li>
