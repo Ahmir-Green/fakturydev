@@ -3014,7 +3014,7 @@ ul.footer__links {
 }
 .auction__image {
     width: 100%;
-    height: auto;
+    /* height: auto; */
 }
 .auction__box {
     width: 100%;
