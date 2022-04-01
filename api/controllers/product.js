@@ -2,7 +2,7 @@ var Product = require('../schemas/products.schema');
 var mongoose = require('mongoose');
 
 exports.product_gets_all = (req, res, next) => {
-  Product.find().select('_id title description price quantity image isDigital').exec().then(doc => {
+  Product.find().select('_id title description price quantity image xummLink isDigital').exec().then(doc => {
     var response = {
       count: doc.length,
       Product: doc.map(doc => {
@@ -13,6 +13,7 @@ exports.product_gets_all = (req, res, next) => {
           price: doc.price,
           quantity: doc.quantity,
           image: doc.image,
+          xummLink: doc.xummLink,
           isDigital: doc.isDigital
         }
       })
@@ -35,6 +36,7 @@ exports.product_create_product = (req, res, next) => {
     price: req.body.price,
     quantity: req.body.quantity,
     image: req.file.filename,
+    xummLink: req.body.xummLink
   });
   if (req.body.isDigital == "null") {
     product.isDigital = false
@@ -59,7 +61,7 @@ exports.product_create_product = (req, res, next) => {
 
 exports.product_get_one = (req, res, next) => {
   var id = req.params.productId;
-  Product.findById(id).select('_id title description price quantity image isDigital').exec().then(doc => {
+  Product.findById(id).select('_id title description price quantity image xummLink isDigital').exec().then(doc => {
     console.log(doc);
     if (doc) {
       res.status(200).json({
@@ -86,7 +88,8 @@ exports.product_update_one = (req, res, next) => {
     title: req.body.title,
     description: req.body.description,
     price: req.body.price,
-    quantity: req.body.quantity
+    quantity: req.body.quantity,
+    xummLink: req.body.xummLink
  }
  if (req.body.isDigital == "null") {
   product.isDigital = false

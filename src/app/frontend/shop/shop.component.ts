@@ -73,6 +73,7 @@ constructor(private productService: ProductService, private userService: UserSer
     description: new FormControl('', [Validators.required]),
     price: new FormControl('', [Validators.required]),
     quantity: new FormControl('', [Validators.required]),
+    xummLink: new FormControl('https://xumm.app/detect/request:rG3qGSDskfbFmiftWFBXMroJUSSjmGrADE?amount=1079.097874'),
     isDigital: new FormControl(false)
     });
 
@@ -148,7 +149,11 @@ constructor(private productService: ProductService, private userService: UserSer
     }
   }
 
-  
+  xummPage(link: string) {
+    if (link !== undefined) {
+      window.open(link, "_blank")
+    }
+  }
 
   
   paymentstripe(data: any, value: any) {
@@ -234,7 +239,8 @@ constructor(private productService: ProductService, private userService: UserSer
       description: product.description,
       quantity: product.quantity,
       price: product.price,
-      isDigital: product.isDigital
+      isDigital: product.isDigital,
+      xummLink: product.xummLink
     });
     this.changeTitle('Update Product'); ;
   }
@@ -258,6 +264,7 @@ constructor(private productService: ProductService, private userService: UserSer
       formData.append('description', this.productForm.get('description')?.value);
       formData.append('quantity', this.productForm.get('quantity')?.value);
       formData.append('price', this.productForm.get('price')?.value);
+      formData.append('xummLink', this.productForm.get('xummLink')?.value);
       formData.append('isDigital', this.productForm.get('isDigital')?.value);
 
       this.productService.addProduct(formData);
@@ -277,6 +284,7 @@ constructor(private productService: ProductService, private userService: UserSer
       formData.append('description', this.productForm.get('description')?.value);
       formData.append('quantity', this.productForm.get('quantity')?.value);
       formData.append('price', this.productForm.get('price')?.value);
+      formData.append('xummLink', this.productForm.get('xummLink')?.value);
       formData.append('isDigital', this.productForm.get('isDigital')?.value);
       this.productService.updateProduct(id, formData);
       this.loadProducts();

@@ -6,4 +6,5 @@ export class Product {
     quantity!: number;
     price!: number;
     isDigital!: boolean;
+    xummLink!: string;
   }

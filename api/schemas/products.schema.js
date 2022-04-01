@@ -7,6 +7,7 @@ const productSchema = mongoose.Schema({
   image: { type: String },
   quantity: { type: Number},
   price: { type: Number, required: true},
+  xummLink: { type: String},
   isDigital: {type:Boolean, default: false}
 },
 {versionKey: false });
