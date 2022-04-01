@@ -22,6 +22,8 @@ export class UserCollectionComponent implements OnInit {
   userEmail: string;
   user: any;
   xrplAddress: any;
+  firstName: string;
+  lastName: string;
   orders: any;
 
   constructor(public auth: AuthService, private userService: UserService, private orderService: OrderService) { }
@@ -47,6 +49,8 @@ export class UserCollectionComponent implements OnInit {
   getUserData(email: string) {
       this.userService.getUser(email).subscribe((res: any) => {
         this.xrplAddress = res.User.xrplAddress;
+        this.firstName = res.User.firstName;
+        this.lastName = res.User.lastName;
         this.userForm.patchValue({
           firstName: res.User.firstName,
           lastName: res.User.lastName,

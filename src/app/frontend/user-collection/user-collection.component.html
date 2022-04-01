@@ -4,11 +4,13 @@
             <div class="collection__head__box" *ngIf="auth.user$ | async as user">
                 <div class="collection__head__img">
                     <img [src]="user.picture" class="profile">
-                    <div class="collection__head__icon">
+                    <!-- <div class="collection__head__icon">
                         <a href="javascript:;"><img src="../../../assets/images/collection-head-icon.svg"></a>
 
-                    </div>
+                    </div> -->
                 </div>
+                
+                <p *ngIf="firstName !== ''">{{firstName + ' '+ lastName}}</p>
                 <div class="collection__head__content">
                     <div class="head__content__text">
                         <h3>{{user.name}}</h3>
@@ -69,7 +71,7 @@
                         <img src="{{imageBaseUrl + order.productImage }}">
                     </div>
                     <h3>{{order.product}}</h3>
-                    <p><b>Amount = {{order.price}}</b></p>
+                    <p><b>Amount = $ {{order.price}}</b></p>
                     <!--<p>Lorem Ipsum is simply dummy text of the printing.</p>-->
                 </div>
             </div>
