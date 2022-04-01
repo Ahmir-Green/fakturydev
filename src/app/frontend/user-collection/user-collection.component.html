@@ -58,12 +58,12 @@
                 </div>
                 </div>
                 <p>XRP address: {{xrplAddress}}</p>
-                <p>{{orders.length}} Item Purchased by FAKTÜRY</p>
+                <p>{{orders && orders.length}} Item Purchased by FAKTÜRY</p>
             </div>
             <div class="collection__heading">
                 <h2>COLLECTION</h2>
             </div>
-            <div class="collection__wrap row">
+            <div class="collection__wrap row text-center">
                 <div class="collection__box col-lg-4" *ngFor="let order of orders; let i = index">
                     <div class="collection__image">
                         <img src="{{imageBaseUrl + order.productImage }}">

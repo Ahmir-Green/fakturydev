@@ -56,8 +56,10 @@ export class UserCollectionComponent implements OnInit {
   }
 
   getUserOrder(email: string) {
+    Utils.showSwalLoader();
     this.orderService.getOrder(email).subscribe((res: any) => {
       this.orders = res.Order
+      Utils.closeSwalLoader();
     })
   }
 
