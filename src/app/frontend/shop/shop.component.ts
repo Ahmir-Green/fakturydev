@@ -48,6 +48,7 @@ userId: any;
 userRole: any;
 productId: any;
 isDigital: boolean;
+  productImage: any;
 
 
 constructor(private productService: ProductService, private userService: UserService, private toastr: ToastrService,
@@ -78,6 +79,10 @@ constructor(private productService: ProductService, private userService: UserSer
     //Add Stripe form validations
     this.stripeForm = new FormGroup({
       _id: new FormControl(''),
+      firstName: new FormControl('', [Validators.required]),
+      lastName: new FormControl('', [Validators.required]),
+      email: new FormControl(''),
+      xrplAddress: new FormControl('', [Validators.required]),
       billingAddress: new FormControl('', [Validators.required]),
       shippingAddress: new FormControl(''),
       });
@@ -94,6 +99,12 @@ constructor(private productService: ProductService, private userService: UserSer
     this.userService.getUser(id).subscribe((res: any) => {
       this.userId = res.User._id;
       this.userRole = res.User.role;
+      this.stripeForm.patchValue({
+        firstName: res.User.firstName,
+        lastName: res.User.lastName,
+        xrplAddress: res.User.xrplAddress,
+        email: res.User.email
+      })
     });
   }
 
@@ -148,8 +159,13 @@ constructor(private productService: ProductService, private userService: UserSer
         let orderObj = {
           userId: this.userId,
           productId: this.productId,
+          productImage: this.productImage,
           product: this.productTitle,
           price: this.productPrice,
+          email: value.email,
+          firstName: value.firstName,
+          lastName: value.lastName,
+          xrplAddress: value.xrplAddress,
           billingAddress: value.billingAddress,
           shippingAddress: value.shippingAddress,
           status: "paid",
@@ -304,10 +320,12 @@ constructor(private productService: ProductService, private userService: UserSer
     this.cd.detectChanges();
   }
 
-  clickEvent(title, price, isDigital) {
+  setProductValue(title, price, isDigital, productId, productImage) {
     this.productTitle = title;
     this.productPrice = price
     this.isDigital = isDigital
+    this.productId = productId
+    this.productImage = productImage
   }
 
   buyProduct() {
