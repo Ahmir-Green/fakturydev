@@ -1883,7 +1883,7 @@ td .form-group input {
 }
 .auction__box__head {
     padding: 1.68em 6.12em 0 6.12em;
-    background: #61FA0A;
+    /* background: #61FA0A; */
 }
 .desc__image {
     width: 4.68em;
@@ -2372,14 +2372,15 @@ to {
     padding-right: 9.87em;
     padding-left: 9.87em;
     border-right: 1px solid #DFDFDF;
+    margin-bottom: 40px;
 }
-.collection__wrap .collection__box:last-child{
-    border-right: none;
+/* .collection__wrap .collection__box:last-child{
+    border-right: none; 
     padding-right: 0;
-}
-.collection__wrap .collection__box:first-child{
+} */
+/* .collection__wrap .collection__box:first-child{
     padding-left: 0;
-}
+} */
 .collection__box p{
     font-size: 1em;
     line-height: 1.62em;
