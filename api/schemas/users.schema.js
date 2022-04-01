@@ -12,7 +12,10 @@ var UserSchema = mongoose.Schema({
      // match: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
       },
   role: {type: String},
-  client_id: {type: String}
+  client_id: {type: String},
+  firstName: { type: String},
+  lastName: { type: String},
+  xrplAddress: { type: String}
 });
 
 module.exports = mongoose.model('User', UserSchema);

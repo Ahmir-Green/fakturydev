@@ -107,7 +107,7 @@ exports.user_delete = (req, res, next) => {
 }
 
 exports.user_get = (req, res, next) => {
-    User.findOne({email: req.params.email}).select('_id email role')
+    User.findOne({email: req.params.email}).select('_id email role firstName lastName xrplAddress')
     .exec().then(doc => {
       if (doc) {
         res.status(200).json({
@@ -126,3 +126,29 @@ exports.user_get = (req, res, next) => {
     });
   }
   
+exports.user_update = (req, res, next) => {
+  console.log(req.body)
+  let email = req.params.email;
+  let user = {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      xrplAddress: req.body.xrplAddress,
+  }
+  User.updateOne({
+      email: email
+    }, {
+      $set: user
+    })
+    .exec()
+    .then(doc => {
+      res.status(200).json({
+        message: 'Successfully Updated',
+  
+      });
+    }).catch(err => {
+      console.log(err);
+      res.status(500).json({
+        error: err
+      });
+    });
+  }

@@ -18,4 +18,10 @@ export class UserService {
     getUser(email:string) {
       return this.http.get(`${this.apiURL}/users/${email}`)
     }
+    
+    updateUser(email:string, data: any) {
+      this.http.patch(`${this.apiURL}/users/${email}`, data).subscribe((res: any) => {
+        this.toastr.success(res.message);
+      })
+    }
 }
