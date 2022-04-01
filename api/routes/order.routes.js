@@ -8,6 +8,6 @@ var orderController = require('../controllers/order');
 
 router.post('/', orderController.create_order);
 
-router.get('/:productId', orderController.order_get_one);
+router.get('/:email', orderController.order_get_one);
        
 module.exports = router;

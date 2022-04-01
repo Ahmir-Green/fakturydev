@@ -28,7 +28,7 @@ export class OrderService {
         })
     }
 
-    getOrder(id:string) {
-      return this.http.get(`${this.apiURL}/orders/${id}`)
+    getOrder(email:string) {
+      return this.http.get(`${this.apiURL}/orders/${email}`)
     }
 }

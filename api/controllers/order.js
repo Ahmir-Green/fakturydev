@@ -9,6 +9,11 @@ exports.create_order = (req, res, next) => {
     userId: req.body.userId,
     productId: req.body.productId,
     product: req.body.product,
+    productImage: req.body.productImage,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    xrplAddress: req.body.xrplAddress,
     price: req.body.price,
     billing_address: req.body.billingAddress,
     shipping_address: req.body.shippingAddress,
@@ -30,9 +35,8 @@ exports.create_order = (req, res, next) => {
 }
 
 exports.order_get_one = (req, res, next) => {
-  var productId = req.params.productId;
-  Order.findById(productId).select('_id userId productId product price').exec().then(doc => {
-    console.log(doc);
+  var userEmail = req.params.email;
+  Order.find({email: userEmail}).select('_id userId productId product price productImage email').exec().then(doc => {
     if (doc) {
       res.status(200).json({
         Order: doc
