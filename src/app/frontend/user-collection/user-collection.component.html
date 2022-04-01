@@ -14,41 +14,62 @@
                         <h3>{{user.name}}</h3>
                     </div>
                     <div class="head__content__icon">
-                        <a href="javascript:;"><img src="../../../assets/images/head-content-icon.svg"></a>
+                        <a href="javascript:;"><img src="../../../assets/images/head-content-icon.svg" data-bs-toggle="modal" data-bs-target="#stripeModal"></a>
                     </div>
-                    <div class="head__content__icon">
-                        <a href="javascript:;"><img src="../../../assets/images/share-icon.svg"></a>
+                    <!-- User form -->
+                    <div class="modal fade" id="stripeModal" tabindex="-1" aria-labelledby="stripeModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h6 class="modal-title" id="stripeModalLabel"> Update Profile</h6>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="resetForm()"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form class="login__form" [formGroup]="userForm" (ngSubmit)="updateUserProfile(userForm.value)" id="payment-form">
+                                        <div class="form-group">
+                                            <label for="first-name">First Name</label>
+                                            <input type="text" id="first-name" class="form-control" formControlName="firstName"
+                                            [ngClass]="{ 'is-invalid': g['firstName'].touched && g['firstName'].errors }">
+                                            <span *ngIf="g['firstName'].touched && g['firstName'].errors?.['required']" class="invalid-feedback">
+                                                First Name is required
+                                            </span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="last-name">Last Name</label>
+                                            <input type="text" id="last-name" class="form-control" formControlName="lastName"
+                                            [ngClass]="{ 'is-invalid': g['lastName'].touched && g['lastName'].errors }">
+                                            <span *ngIf="g['lastName'].touched && g['lastName'].errors?.['required']" class="invalid-feedback">
+                                                Last Name is required
+                                            </span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">XRPL Address</label>
+                                            <input type="text" id="email" class="form-control" formControlName="xrplAddress"
+                                            [ngClass]="{ 'is-invalid': g['xrplAddress'].touched && g['xrplAddress'].errors }">
+                                            <span *ngIf="g['xrplAddress'].touched && g['xrplAddress'].errors?.['required']" class="invalid-feedback">
+                                                XRPL Address is required
+                                            </span>
+                                        </div>
+                                        <button class="submit_button" [disabled]="userForm.invalid">Submit</button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <p>XRP address: rs985678hgnB75</p>
-                <p>3 Item Purchased by FAKTÜRY</p>
+                </div>
+                <p>XRP address: {{xrplAddress}}</p>
+                <p>{{orders.length}} Item Purchased by FAKTÜRY</p>
             </div>
             <div class="collection__heading">
                 <h2>COLLECTION</h2>
             </div>
-            <div class="collection__wrap">
-                <div class="collection__box">
+            <div class="collection__wrap row">
+                <div class="collection__box col-lg-4" *ngFor="let order of orders; let i = index">
                     <div class="collection__image">
-                        <img src="../../../assets/images/collection-img1.png">
+                        <img src="{{imageBaseUrl + order.productImage }}">
                     </div>
-                    <h3>NFT Name</h3>
-                    <p><b>Amount = 300 XRP</b></p>
-                    <!--<p>Lorem Ipsum is simply dummy text of the printing.</p>-->
-                </div>
-                <div class="collection__box">
-                    <div class="collection__image">
-                        <img src="../../../assets/images/collection-img1.png">
-                    </div>
-                    <h3>NFT Name</h3>
-                    <p><b>Amount = 300 XRP</b></p>
-                    <!--<p>Lorem Ipsum is simply dummy text of the printing.</p>-->
-                </div>
-                <div class="collection__box">
-                    <div class="collection__image">
-                        <img src="../../../assets/images/collection-img1.png">
-                    </div>
-                    <h3>NFT Name</h3>
-                    <p><b>Amount = 300 XRP</b></p>
+                    <h3>{{order.product}}</h3>
+                    <p><b>Amount = {{order.price}}</b></p>
                     <!--<p>Lorem Ipsum is simply dummy text of the printing.</p>-->
                 </div>
             </div>
