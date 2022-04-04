@@ -39,7 +39,7 @@ export class HeaderComponent implements OnInit {
 
   navigate(name){
     this.removeNavigationClass()
-    this.router.navigate(['/Home',name]);
+    this.router.navigate(['/home',name]);
   }
 
 }

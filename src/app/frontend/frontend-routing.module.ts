@@ -24,7 +24,7 @@ const routes: Routes = [
           component: HomeComponent,
         },
         {
-          path: 'Home/:id',
+          path: 'home/:id',
           pathMatch: 'full',
           component: HomeComponent,
         },
