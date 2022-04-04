@@ -48,7 +48,8 @@ userId: any;
 userRole: any;
 productId: any;
 isDigital: boolean;
-  productImage: any;
+productImage: any;
+initialValues: any;
 
 
 constructor(private productService: ProductService, private userService: UserService, private toastr: ToastrService,
@@ -76,6 +77,7 @@ constructor(private productService: ProductService, private userService: UserSer
     xummLink: new FormControl('https://xumm.app/detect/request:rG3qGSDskfbFmiftWFBXMroJUSSjmGrADE?amount=1079.097874'),
     isDigital: new FormControl(false)
     });
+    this.initialValues = this.productForm.value;
 
     //Add Stripe form validations
     this.stripeForm = new FormGroup({
@@ -150,7 +152,7 @@ constructor(private productService: ProductService, private userService: UserSer
   }
 
   xummPage(link: string) {
-    if (link !== undefined) {
+    if (link !== undefined && link !== "null") {
       window.open(link, "_blank")
     }
   }
@@ -293,7 +295,7 @@ constructor(private productService: ProductService, private userService: UserSer
   }
 
   resetForm() {
-    this.productForm.reset();
+    this.productForm.reset(this.initialValues);
     this.stripeForm.reset();
     this.changeTitle('Add Product');
     this.imageSrc = '';
