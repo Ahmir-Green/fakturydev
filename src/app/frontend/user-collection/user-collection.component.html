@@ -10,10 +10,10 @@
                     </div> -->
                 </div>
                 
-                <p *ngIf="firstName !== ''">{{firstName + ' '+ lastName}}</p>
+                <h3 class="text-center userProfileClass">{{user.email}}</h3>
                 <div class="collection__head__content">
-                    <div class="head__content__text">
-                        <h3>{{user.name}}</h3>
+                    <div class="head__content__text userNameClass">
+                        <h4 *ngIf="firstName !== ''">{{firstName + ' '+ lastName}}</h4>
                     </div>
                     <div class="head__content__icon">
                         <a href="javascript:;"><img src="../../../assets/images/head-content-icon.svg" data-bs-toggle="modal" data-bs-target="#stripeModal"></a>
