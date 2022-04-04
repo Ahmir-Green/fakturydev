@@ -7,14 +7,13 @@ var UserSchema = mongoose.Schema({
       unique: true,
       match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
       },
-  password: {type: String,
-     required: true
+  password: {type: String
      // match: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
       },
   role: {type: String},
   client_id: {type: String},
-  firstName: { type: String},
-  lastName: { type: String},
+  firstName: { type: String, default: ''},
+  lastName: { type: String, default: ''},
   xrplAddress: { type: String}
 });
 

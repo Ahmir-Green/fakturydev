@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '@auth0/auth0-angular';
+import { UserService } from '../shop/user.service';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 export class HomeComponent implements OnInit {
 
   form!: FormGroup;
-  constructor(private route:ActivatedRoute) { }
+  constructor(private route:ActivatedRoute, public auth: AuthService, private userService: UserService,) { }
 
   ngOnInit(): void {
     var namePattern = '^(?! )[A-Za-z ]*(?<! )$';
@@ -29,7 +31,11 @@ export class HomeComponent implements OnInit {
                                     Validators.minLength(3)])
     })
 
- 
+    this.auth.user$.subscribe(user => {
+      if (user) {
+        this.saveUser(user)
+      }
+    });
   }
 
   ngAfterViewInit():void{
@@ -40,6 +46,16 @@ export class HomeComponent implements OnInit {
     })
   }
 
+  saveUser(user) {
+    let userObj = {
+      email: user.email,
+      firstName: user.name,
+      role: ''
+    }
+    this.userService.saveUser(userObj).subscribe((res: any) => {
+      console.log(res.Message);
+    })
+  }
   // convenience getter for easy access to contactUs fields
   get f() { return this.form.controls; }
 

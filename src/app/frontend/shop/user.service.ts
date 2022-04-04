@@ -24,4 +24,8 @@ export class UserService {
         this.toastr.success(res.message);
       })
     }
+
+    saveUser(user) {
+      return this.http.post(`${this.apiURL}/users/signup`, user)
+    }
 }

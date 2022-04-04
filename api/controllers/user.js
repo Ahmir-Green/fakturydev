@@ -8,20 +8,13 @@ exports.user_signup = (req, res, next) => {
   .exec()
   .then(user => {
     if(user.length >= 1) {
-       res.status(409).json({
-        Message: 'Mail exist.'
-      });
+       return
     } else {
-      bcryptjs.hash(req.body.password, 10, (err, hash) => {
-        if (err) {
-        return  res.status(500).json({
-            error: err
-          });
-        } else {
           var user = new User({
             _id: new mongoose.Types.ObjectId(),
             email: req.body.email,
-            password: hash
+            firstName: req.body.firstName,
+            role: req.body.role
           });
           user.save()
           .then(result => {
@@ -39,9 +32,6 @@ exports.user_signup = (req, res, next) => {
         }
       });
     }
-  });
-}
-
 
 exports.user_login = (req, res, next) => {
   User.find({email: req.body.email})
