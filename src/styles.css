@@ -1722,6 +1722,10 @@ button.d-flex.align-items-center.justify-content-between.btn.btn-link {
     height: 100%;
  }
 
+ app-footer {
+    margin-top: auto;
+ }
+ 
 .shop--section {
     padding: 9.25em 0 6.25em 0;
     /* background: url(../src/assets/images/shop.png) no-repeat;
