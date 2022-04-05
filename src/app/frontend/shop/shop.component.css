@@ -121,3 +121,6 @@ ul {
     list-style-type: none;
     margin-bottom: 10px;
 }
+ .noData {
+     margin: 40px auto;
+ }

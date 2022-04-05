@@ -5,6 +5,7 @@
                 <h2>The Shop</h2>
             </div>
             <div class="shop__wrap">
+                <ng-container *ngIf="products && products.length > 0">
                 <div class="shop__box" *ngFor="let product of products;let i = index">
                     <div class="shop__box__main">
                         <div class="box__image">
@@ -114,6 +115,10 @@
                         </li>
                     </ul>
                 </div>
+                </ng-container>
+                <ng-container *ngIf="products && products.length == 0 && userRole !== 'Admin'">
+                    <h6 class="noData">Check back later, no data found.</h6>
+                </ng-container>
             </div>
         </div>
         
