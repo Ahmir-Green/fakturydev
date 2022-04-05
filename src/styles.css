@@ -12,12 +12,18 @@
 html {
     overflow-x: hidden
 }
+.mainWrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
 body {
     font-size: 16px;
     font-weight: 300;
     color: #01214a;
     text-align: left;
     font-family: 'Poppins', sans-serif;
+    min-height: 100%;
 }
 @media (max-width:1400px) and (min-width:1300px) and (min-height:900px) {
     body {
@@ -50,7 +56,7 @@ h2 {
 }
 h3 {
     font-size: 1.875em;
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
     color: #fff;
     font-weight: 600;
 }
@@ -1701,13 +1707,26 @@ button.d-flex.align-items-center.justify-content-between.btn.btn-link {
     font-weight: 400;
     margin: 0;
 }
+ app-shop  {
+    background: url(../src/assets/images/shop.png) no-repeat;
+    /* background: url(shop.png) no-repeat; */
+    background-size: cover;
+    background-position: top;
+    height: 100%;
+ }
 
+ app-auction {
+    background: url(../src/assets/images/auction-bg.png) no-repeat;
+    background-size: cover;
+    background-position: top;
+    height: 100%;
+ }
 
 .shop--section {
     padding: 9.25em 0 6.25em 0;
-    background: url(../src/assets/images/shop.png) no-repeat;
+    /* background: url(../src/assets/images/shop.png) no-repeat;
     background-size: cover;
-    background-position: top;
+    background-position: top; */
 }
 .shop__head h2 {
     font-size: 3.75em;
@@ -1802,12 +1821,12 @@ button.d-flex.align-items-center.justify-content-between.btn.btn-link {
 }
 .auction--section {
     padding: 9.25em 0 6.25em 0;
-    background: url(../src/assets/images/auction-bg.png) no-repeat;
+    /* background: url(../src/assets/images/auction-bg.png) no-repeat;
     background-size: cover;
-    background-position: center;
+    background-position: top; */
 }
 .auction__image {
-    width: 21.37em;
+    width: 100%;
     height: 29.37em;
     margin: 0 auto;
     position: relative;
@@ -1833,16 +1852,16 @@ td .form-group input {
 .auction__image > img {
     display: block;
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 25%;
+    left: 49.9%;
     transform: translate(-50%, -50%);
   }
 
   .auction__image > video {
     display: block;
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 45%;
+    left: 49.9%;
     transform: translate(-50%, -50%);
   }
 .auction__image2 {
@@ -1882,7 +1901,7 @@ td .form-group input {
     row-gap: 6.5em;
 }
 .auction__box__head {
-    padding: 1.68em 6.12em 0 6.12em;
+    /* padding: 1.68em 6.12em 0 6.12em; */
     /* background: #61FA0A; */
 }
 .desc__image {
@@ -2424,7 +2443,7 @@ to {
     line-height: 1em;
     color: #2A2A2A;
     margin-bottom: 0;
-    margin-right:  0.93em;
+    margin-right: 5px;
     font-weight: 600;
 }
 
@@ -2449,7 +2468,12 @@ to {
     color: #707070;
 }
 
-
+.sticky-footer {
+        position:fixed;
+        bottom:0px;
+        background-color:pink;
+        width:100%;
+}
 
 
 
