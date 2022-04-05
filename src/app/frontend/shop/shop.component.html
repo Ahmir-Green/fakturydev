@@ -128,7 +128,7 @@
     </div>
       
 <!-- add Product form -->
- <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModal2Label" aria-hidden="true">
+ <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModal2Label" aria-hidden="true" (blur)="resetProductForm()">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -161,7 +161,7 @@
                   </div>
                   <div class="form-group">
                     <label for="priceField" class="form-label">Price</label>
-                    <input type="number" formControlName="price" class="form-control" 
+                    <span class="inputPrice">$</span><input type="number" formControlName="price" class="inputPadding form-control" 
                     [ngClass]="{ 'is-invalid': f['price'].touched && f['price'].errors }" id="priceField">
                     <span *ngIf="f['price'].touched && f['price'].errors" class="invalid-feedback">
                       <span *ngIf="f['price'].errors['required']">Price is required</span>

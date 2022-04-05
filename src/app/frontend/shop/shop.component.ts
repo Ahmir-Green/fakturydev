@@ -74,7 +74,7 @@ constructor(private productService: ProductService, private userService: UserSer
     description: new FormControl('', [Validators.required]),
     price: new FormControl('', [Validators.required]),
     quantity: new FormControl('', [Validators.required]),
-    xummLink: new FormControl('https://xumm.app/detect/request:rG3qGSDskfbFmiftWFBXMroJUSSjmGrADE?amount=1079.097874'),
+    xummLink: new FormControl(''),
     isDigital: new FormControl(false)
     });
     this.initialValues = this.productForm.value;
@@ -294,6 +294,9 @@ constructor(private productService: ProductService, private userService: UserSer
       this.resetForm();
   }
 
+  resetProductForm() {
+      this.productForm.reset(this.initialValues)
+  }
   resetForm() {
     this.productForm.reset(this.initialValues);
     this.stripeForm.reset();

@@ -124,3 +124,14 @@ ul {
  .noData {
      margin: 40px auto;
  }
+
+ .inputPrice {
+    position: absolute;
+    margin-left: 6px;
+    margin-top: 12px;
+    font-size: 12px;
+}
+
+.inputPadding {
+    padding-left: 20px;
+}
