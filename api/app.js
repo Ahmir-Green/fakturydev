@@ -28,9 +28,8 @@ mongoose
 
 app.use(cors())
 app.use(morgan('dev'));
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
-
+app.use(bodyParser.urlencoded({limit: '100mb', extended: false, parameterLimit:100000}));
+app.use(bodyParser.json({limit: '100mb'}));
 app.use("/images", express.static(path.join(__dirname, 'public/images')));
 app.use("/", express.static(path.join(__dirname, "angular")));
 
