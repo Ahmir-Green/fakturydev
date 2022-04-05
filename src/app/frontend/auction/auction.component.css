@@ -175,3 +175,8 @@ table {
         height: 40px;
         margin-right: 1.25em;
     }
+
+    .noData {
+        margin: 40px auto;
+        text-align: center;
+    }

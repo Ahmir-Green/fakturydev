@@ -203,5 +203,7 @@
       </div>
     </div>
   </div>
-
+  <div *ngIf="auctions && auctions.length == 0 && userRole != 'Admin'">
+    <h6 class="noData">Check back later, no data found.</h6>
+</div>
 </main>
