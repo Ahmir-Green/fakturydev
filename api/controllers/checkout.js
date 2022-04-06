@@ -14,6 +14,13 @@ exports.recive_payment = async(req, res) => {
             description: req.body.data.title,
             currency: "USD",
             customer: customer.id,
+            receipt_email: req.body.data.email,
+            metadata: {
+              'firstName': req.body.data.firstName,
+              'lastName': req.body.data.lastName, 
+              'xrplAddress': req.body.data.xrplAddress, 
+              'billingAddress': req.body.data.billingAddress
+            }
           });
         })
         .then((charge) => {

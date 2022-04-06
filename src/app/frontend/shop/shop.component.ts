@@ -199,7 +199,12 @@ constructor(private productService: ProductService, private userService: UserSer
     var payload = {
       token: token,
       amount: this.productPrice,
-      title: this.productTitle
+      title: this.productTitle,
+      firstName: value.firstName,
+      lastName: value.lastName,
+      xrplAddress: value.xrplAddress,
+      billingAddress: value.billingAddress,
+      email: value.email
     }
     this.paymentstripe(payload, value);
   }
@@ -274,7 +279,7 @@ constructor(private productService: ProductService, private userService: UserSer
       $('#exampleModal2').modal('hide');
       setTimeout(()=>{                
         this.resetForm();
-      }, 1000);
+      }, 2000);
     }
   }
 
