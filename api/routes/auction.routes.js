@@ -19,7 +19,8 @@ var fileFilter = function(req, file, cb){
 cb(null, true);
 };
 var upload = multer({storage: storage,
-fileFilter: fileFilter
+fileFilter: fileFilter,
+limits: { fileSize: 9048576 } // 90mb
 });
 
 
