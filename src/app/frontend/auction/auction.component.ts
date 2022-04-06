@@ -217,7 +217,7 @@ export class AuctionComponent implements OnInit {
       $('#auctionModal').modal('hide');
       setTimeout(()=>{                
         this.resetForm();
-      }, 1000);
+      }, 2000);
       }
   }
   onFileChange(event: any){

@@ -1862,10 +1862,10 @@ td .form-group input {
 }
 .auction__image > img {
     display: block;
-    position: absolute;
-    top: 25%;
-    left: 49.9%;
-    transform: translate(-50%, -50%);
+    position: relative;
+    object-fit: fill;
+    height: 100%;
+    width: 100%;
   }
 
   .auction__image > video {
@@ -3079,7 +3079,7 @@ ul.footer__links {
     padding: 1.56em 1em;
 }
 .auction__box__head {
-    padding: 1.68em 2em 0 2em;
+    /* padding: 1.68em 2em 0 2em; */
 }
 .brand-logo {
     width: 4.86em;
@@ -3156,6 +3156,7 @@ ul.footer__links {
         width: 100%;
         height: auto;
     }
+    
     .header__button .nav__buttons .btn__anchor{
         display: none;
     }
