@@ -7,10 +7,10 @@
             <div class="auction__wrap">
                 <div class="auction__box" *ngFor="let auction of auctions; let i = index" >
                     <div class="auction__box__head">
-                        <div class="auction__image" *ngIf="!auction.file.includes('.mp4')">
+                        <div class="auction__image" *ngIf="auction.file && !auction.file.includes('.mp4')">
                             <img src="{{imageBaseUrl + auction.file }}">
                         </div>
-                        <div class="auction__image" *ngIf="auction.file.includes('.mp4')">
+                        <div class="auction__image" *ngIf="auction.file && auction.file.includes('.mp4')">
                             <video class="auctionVideo" controls="false" autoplay="autoplay" loop>
                                 <source src="{{imageBaseUrl + auction.file}}" type="video/mp4">
                                 Your browser does not support the video tag.
@@ -204,6 +204,6 @@
     </div>
   </div>
   <div *ngIf="auctions && auctions.length == 0 && userRole != 'Admin'">
-    <h6 class="noData">Check back later, no data found.</h6>
+    <h6 class="noData">Coming Soon.</h6>
 </div>
 </main>

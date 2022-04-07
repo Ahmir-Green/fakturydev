@@ -53,3 +53,23 @@ exports.order_get_one = (req, res, next) => {
     })
   });
 }
+
+exports.order_get_one_productId = (req, res, next) => {
+  var productId = req.params.pId;
+  Order.find({productId: productId}).select('productId product price productImage').exec().then(doc => {
+    if (doc) {
+      res.status(200).json({
+        count: doc.length
+      });
+    } else {
+      res.status(404).json({
+        error: 'No Records found for that ID'
+      })
+    }
+  }).catch(err => {
+    console.log(err);
+    res.status(500).json({
+      error: err
+    })
+  });
+}

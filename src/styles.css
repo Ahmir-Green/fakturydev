@@ -1830,6 +1830,22 @@ button.d-flex.align-items-center.justify-content-between.btn.btn-link {
     background: #61FA0A;
     color: #fff;
 }
+.sold__btn {
+    background: #61FA0A;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 0.81em 2.37em;
+    font-size: 1em;
+    line-height: 1.5em;
+    font-weight: 700;
+    color: #111914;
+    transition: .5s;
+}
+.sold__btn:hover {
+    background: #111914;
+    color:#61FA0A;
+    cursor: not-allowed !important;
+}
 .auction--section {
     padding: 9.25em 0 6.25em 0;
     /* background: url(../src/assets/images/auction-bg.png) no-repeat;
@@ -1846,6 +1862,11 @@ button.d-flex.align-items-center.justify-content-between.btn.btn-link {
     margin: 0;
 }
 .auctionVideo {
+    min-width: 100%;
+    min-height: auto;
+    padding: 0;
+}
+.shopVideo {
     min-width: 100%;
     min-height: auto;
     padding: 0;

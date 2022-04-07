@@ -31,4 +31,7 @@ export class OrderService {
     getOrder(email:string) {
       return this.http.get(`${this.apiURL}/orders/${email}`)
     }
+    getOrderByProductId(pId: string) {
+      return this.http.get(`${this.apiURL}/orders/product/${pId}`)
+    }
 }
