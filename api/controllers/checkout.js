@@ -19,7 +19,8 @@ exports.recive_payment = async(req, res) => {
               'firstName': req.body.data.firstName,
               'lastName': req.body.data.lastName, 
               'xrplAddress': req.body.data.xrplAddress, 
-              'billingAddress': req.body.data.billingAddress
+              'billingAddress': req.body.data.billingAddress,
+              'shippingAddress': req.body.data.shippingAddress
             }
           });
         })

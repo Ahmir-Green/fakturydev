@@ -204,6 +204,7 @@ constructor(private productService: ProductService, private userService: UserSer
       lastName: value.lastName,
       xrplAddress: value.xrplAddress,
       billingAddress: value.billingAddress,
+      shippingAddress: value.shippingAddress,
       email: value.email
     }
     this.paymentstripe(payload, value);
