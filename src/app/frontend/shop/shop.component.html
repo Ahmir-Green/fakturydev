@@ -10,8 +10,18 @@
                     <div class="shop__box__main">
                         <div class="box__image">
                             <div class="swiper-container">
-                                <div class="swiper-wrapper">
-                                    <div class="swiper-slide"><img src="{{imageBaseUrl + product.image }}"></div>
+                                <div class="swiper-wrapper" *ngIf="product.file && !product.file.includes('.mp4')">
+                                    <div class="swiper-slide">
+                                        <img src="{{imageBaseUrl + product.file }}">
+                                    </div>
+                                </div>
+                                <div class="swiper-wrapper" *ngIf="product.file && product.file.includes('.mp4')">
+                                    <div class="swiper-slide">
+                                        <video class="shopVideo" controls="false" autoplay="autoplay" loop>
+                                            <source src="{{imageBaseUrl + product.file}}" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                          </video>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -28,10 +38,13 @@
                     </div>
                     <div class="shop__box__bottom" *ngIf="userRole !== 'Admin'">
                         <div class="shop__count">
-                            <p>1 of {{product.quantity}}</p>
+                            <p>{{orders[i]}} of {{product.quantity}} <span class="soldOutClass"> (sold)</span></p>
                         </div>
                         <div ngbDropdown class="buy__btn">
-                            <a href="javascript:;" id="dropdownBasic1" (click)="buyProduct()" ngbDropdownToggle>Buy Now  </a>
+                            <a href="javascript:;" id="dropdownBasic1" (click)="buyProduct()" ngbDropdownToggle *ngIf="product.quantity !== orders[i];else soldOut">Buy Now  </a>
+                            <ng-template #soldOut>
+                                <button class="sold__btn" href="javascript:;">Sold Out  </button>
+                            </ng-template>
                             <div ngbDropdownMenu aria-labelledby="dropdownBasic1" *ngIf="userEmail && userEmail !== undefined">
                             <form target="_blank">
                                 <button ngbDropdownItem class="paymentBtn" (click)="xummPage(product.xummLink)">Pay with Xumm</button>
@@ -147,11 +160,11 @@
                         Title is required
                       </span>
                     </div>
-                <div class="form-group">
-                    <label for="images" class="form-label">Image</label>
-                    <input type="file" formControlName="image" class="form-control" (change)="onFileChange($event)">
-                </div>
-                <img [src]="imageSrc" *ngIf="imageSrc" class="mb-2 imageStyling">
+                    <div class="form-group">
+                        <label for="image" class="form-label">Image OR Video</label>
+                        <input type="file" formControlName="file" class="form-control" (change)="onFileChange($event)">
+                    </div>
+                <img [src]="fileSrc" *ngIf="fileSrc" class="mb-2 imageStyling">
                 <div class="form-group">
                     <label for="exampleInputPassword1" class="form-label">Description</label>
                     <input type="text" formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': f['description'].touched && f['description'].errors }" id="inputPassword4">

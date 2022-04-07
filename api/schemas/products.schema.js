@@ -4,7 +4,7 @@ const productSchema = mongoose.Schema({
   _id : mongoose.Schema.Types.ObjectId,
   title: { type: String, required: true },
   description: { type: String },
-  image: { type: String },
+  file: { type: String },
   quantity: { type: Number},
   price: { type: Number, required: true},
   xummLink: { type: String},

@@ -28,8 +28,8 @@ baseUrl = 'https://www.faktury.dev/api';
 imageBaseUrl = 'https://www.faktury.dev/images/'
 productForm!: FormGroup;
 stripeForm!: FormGroup;
-imageSrc: string = '';
-imageUrl: any;
+fileSrc: string = '';
+fileUrl: any;
 submitted = false;
 products: any;
 showProductDes: any = {};
@@ -50,6 +50,7 @@ productId: any;
 isDigital: boolean;
 productImage: any;
 initialValues: any;
+orders: any[] = [];
 
 
 constructor(private productService: ProductService, private userService: UserService, private toastr: ToastrService,
@@ -70,7 +71,7 @@ constructor(private productService: ProductService, private userService: UserSer
     this.productForm = new FormGroup({
     _id: new FormControl(''),
     title: new FormControl('', [Validators.required]),
-    image: new FormControl(''),
+    file: new FormControl(''),
     description: new FormControl('', [Validators.required]),
     price: new FormControl('', [Validators.required]),
     quantity: new FormControl('', [Validators.required]),
@@ -220,6 +221,11 @@ constructor(private productService: ProductService, private userService: UserSer
     Utils.showSwalLoader();
     return this.productService.getPosts().subscribe((data: any) => {
       this.products = data.Product;
+        for (let i = 0; i < this.products.length; i++) {
+          this.orderService.getOrderByProductId(this.products[i]._id).subscribe((data: any) => {
+              this.orders.push(data.count);
+          })
+        }
       Utils.closeSwalLoader();
     });
   }
@@ -240,7 +246,7 @@ constructor(private productService: ProductService, private userService: UserSer
 
   //update product
   updateProduct(product: Product) {
-    this.imageSrc = this.imageBaseUrl + product.image;
+    this.fileSrc = this.imageBaseUrl + product.file;
     this.productForm.patchValue({
       _id: product._id,
       title: product.title,
@@ -268,7 +274,7 @@ constructor(private productService: ProductService, private userService: UserSer
     if(this.submitted) {
       const formData = new FormData();
       formData.append('title', this.productForm.get('title')?.value);
-      formData.append('image', this.imageUrl)
+      formData.append('file', this.fileUrl)
       formData.append('description', this.productForm.get('description')?.value);
       formData.append('quantity', this.productForm.get('quantity')?.value);
       formData.append('price', this.productForm.get('price')?.value);
@@ -288,7 +294,7 @@ constructor(private productService: ProductService, private userService: UserSer
       let id = this.productForm.value._id;
       const formData = new FormData();
       formData.append('title', this.productForm.get('title')?.value);
-      formData.append('image', this.imageUrl)
+      formData.append('file', this.fileUrl)
       formData.append('description', this.productForm.get('description')?.value);
       formData.append('quantity', this.productForm.get('quantity')?.value);
       formData.append('price', this.productForm.get('price')?.value);
@@ -307,7 +313,7 @@ constructor(private productService: ProductService, private userService: UserSer
     this.productForm.reset(this.initialValues);
     this.stripeForm.reset();
     this.changeTitle('Add Product');
-    this.imageSrc = '';
+    this.fileSrc = '';
     this.loadProducts();
     setTimeout(()=>{
       this.initiateCardElement();
@@ -320,11 +326,11 @@ constructor(private productService: ProductService, private userService: UserSer
 
     if(event.target.files && event.target.files.length) {
       const file:File = event.target.files[0];
-      this.imageUrl = file
+      this.fileUrl = file
       reader.readAsDataURL(file);
 
       reader.onload = () => {
-        this.imageSrc = reader.result as string;
+        this.fileSrc = reader.result as string;
       };
     }  
   }
