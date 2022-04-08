@@ -117,7 +117,7 @@ constructor(private productService: ProductService, private userService: UserSer
   // }
 
   async initiateCardElement()  {
-    this.stripe = await loadStripe('pk_test_51KbR9HKtlpexRaBxyd7dlTu7bBRfU9UIlWzc55TD4llUmO7FeLIqXtq13J2MiSNuEfPJlql6gT2NxuVsNKu8ujXF00UqliCIal');
+    this.stripe = await loadStripe('pk_live_51KbR9HKtlpexRaBx6v3wXYTQshIMhYoTVXFLeekuOoS7xUGbzhOiDctR91E5fNVXdljXAbyH5yEggVMWzTJJyMhD00VzM7Z0qq');
       const elements = this.stripe.elements();
       const cardStyle = {
         base: {
@@ -187,7 +187,7 @@ constructor(private productService: ProductService, private userService: UserSer
           this.resetForm();
         });
         Utils.closeSwalLoader();
-        }
+      }
       else {
         this.failure = true
         Utils.closeSwalLoader();
