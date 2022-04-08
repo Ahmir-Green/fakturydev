@@ -10,12 +10,12 @@
                     <div class="shop__box__main">
                         <div class="box__image">
                             <div class="swiper-container">
-                                <div class="swiper-wrapper" *ngIf="product.file && !product.file.includes('.mp4')">
+                                <div class="swiper-wrapper" *ngIf="product.file && !(product.file.includes('.mp4') || product.file.includes('.MP4'))">
                                     <div class="swiper-slide">
                                         <img src="{{imageBaseUrl + product.file }}">
                                     </div>
                                 </div>
-                                <div class="swiper-wrapper" *ngIf="product.file && product.file.includes('.mp4')">
+                                <div class="swiper-wrapper" *ngIf="product.file && (product.file.includes('.mp4') || product.file.includes('.MP4'))">
                                     <div class="swiper-slide">
                                         <video class="shopVideo" controls="false" autoplay="autoplay" loop>
                                             <source src="{{imageBaseUrl + product.file}}" type="video/mp4">
@@ -49,7 +49,7 @@
                             <form target="_blank">
                                 <button ngbDropdownItem class="paymentBtn" (click)="xummPage(product.xummLink)">Pay with Xumm</button>
                             </form>
-                            <button ngbDropdownItem class="paymentBtn" data-bs-toggle="modal" data-bs-target="#stripeModal" (click)="setProductValue(product.title, product.price, product.isDigital, product._id, product.image)" >Pay with Stripe</button>
+                            <button ngbDropdownItem class="paymentBtn" data-bs-toggle="modal" data-bs-target="#stripeModal" (click)="setProductValue(product.title, product.price, product.isDigital, product._id, product.file)" >Pay with Stripe</button>
                             </div>
                             <!-- Stripe form -->
                             <div class="modal fade" id="stripeModal" tabindex="-1" aria-labelledby="stripeModalLabel" aria-hidden="true">
