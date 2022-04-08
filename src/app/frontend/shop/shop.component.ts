@@ -286,7 +286,7 @@ constructor(private productService: ProductService, private userService: UserSer
       $('#exampleModal2').modal('hide');
       setTimeout(()=>{                
         this.resetForm();
-      }, 2000);
+      }, 3000);
     }
   }
 
@@ -303,7 +303,9 @@ constructor(private productService: ProductService, private userService: UserSer
       this.productService.updateProduct(id, formData);
       this.loadProducts();
       $('#exampleModal2').modal('hide');          
-      this.resetForm();
+      setTimeout(()=>{                
+        this.resetForm();
+      }, 3000);
   }
 
   resetProductForm() {
