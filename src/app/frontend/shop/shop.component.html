@@ -38,7 +38,7 @@
                     </div>
                     <div class="shop__box__bottom" *ngIf="userRole !== 'Admin'">
                         <div class="shop__count">
-                            <p>{{orders[i]}} of {{product.quantity}} <span class="soldOutClass"> (sold)</span></p>
+                            <p>{{orders[i]}} of {{product.quantity}}</p>
                         </div>
                         <div ngbDropdown class="buy__btn">
                             <a href="javascript:;" id="dropdownBasic1" (click)="buyProduct()" ngbDropdownToggle *ngIf="product.quantity !== orders[i];else soldOut">Buy Now  </a>
