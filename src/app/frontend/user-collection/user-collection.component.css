@@ -116,6 +116,12 @@ ul {
     max-height: 160px;
     object-fit: fill;
 }
+.collectionVideo {
+    width: 100%;
+    max-height: 160px;
+    object-fit: fill;
+    padding: 0;
+}
 
 @media (max-width:767px){
     .collection__image  > img {
