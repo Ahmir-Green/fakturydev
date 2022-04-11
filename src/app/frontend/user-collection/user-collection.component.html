@@ -69,9 +69,9 @@
             <div class="collection__wrap row text-center">
                 <div class="collection__box col-lg-4" *ngFor="let order of orders; let i = index">
                     <div class="collection__image" >
-                        <img src="{{imageBaseUrl + order.productImage }}" *ngIf="order.productImage && !(order.productImage.includes('.mp4') || order.productImage.includes('.MP4')); else video">
-                        <ng-template #video>
-                        <video class="collectionVideo" controls="false" autoplay="autoplay" loop>
+                        <img src="{{imageBaseUrl + order.productImage }}" *ngIf="order.productImage && (order.productImage.includes('.jpg') || order.productImage.includes('.gif') || order.productImage.includes('.bmp') || order.productImage.includes('.png')); else videoElement">
+                        <ng-template #videoElement>
+                        <video class="collectionVideo" controls="false" [autoplay]="false" loop>
                             <source src="{{imageBaseUrl + order.productImage}}" type="video/mp4">
                             Your browser does not support the video tag.
                           </video>

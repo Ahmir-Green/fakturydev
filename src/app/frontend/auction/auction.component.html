@@ -7,15 +7,15 @@
             <div class="auction__wrap">
                 <div class="auction__box" *ngFor="let auction of auctions; let i = index" >
                     <div class="auction__box__head">
-                        <div class="auction__image" *ngIf="auction.file && !(auction.file.includes('.mp4') || auction.file.includes('.MP4'))">
+                        <div class="auction__image" *ngIf="auction.file && (auction.file.includes('.jpg') || auction.file.includes('.gif') || auction.file.includes('.bmp') || auction.file.includes('.png')); else videoElement">
                             <img src="{{imageBaseUrl + auction.file }}">
                         </div>
-                        <div class="auction__image" *ngIf="auction.file && (auction.file.includes('.mp4') || auction.file.includes('.MP4'))">
-                            <video class="auctionVideo" controls="false" autoplay="autoplay" loop>
+                        <ng-template class="auction__image" #videoElement>
+                            <video class="auctionVideo" controls="false" [autoplay]="false" loop>
                                 <source src="{{imageBaseUrl + auction.file}}" type="video/mp4">
                                 Your browser does not support the video tag.
                               </video>
-                        </div>
+                        </ng-template>
                     </div>
                     <h6 class="auctionTitle">{{auction.title}}</h6>
                     <div class="wrapper">

@@ -10,19 +10,19 @@
                     <div class="shop__box__main">
                         <div class="box__image">
                             <div class="swiper-container">
-                                <div class="swiper-wrapper" *ngIf="product.file && !(product.file.includes('.mp4') || product.file.includes('.MP4'))">
+                                <div class="swiper-wrapper" *ngIf="product.file && (product.file.includes('.jpg') || product.file.includes('.gif') || product.file.includes('.bmp') || product.file.includes('.png')); else videoElement">
                                     <div class="swiper-slide">
                                         <img src="{{imageBaseUrl + product.file }}">
                                     </div>
                                 </div>
-                                <div class="swiper-wrapper" *ngIf="product.file && (product.file.includes('.mp4') || product.file.includes('.MP4'))">
+                                <ng-template class="swiper-wrapper" #videoElement>
                                     <div class="swiper-slide">
-                                        <video class="shopVideo" controls="false" autoplay="autoplay" loop>
+                                        <video class="shopVideo" controls="false" [autoplay]="false" loop>
                                             <source src="{{imageBaseUrl + product.file}}" type="video/mp4">
                                             Your browser does not support the video tag.
                                           </video>
                                     </div>
-                                </div>
+                                </ng-template>
                             </div>
                         </div>
                     </div>
