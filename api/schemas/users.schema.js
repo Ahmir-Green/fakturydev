@@ -14,6 +14,7 @@ var UserSchema = mongoose.Schema({
   client_id: {type: String},
   firstName: { type: String, default: ''},
   lastName: { type: String, default: ''},
+  email_verified: { type: Boolean, default: false },
   xrplAddress: { type: String}
 });
 

@@ -50,6 +50,7 @@ export class HomeComponent implements OnInit {
     let userObj = {
       email: user.email,
       firstName: user.name,
+      email_verified: true,
       role: ''
     }
     this.userService.saveUser(userObj).subscribe((res: any) => {
