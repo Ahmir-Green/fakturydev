@@ -24,11 +24,6 @@ html {
         height: auto;
     }
 }
-@media (max-width:767px) {
-    .head__content__text h3 {
-        font-size: 1.67em;
-    }
-}
 body {
     font-size: 16px;
     font-weight: 300;
@@ -2476,7 +2471,7 @@ to {
 .head__content__text h3 {
     color: #2A2A2A;
     text-align: center;
-    font-size: 1.87em;
+    font-size: 1.69em;
     line-height: 1em;
     color: #2A2A2A;
     margin-bottom: 0;
