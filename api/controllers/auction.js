@@ -2,7 +2,7 @@ var Auction = require('../schemas/auctions.schema');
 var mongoose = require('mongoose');
 
 exports.auction_gets_all = (req, res, next) => {
-  Auction.find().select('_id title description file expiryTime winner status').exec().then(doc => {
+  Auction.find().select('_id title description file expiryTime bids status').exec().then(doc => {
     var response = {
       count: doc.length,
       Auction: doc.map(doc => {
@@ -13,7 +13,7 @@ exports.auction_gets_all = (req, res, next) => {
           file: doc.file,
           bids: doc.bid,
           expiryTime: doc.expiryTime,
-          winner: doc.winner,
+          bids: doc.bids,
           status: doc.status
         }
       })
@@ -56,7 +56,7 @@ exports.auction_create_auction = (req, res, next) => {
 
 exports.auction_get_one = (req, res, next) => {
   var id = req.params.auctionId;
-  Auction.findById(id).select('_id title description file winner expiryTime status').exec().then(doc => {
+  Auction.findById(id).select('_id title description file bids expiryTime status').exec().then(doc => {
     console.log(doc);
     if (doc) {
       res.status(200).json({
@@ -79,31 +79,43 @@ exports.auction_get_one = (req, res, next) => {
 
 exports.auction_update_one = (req, res, next) => {
  var id = req.params.auctionId;
- let auction = {
-    title: req.body.title,
-    description: req.body.description,
-    expiryTime: req.body.expiryTime,
+ let auction = {}
+ if (req.body.title) {
+    auction.title = req.body.title,
+    auction.description = req.body.description,
+    auction.expiryTime = req.body.expiryTime
  }
  if(req.file != undefined) {
   auction.file = req.file.filename
+ } 
+ if (req.body.xrpBid) {
+   bids = {
+    userId: req.body.userId,
+    email: req.body.email,
+    address: req.body.address,
+    xrpBid: req.body.xrpBid,
+    fakBid : req.body.fakBid,
+    createdAt : new Date()
+   }
  }
  if (req.body.status == 'purchased') {
    auction.status = req.body.status,
    auction.title = req.body.title,
    auction.description = req.body.description,
    auction.expiryTime = req.body.expiryTime,
-   auction.winner = {
-     userId: req.body.userId,
-     email: req.body.email,
-     address: req.body.address,
-     xrpBid: req.body.xrpBid,
-     fakBid : req.body.fakBid,
-     is_approved: req.body.is_approved
+   bids = {
+    userId: req.body.userId,
+    email: req.body.email,
+    address: req.body.address,
+    xrpBid: req.body.xrpBid,
+    fakBid : req.body.fakBid,
+    createdAt : new Date(),
+    is_winner: true
    }
  }
  Auction.updateOne({
      _id: id
-   }, {
+   },{ $addToSet: { bids : bids } }, {
      $set: auction
    })
    .exec()

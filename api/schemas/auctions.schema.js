@@ -12,14 +12,18 @@ const auctionSchema = mongoose.Schema({
     enum : ['active', 'purchased'],
     default: 'active' 
   },
-  winner:[{
-    userId: { type: mongoose.Schema.Types.ObjectId, ref : 'User' },
+  bids:[{
+    userId: { 
+      type: mongoose.Schema.Types.ObjectId, 
+      ref : 'User' 
+    },
     address: { type: String },
     email: { type: String },
     xrpBid:{type: Number},
-    fakBid: {type: Number},
-    is_approved: { type: Number, default: 0}
-  }],
+    fakBid: {type: Number}, 
+    createdAt: {type: Date},
+    is_winner: {type: Boolean, default: false}
+  }]
 },{versionKey: false });
 
 module.exports = mongoose.model('auction', auctionSchema);

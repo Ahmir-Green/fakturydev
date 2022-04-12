@@ -30,10 +30,7 @@ export class AuctionService {
     // update auction in db
   updateAuction(id : string, data: any)
   {
-    return this.http.patch(`${this.apiURL}/auctions/${id}`, data)
-      .subscribe((res: any) => {
-        this.toastr.success(res.message);
-      })
+    return this.http.patch(`${this.apiURL}/auctions/${id}`, data);
   }
 
   // delete auction from db

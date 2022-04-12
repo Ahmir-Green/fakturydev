@@ -37,6 +37,9 @@ export class AuctionComponent implements OnInit {
   userEmail: string;
   userId: any;
   isFormShown: boolean;
+  highest__bid: any;
+  highest__bid__user: any;
+  highestBidArr: any[] = [];
 
   
   constructor(public auth: AuthService,public auctionService: AuctionService, 
@@ -101,9 +104,8 @@ export class AuctionComponent implements OnInit {
       if (this.bidForm.invalid) {
           this.toastr.warning('please fill this form');
       }  else {
-        bidForm.auctionId = id;
         bidForm.userId = this.userId
-        this.bidService.addBid(bidForm).subscribe((res: any) => {
+        this.auctionService.updateAuction(id, bidForm).subscribe((res: any) => {
           this.toastr.success(res.message);
         }, err => {
           this.toastr.error(err.error.message);
@@ -240,7 +242,31 @@ export class AuctionComponent implements OnInit {
       if (this.auctions.length <= 0) {
         Utils.closeSwalLoader()
       }
-      this.auctions = _.orderBy(this.auctions, 'expiryTime', 'desc');
+      let greaterBid = 0;
+      let greaterBidUser = '';
+      for (let i = 0; i < this.auctions.length; i++) {
+        if (this.auctions[i].bids.length != 0) {
+        greaterBid = this.auctions[i].bids[0].xrpBid;
+        greaterBidUser = this.auctions[i].bids[0].email;
+        for (let j = 0; j < this.auctions[i].bids.length; j++) {
+          if ( i+j <= j) {
+            if (greaterBid >= this.auctions[i].bids[i+j].xrpBid) {
+              this.highest__bid = greaterBid;
+              this.highest__bid__user = greaterBidUser;
+            } else {
+              this.highest__bid = this.auctions[i].bids[i+j].xrpBid;
+              this.highest__bid__user = this.auctions[i].bids[i+j].email;
+              greaterBid = this.auctions[i].bids[i+j].xrpBid;
+              greaterBidUser = this.auctions[i].bids[i+j].email;
+            }
+          }
+        }
+        this.auctions[i].highestBidUser = greaterBidUser;
+        this.auctions[i].highestBidAmount = greaterBid;
+      }
+        
+      }
+      
       setTimeout(() => {
         this.auctions = this.auctions.map((a) => {
           Utils.closeSwalLoader();
