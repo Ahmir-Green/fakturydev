@@ -38,7 +38,7 @@
                     </div>
                     <div class="shop__box__bottom" *ngIf="userRole !== 'Admin'">
                         <div class="shop__count">
-                            <p>{{orders[i]}} of {{product.quantity}}</p>
+                            <!-- <p>{{orders[i]}} of {{product.quantity}}</p> -->
                         </div>
                         <div ngbDropdown class="buy__btn">
                             <a href="javascript:;" id="dropdownBasic1" (click)="buyProduct()" ngbDropdownToggle *ngIf="product.quantity !== orders[i];else soldOut">Buy Now  </a>
@@ -47,16 +47,16 @@
                             </ng-template>
                             <div ngbDropdownMenu aria-labelledby="dropdownBasic1" *ngIf="userEmail && userEmail !== undefined">
                             <form target="_blank">
-                                <button ngbDropdownItem class="paymentBtn" (click)="xummPage(product.xummLink)">Pay with Xumm</button>
+                                <button ngbDropdownItem class="paymentBtn" (click)="xummPage(product.xummLink)">Pay with XRP</button>
                             </form>
-                            <button ngbDropdownItem class="paymentBtn" data-bs-toggle="modal" data-bs-target="#stripeModal" (click)="setProductValue(product.title, product.price, product.isDigital, product._id, product.file)" >Pay with Stripe</button>
+                            <button ngbDropdownItem class="paymentBtn" data-bs-toggle="modal" data-bs-target="#stripeModal" (click)="setProductValue(product.title, product.price, product.isDigital, product._id, product.file)" >Pay with Card</button>
                             </div>
                             <!-- Stripe form -->
                             <div class="modal fade" id="stripeModal" tabindex="-1" aria-labelledby="stripeModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                <h6 class="modal-title" id="stripeModalLabel"> Pay with Stripe</h6>
+                                <h6 class="modal-title" id="stripeModalLabel"> Pay with Card</h6>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="resetForm()"></button>
                                 </div>
                                 <div class="modal-body">
