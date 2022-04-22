@@ -7,7 +7,7 @@
             <div class="auction__wrap">
                 <div class="auction__box" *ngFor="let auction of auctions; let i = index" >
                     <div class="auction__box__head">
-                        <div class="auction__image" *ngIf="auction.file && (auction.file.includes('.jpg') || auction.file.includes('.gif') || auction.file.includes('.bmp') || auction.file.includes('.png')); else videoElement">
+                        <div class="auction__image" *ngIf="auction.file && (auction.file.includes('.jpg') || auction.file.includes('.gif') || auction.file.includes('.bmp') || auction.file.includes('.png') || auction.file.includes('.jpeg')); else videoElement">
                             <img src="{{imageBaseUrl + auction.file }}">
                         </div>
                         <ng-template class="auction__image" #videoElement>

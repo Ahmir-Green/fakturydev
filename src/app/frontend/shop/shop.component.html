@@ -10,7 +10,7 @@
                     <div class="shop__box__main">
                         <div class="box__image">
                             <div class="swiper-container">
-                                <div class="swiper-wrapper" *ngIf="product.file && (product.file.includes('.jpg') || product.file.includes('.gif') || product.file.includes('.bmp') || product.file.includes('.png')); else videoElement">
+                                <div class="swiper-wrapper" *ngIf="product.file && (product.file.includes('.jpg') || product.file.includes('.gif') || product.file.includes('.bmp') || product.file.includes('.png')  || product.file.includes('.jpeg') ); else videoElement">
                                     <div class="swiper-slide">
                                         <img src="{{imageBaseUrl + product.file }}">
                                     </div>
