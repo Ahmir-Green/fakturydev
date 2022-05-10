@@ -177,11 +177,12 @@ exports.auction_bid_update_one = (req, res, next) => {
   Auction.updateOne({
       'bids._id': req.body.bidId
     }, {'$set': {
-      'bids.$.is_winner': req.body.is_winner,
-      'status': req.body.status
+      'status': req.body.status,
+      'bids.$.is_winner': req.body.is_winner
   }})
     .exec()
     .then(doc => {
+      // console.log(doc)
       res.status(200).json({
         message: 'Successfully Updated',
  

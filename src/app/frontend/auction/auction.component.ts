@@ -41,6 +41,8 @@ export class AuctionComponent implements OnInit {
   highest__bid: any;
   highest__bid__user: any;
   highestBidArr: any[] = [];
+  showBid: boolean = true;
+  winnerEmail: any;
 
   
   constructor(public auth: AuthService,public auctionService: AuctionService, 
@@ -140,6 +142,13 @@ export class AuctionComponent implements OnInit {
   getBid(auctionId: string) {
     this.auctionService.getAuctionBid(auctionId).subscribe((data: any) => {
       this.bids = data.Bids.bids;
+      for (let i = 0; i < this.bids.length; i++){
+        if(this.bids[i].is_winner == true) {
+          this.winnerEmail = this.bids[i].email;
+          this.showBid = false;
+          return
+        }
+      }
     });
   }
 
@@ -180,15 +189,13 @@ export class AuctionComponent implements OnInit {
           }
         this.auctionService.updateAuctionBid(auctionId, data).subscribe((res: any) => {
           this.toastr.success(res.message);
-        }, err => {
-          this.toastr.error(err.error.message);
         });
         setTimeout(()=>{
         $('#myModal').modal('hide');                
         Utils.showSwalLoader();
         this.loadAuctions();
         Utils.closeSwalLoader();
-        }, 1000);
+        }, 2000);
         }
       });  
     }

@@ -112,13 +112,14 @@
                     
                             <!-- Modal body -->
                             <div class="modal-body">
-                                <table class="table text-center" *ngIf="bids && bids.length > 0; else noThings">
+                                <table class="table" *ngIf="bids && bids.length > 0 && showBid; else winner">
                                     <thead>
                                         <tr>
                                         <!-- <th>AuctionId</th> -->
                                         <th>Email</th>
-                                        <th>XrpBid</th>
-                                        <th>FakBid</th>
+                                        <th  class="text-right">XrpBid</th>
+                                        <th  class="text-right">FakBid</th>
+                                        <th></th>
                                         <th>Edit</th>
                                         </tr>
                                     </thead>
@@ -126,8 +127,9 @@
                                         <tr *ngFor="let bid of bids; let i = index" >
                                         <!-- <td>{{bid.auctionId}}</td> -->
                                         <td>{{bid.email}}</td>
-                                        <td>{{bid.xrpBid}}</td>
-                                        <td>{{bid.fakBid}}</td>
+                                        <td class="text-right">{{bid.xrpBid}}</td>
+                                        <td class="text-right">{{bid.fakBid}}</td>
+                                        <td></td>
                                         <td>
                                             <ul class="displayClass">
                                                 <li>
@@ -138,6 +140,13 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                <ng-template #winner>
+                                    <ng-container *ngIf="!showBid;else noThings">
+                                        <div class="text-center">
+                                           <h4> Winner is <b><i>{{winnerEmail}}</i></b></h4>
+                                        </div>
+                                    </ng-container>
+                                </ng-template>
                                 <ng-template #noThings>
                                     <div class="text-center">
                                         No Bids
