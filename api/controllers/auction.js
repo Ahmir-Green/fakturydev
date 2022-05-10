@@ -56,11 +56,11 @@ exports.auction_create_auction = (req, res, next) => {
 
 exports.auction_get_one = (req, res, next) => {
   var id = req.params.auctionId;
-  Auction.findById(id).select('_id title description file bids expiryTime status').exec().then(doc => {
-    console.log(doc);
+  Auction.findById(id).select('bids').exec().then(doc => {
+    // console.log(doc);
     if (doc) {
       res.status(200).json({
-        Auction: doc
+        Bids: doc
       });
     } else {
       res.status(404).json({
@@ -74,7 +74,6 @@ exports.auction_get_one = (req, res, next) => {
     })
   });
 }
-
 
 
 exports.auction_update_one = (req, res, next) => {
@@ -102,20 +101,21 @@ exports.auction_update_one = (req, res, next) => {
    auction.status = req.body.status,
    auction.title = req.body.title,
    auction.description = req.body.description,
-   auction.expiryTime = req.body.expiryTime,
-   bids = {
-    userId: req.body.userId,
-    email: req.body.email,
-    address: req.body.address,
-    xrpBid: req.body.xrpBid,
-    fakBid : req.body.fakBid,
-    createdAt : new Date(),
-    is_winner: true
-   }
+   auction.expiryTime = req.body.expiryTime
  }
+  //  bids = {
+  //   userId: req.body.userId,
+  //   email: req.body.email,
+  //   address: req.body.address,
+  //   xrpBid: req.body.xrpBid,
+  //   fakBid : req.body.fakBid,
+  //   createdAt : new Date(),
+  //   is_winner: true
+  //  }
+ 
  Auction.updateOne({
      _id: id
-   },{ $addToSet: { bids : bids } }, {
+   }, {
      $set: auction
    })
    .exec()
@@ -132,6 +132,67 @@ exports.auction_update_one = (req, res, next) => {
    });
 }
 
+exports.auction_bid_update_one = (req, res, next) => {
+  var id = req.params.auctionId;
+  console.log(req.body)
+  // return;
+  // let auction = {}
+  // if (req.body.title) {
+  //    auction.title = req.body.title,
+  //    auction.description = req.body.description,
+  //    auction.expiryTime = req.body.expiryTime
+  // }
+  // if(req.file != undefined) {
+  //  auction.file = req.file.filename
+  // } 
+
+    // bids = {
+    // //  userId: req.body.userId,
+    //  email: req.body.email,
+    //  address: req.body.address,
+    //  xrpBid: req.body.xrpBid,
+    //  fakBid : req.body.fakBid,
+    //  createdAt : req.body.createdAt,
+    //  is_winner: req.body.is_winner
+    // }
+  // if (req.body.status == 'purchased') {
+  //   auction.status = req.body.status,
+  //   auction.title = req.body.title,
+  //   auction.description = req.body.description,
+  //   auction.expiryTime = req.body.expiryTime,
+  //   bids = {
+  //    userId: req.body.userId,
+  //    email: req.body.email,
+  //    address: req.body.address,
+  //    xrpBid: req.body.xrpBid,
+  //    fakBid : req.body.fakBid,
+  //    createdAt : new Date(),
+  //    is_winner: true
+  //   }
+  // }
+//   Person.update({'items.id': 2}, {'$set': {
+//     'items.$.name': 'updated item2',
+//     'items.$.value': 'two updated'
+// }},
+  Auction.updateOne({
+      'bids._id': req.body.bidId
+    }, {'$set': {
+      'bids.$.is_winner': req.body.is_winner,
+      'status': req.body.status
+  }})
+    .exec()
+    .then(doc => {
+      res.status(200).json({
+        message: 'Successfully Updated',
+ 
+      });
+    }).catch(err => {
+      console.log(err);
+      res.status(500).json({
+        error: err
+      });
+    });
+ }
 
 
 exports.auction_delete_one = (req, res, next) => {

@@ -4,6 +4,7 @@ import { Auction } from "./auction.modal";
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class AuctionService {
     private toastr: ToastrService) { }
 
   // Define API
-  apiURL = 'https://www.faktury.dev/api';
+  apiURL = environment.apiUrl;
 
 
   // save auction to db
@@ -33,6 +34,10 @@ export class AuctionService {
     return this.http.patch(`${this.apiURL}/auctions/${id}`, data);
   }
 
+  updateAuctionBid(id : string, data: any)
+  {
+    return this.http.patch(`${this.apiURL}/auctions/bid/${id}`, data);
+  }
   // delete auction from db
   deletePost(auctionId: string) {
     this.http
@@ -45,5 +50,9 @@ export class AuctionService {
   getPosts() {
     return this.http.get(`${this.apiURL}/auctions/`)
 
+  }
+  // get bid by id
+  getAuctionBid(auctionId: string) {
+    return this.http.get(`${this.apiURL}/auctions/` + auctionId)
   }
 }

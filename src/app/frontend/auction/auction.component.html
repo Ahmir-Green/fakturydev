@@ -115,7 +115,7 @@
                                 <table class="table text-center" *ngIf="bids && bids.length > 0; else noThings">
                                     <thead>
                                         <tr>
-                                        <th>AuctionId</th>
+                                        <!-- <th>AuctionId</th> -->
                                         <th>Email</th>
                                         <th>XrpBid</th>
                                         <th>FakBid</th>
@@ -124,12 +124,12 @@
                                     </thead>
                                     <tbody>
                                         <tr *ngFor="let bid of bids; let i = index" >
-                                        <td>{{bid.auctionId}}</td>
+                                        <!-- <td>{{bid.auctionId}}</td> -->
                                         <td>{{bid.email}}</td>
                                         <td>{{bid.xrpBid}}</td>
                                         <td>{{bid.fakBid}}</td>
                                         <td>
-                                            <ul>
+                                            <ul class="displayClass">
                                                 <li>
                                                     <a (click)="editBid(bids[i], auction)" class="a_btn">Approve ?</a>
                                                 </li>

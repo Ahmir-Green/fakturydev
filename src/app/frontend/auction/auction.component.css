@@ -180,3 +180,8 @@ table {
         margin: 40px auto;
         text-align: center;
     }
+
+    .displayClass {
+        display: inline!important;
+        margin: 10px auto;
+    }

@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import { Utils } from 'src/utils';
 import { BidService } from './bid.service';
+import { environment } from '../../../environments/environment';
 declare var $ : any;
 import * as _ from 'lodash';
 
@@ -19,8 +20,8 @@ import * as _ from 'lodash';
 })
 export class AuctionComponent implements OnInit {
 
-  baseUrl = 'https://www.faktury.dev/api';
-  imageBaseUrl = 'https://www.faktury.dev/images/'
+  baseUrl = environment.apiUrl;
+  imageBaseUrl = environment.imageBaseUrl;
 
   auctionForm!: FormGroup;
   bidForm!: FormGroup;
@@ -137,8 +138,8 @@ export class AuctionComponent implements OnInit {
 
   //get auction bid
   getBid(auctionId: string) {
-    this.bidService.getOneBid(auctionId).subscribe((data: any) => {
-      this.bids = data.Bid;
+    this.auctionService.getAuctionBid(auctionId).subscribe((data: any) => {
+      this.bids = data.Bids.bids;
     });
   }
 
@@ -161,7 +162,7 @@ export class AuctionComponent implements OnInit {
     editBid(bid, auction) {
       Swal.fire(Utils.updateConfig()).then(result => {
         if (result.value && result.value === true) {
-          let auctionId = bid.auctionId
+          let auctionId = auction._id
           let data = {
             title: auction.title,
             description: auction.description,
@@ -171,11 +172,17 @@ export class AuctionComponent implements OnInit {
             email: bid.email,
             xrpBid: bid.xrpBid,
             fakBid: bid.fakBid,
-            userId: bid.userId,
-            is_approved : 1,
+            createdAt: bid.createdAt,
+            bidId: bid._id,
+            // userId: bid.userId,
+            is_winner : true,
             status : 'purchased'
           }
-        this.auctionService.updateAuction(auctionId, data);
+        this.auctionService.updateAuctionBid(auctionId, data).subscribe((res: any) => {
+          this.toastr.success(res.message);
+        }, err => {
+          this.toastr.error(err.error.message);
+        });
         setTimeout(()=>{
         $('#myModal').modal('hide');                
         Utils.showSwalLoader();
@@ -193,7 +200,9 @@ export class AuctionComponent implements OnInit {
       formData.append('expiryTime', this.auctionForm.get('expiryTime')?.value);
       formData.append('file', this.fileUrl)
       formData.append('description', this.auctionForm.get('description')?.value);
-      this.auctionService.updateAuction(id, formData);
+      this.auctionService.updateAuction(id, formData).subscribe((res: any) => {
+        this.toastr.success(res.message)
+      });
       setTimeout(()=>{                
         this.loadAuctions();
       $('#auctionModal').modal('hide');          

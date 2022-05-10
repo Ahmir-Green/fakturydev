@@ -31,6 +31,11 @@ router.post('/', upload.single('file'), auctionController.auction_create_auction
 
 router.patch('/:auctionId',upload.single('file'), auctionController.auction_update_one);
 
+router.patch('/bid/:auctionId', auctionController.auction_bid_update_one);
+
 router.delete('/:auctionId', auctionController.auction_delete_one);
+
+
+router.get('/:auctionId',  auctionController.auction_get_one);
        
 module.exports = router;
