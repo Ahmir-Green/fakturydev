@@ -303,11 +303,12 @@ export class AuctionComponent implements OnInit {
     hours = Math.floor((diff % (1000 * 60 * 60 * 24 )) / (1000 * 60 * 60));
     mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
     secs = Math.floor((diff % (1000 * 60 )) / (1000));
-    if (diff < 0) {
-      return `<div class="auctionExpiryClass"> Expired </div>`
-    }
     if (status == 'purchased') {
       return `<div class="auctionPurchasedClass"> Purchased </div>`
+    }
+    
+    if (diff < 0) {
+      return `<div class="auctionExpiryClass"> Expired </div>`
     }
     return `<div class="js-days" class="number">
     <span class="current">${days}</span></div>
