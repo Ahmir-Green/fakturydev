@@ -254,6 +254,7 @@ export class AuctionComponent implements OnInit {
   loadAuctions() {
     Utils.showSwalLoader();
     return this.auctionService.getPosts().subscribe((data: any) => {
+      // console.log(data)
       this.auctions = data.Auction;
       if (this.auctions.length <= 0) {
         Utils.closeSwalLoader()
@@ -306,7 +307,7 @@ export class AuctionComponent implements OnInit {
     if (status == 'purchased') {
       return `<div class="auctionPurchasedClass"> Purchased </div>`
     }
-    
+
     if (diff < 0) {
       return `<div class="auctionExpiryClass"> Expired </div>`
     }
