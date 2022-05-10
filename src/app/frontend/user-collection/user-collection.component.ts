@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AuthService } from '@auth0/auth0-angular';
+import { environment } from 'src/environments/environment';
 
 import { Utils } from 'src/utils';
 import { OrderService } from '../shop/order.service';
@@ -15,8 +16,8 @@ declare var $ : any;
 })
 export class UserCollectionComponent implements OnInit {
 
-  baseUrl = 'https://www.faktury.dev/api';
-  imageBaseUrl = 'https://www.faktury.dev/images/'
+  baseUrl = environment.apiUrl;
+  imageBaseUrl = environment.imageBaseUrl;
   profileJson!: string;
   userForm: FormGroup;
   userEmail: string;

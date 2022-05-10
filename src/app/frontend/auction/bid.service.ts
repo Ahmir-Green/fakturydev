@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { catchError, retry } from 'rxjs/operators'
 import { throwError } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class BidService {
     private toastr: ToastrService) { }
 
   // Define API
-  apiURL = 'https://www.faktury.dev/api';
+  apiURL = environment.apiUrl;
 
 
   // save bids to db

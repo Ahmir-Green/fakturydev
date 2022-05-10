@@ -11,6 +11,7 @@ import {loadStripe, Stripe} from '@stripe/stripe-js';
 import { OrderService } from './order.service';
 import { Router } from '@angular/router';
 import { UserService } from './user.service';
+import { environment } from 'src/environments/environment';
 //import * as $ from 'jquery';
 declare var $ : any;
 
@@ -24,8 +25,8 @@ export class ShopComponent implements OnInit {
 private stripe: Stripe
 private $modal: any;
 
-baseUrl = 'https://www.faktury.dev/api';
-imageBaseUrl = 'https://www.faktury.dev/images/'
+baseUrl = environment.apiUrl;
+imageBaseUrl = environment.imageBaseUrl;
 productForm!: FormGroup;
 stripeForm!: FormGroup;
 fileSrc: string = '';

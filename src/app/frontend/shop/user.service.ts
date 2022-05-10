@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class UserService {
     private toastr: ToastrService) { }
     
     // Define API
-    apiURL = 'https://www.faktury.dev/api';
+    apiURL = environment.apiUrl;
 
     getUser(email:string) {
       return this.http.get(`${this.apiURL}/users/${email}`)

@@ -4,6 +4,7 @@ import { Product } from "./product.modal";
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class ProductService {
     private toastr: ToastrService) { }
 
   // Define API
-  apiURL = 'https://www.faktury.dev/api';
+  apiURL = environment.apiUrl;
 
 
   // save product to db
