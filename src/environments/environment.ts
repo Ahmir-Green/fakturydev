@@ -1,4 +1,7 @@
 export const environment = {
+  baseUrl: 'http://localhost:4200',
+  imageBaseUrl: 'http://localhost:4200/images/',
+  apiUrl: 'http://localhost:3000/api',
   production: false,
   domain: "dev-r3w1d3v5.us.auth0.com",
   clientId: "4L4WEhn4Z4zd1jGyggajRJwGxQaygzHi",
