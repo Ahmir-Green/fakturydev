@@ -6,4 +6,6 @@ export class Auction {
     expiryTime!: any;
     bids: any;
     status: string;
+    currencyType: string;
+    minimumBid: any;
   }

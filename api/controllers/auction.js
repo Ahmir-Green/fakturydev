@@ -2,7 +2,7 @@ var Auction = require('../schemas/auctions.schema');
 var mongoose = require('mongoose');
 
 exports.auction_gets_all = (req, res, next) => {
-  Auction.find().select('_id title description file expiryTime bids status').exec().then(doc => {
+  Auction.find().select('_id title description file expiryTime bids status currencyType minimumBid').exec().then(doc => {
     var response = {
       count: doc.length,
       Auction: doc.map(doc => {
@@ -13,8 +13,10 @@ exports.auction_gets_all = (req, res, next) => {
           file: doc.file,
           bids: doc.bid,
           expiryTime: doc.expiryTime,
+          currencyType: doc.currencyType,
           bids: doc.bids,
-          status: doc.status
+          status: doc.status,
+          minimumBid: doc.minimumBid
         }
       })
     };
@@ -31,27 +33,29 @@ exports.auction_gets_all = (req, res, next) => {
 exports.auction_create_auction = (req, res, next) => {
 
   var auction = new Auction({
-      _id: new mongoose.Types.ObjectId(),
-      title: req.body.title,
-      description: req.body.description,
-      expiryTime: req.body.expiryTime,
-      file: req.file.originalname
+    _id: new mongoose.Types.ObjectId(),
+    title: req.body.title,
+    description: req.body.description,
+    expiryTime: req.body.expiryTime,
+    file: req.file.originalname,
+    currencyType: req.body.currencyType,
+    minimumBid: req.body.minimumBid ? req.body.minimumBid : 0
 
+  });
+  auction.save().then(result => {
+    res.status(200).json({
+      message: 'auction saved successfully',
+      createdAuction: result
     });
-    auction.save().then(result => {
-        res.status(200).json({
-          message: 'auction saved successfully',
-          createdAuction: result
-        });
-      })
-      .catch(err => {
-        console.log(err);
-        res.status(500).json({
-          Error: err
-        });
+  })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        Error: err
       });
-  
-  }
+    });
+
+}
 
 
 exports.auction_get_one = (req, res, next) => {
@@ -77,32 +81,41 @@ exports.auction_get_one = (req, res, next) => {
 
 
 exports.auction_update_one = (req, res, next) => {
- var id = req.params.auctionId;
- let auction = {}
- if (req.body.title) {
+  var id = req.params.auctionId;
+  let auction = {}
+  auction.bids = req.body.bids
+  if (req.body.title) {
     auction.title = req.body.title,
-    auction.description = req.body.description,
-    auction.expiryTime = req.body.expiryTime
- }
- if(req.file != undefined) {
-  auction.file = req.file.filename
- } 
- if (req.body.xrpBid) {
-   bids = {
-    userId: req.body.userId,
-    email: req.body.email,
-    address: req.body.address,
-    xrpBid: req.body.xrpBid,
-    fakBid : req.body.fakBid,
-    createdAt : new Date()
-   }
- }
- if (req.body.status == 'purchased') {
-   auction.status = req.body.status,
-   auction.title = req.body.title,
-   auction.description = req.body.description,
-   auction.expiryTime = req.body.expiryTime
- }
+      auction.description = req.body.description,
+      auction.expiryTime = req.body.expiryTime,
+      auction.currencyType = req.body.currencyType,
+      auction.minimumBid = req.body.minimumBid ? req.body.minimumBid : 0
+  }
+  if (req.file != undefined) {
+    auction.file = req.file.filename
+  }
+  if (req.body.bidForm && req.body.bidForm.amount) {
+    bid = {
+      userId: req.body.bidForm.userId,
+      email: req.body.bidForm.email,
+      address: req.body.bidForm.address,
+      amount: req.body.bidForm.amount,
+      createdAt: new Date()
+    }
+    auction.bids.push(bid)
+  }
+  if (req.body.status == 'purchased') {
+    auction.status = req.body.status,
+      auction.title = req.body.title,
+      auction.description = req.body.description,
+      auction.expiryTime = req.body.expiryTime,
+      auction.currencyType = req.body.currencyType
+    auction.minimumBid = req.body.minimumBid ? req.body.minimumBid : 0
+  }
+  // console.log("bid : ", bid)
+  // console.log("Auction.bid :", auction.bids)
+  // return
+
   //  bids = {
   //   userId: req.body.userId,
   //   email: req.body.email,
@@ -112,24 +125,24 @@ exports.auction_update_one = (req, res, next) => {
   //   createdAt : new Date(),
   //   is_winner: true
   //  }
- 
- Auction.updateOne({
-     _id: id
-   }, {
-     $set: auction
-   })
-   .exec()
-   .then(doc => {
-     res.status(200).json({
-       message: 'Successfully Updated',
+  console.log("auction : ", auction)
+  Auction.updateOne({
+    _id: id
+  }, {
+    $set: auction
+  })
+    .exec()
+    .then(doc => {
+      res.status(200).json({
+        message: 'Successfully Updated',
 
-     });
-   }).catch(err => {
-     console.log(err);
-     res.status(500).json({
-       error: err
-     });
-   });
+      });
+    }).catch(err => {
+      console.log(err);
+      res.status(500).json({
+        error: err
+      });
+    });
 }
 
 exports.auction_bid_update_one = (req, res, next) => {
@@ -146,15 +159,15 @@ exports.auction_bid_update_one = (req, res, next) => {
   //  auction.file = req.file.filename
   // } 
 
-    // bids = {
-    // //  userId: req.body.userId,
-    //  email: req.body.email,
-    //  address: req.body.address,
-    //  xrpBid: req.body.xrpBid,
-    //  fakBid : req.body.fakBid,
-    //  createdAt : req.body.createdAt,
-    //  is_winner: req.body.is_winner
-    // }
+  // bids = {
+  // //  userId: req.body.userId,
+  //  email: req.body.email,
+  //  address: req.body.address,
+  //  xrpBid: req.body.xrpBid,
+  //  fakBid : req.body.fakBid,
+  //  createdAt : req.body.createdAt,
+  //  is_winner: req.body.is_winner
+  // }
   // if (req.body.status == 'purchased') {
   //   auction.status = req.body.status,
   //   auction.title = req.body.title,
@@ -170,22 +183,24 @@ exports.auction_bid_update_one = (req, res, next) => {
   //    is_winner: true
   //   }
   // }
-//   Person.update({'items.id': 2}, {'$set': {
-//     'items.$.name': 'updated item2',
-//     'items.$.value': 'two updated'
-// }},
+  //   Person.update({'items.id': 2}, {'$set': {
+  //     'items.$.name': 'updated item2',
+  //     'items.$.value': 'two updated'
+  // }},
   Auction.updateOne({
-      'bids._id': req.body.bidId
-    }, {'$set': {
+    'bids._id': req.body.bidId
+  }, {
+    '$set': {
       'status': req.body.status,
       'bids.$.is_winner': req.body.is_winner
-  }})
+    }
+  })
     .exec()
     .then(doc => {
       // console.log(doc)
       res.status(200).json({
         message: 'Successfully Updated',
- 
+
       });
     }).catch(err => {
       console.log(err);
@@ -193,23 +208,23 @@ exports.auction_bid_update_one = (req, res, next) => {
         error: err
       });
     });
- }
+}
 
 
 exports.auction_delete_one = (req, res, next) => {
- var id = req.params.auctionId;
- Auction.remove({
-     _id: id
-   })
-   .exec()
-   .then(doc => {
-     res.status(200).json({
-       Message: 'Auction successfully deleted'
-     });
-   }).catch(err => {
-     console.log(err);
-     res.status(500).json({
-       error: err
-     });
-   });
+  var id = req.params.auctionId;
+  Auction.remove({
+    _id: id
+  })
+    .exec()
+    .then(doc => {
+      res.status(200).json({
+        Message: 'Auction successfully deleted'
+      });
+    }).catch(err => {
+      console.log(err);
+      res.status(500).json({
+        error: err
+      });
+    });
 }

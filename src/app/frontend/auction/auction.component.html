@@ -36,7 +36,7 @@
                                 </div>
                                 <div class="desc__text">
                                     <p>{{obscureEmail(auction.highestBidUser)}}</p>
-                                    <p>Amount = {{auction.highestBidAmount}} XRP</p>
+                                    <p>Amount = {{auction.highestBidAmount}} {{auction.currencyType}}</p>
                                 </div>
                             </div>
                         </div>
@@ -63,27 +63,31 @@
                                 <input type="email" id="email__address" readonly [(ngModel)]="userEmail"
                                 class="form-control" placeholder="Email Address" formControlName = "email">
                             </div>
-                            <div class="form-group">
-                                <input type="number" id="bid__fak" placeholder="Bid in FAK" class="form-control" formControlName = "fakBid" 
-                                [ngClass]="{ 'is-invalid': g['fakBid'].touched && g['fakBid'].errors }">
-                                <span *ngIf="g['fakBid'].touched && g['fakBid'].errors?.['required']" class="invalid-feedback">
+                            <div class="form-group" *ngIf="auction && auction.currencyType == 'fak'">
+                                <input type="number" id="bid__fak" placeholder="Bid in FAK" class="form-control" formControlName = "amount" 
+                                >
+                                <!-- <span *ngIf="g['fakBid'].touched && g['fakBid'].errors?.['required']" class="invalid-feedback">
                                     Bid in FAK is required
-                                </span>
+                                </span> -->
                             </div>
-                            <div class="form-group">
-                                <input type="number" id="bid__xrp" placeholder="Bid in XRP" class="form-control" formControlName = "xrpBid" 
-                                [ngClass]="{ 'is-invalid': g['xrpBid'].touched && g['xrpBid'].errors }">
-                                <span *ngIf="g['xrpBid'].touched && g['xrpBid'].errors?.['required']" class="invalid-feedback">
+                            <div class="form-group" *ngIf="auction && auction.currencyType == 'xrp'">
+                                <input type="number" id="bid__xrp" placeholder="Bid in XRP" class="form-control" formControlName = "amount" 
+                                >
+                                <!-- <span *ngIf="g['xrpBid'].touched && g['xrpBid'].errors?.['required']" class="invalid-feedback">
                                     Bid in XRP is required
-                                </span>
+                                </span> -->
                             </div>
-                            <div class="auction__checkbox">
-                                <input class="styled-checkbox" id="styled-checkbox-1" type="checkbox" value="value1">
-                                <label for="styled-checkbox-1">No Maximum Bid</label>
+                            <div class="form-group" *ngIf="auction && auction.minimumBid !== 0">
+                                <input type="number" id="bid__xrp" [disabled]="true" placeholder="minimumBid {{auction.minimumBid}}" class="form-control" 
+                                >
+                                <!-- <span *ngIf="g['xrpBid'].touched && g['xrpBid'].errors?.['required']" class="invalid-feedback">
+                                    Bid in XRP is required
+                                </span> -->
                             </div>
+                            
                         </form>
                         <div class="submit__btn">
-                            <button (click)="bidsForm(auction._id, bidForm.value)">Submit</button>
+                            <button (click)="bidsForm(auction, bidForm.value)">Submit</button>
 
                         </div>
                     </div>
@@ -117,8 +121,9 @@
                                         <tr>
                                         <!-- <th>AuctionId</th> -->
                                         <th>Email</th>
-                                        <th  class="text-right">XrpBid</th>
-                                        <th  class="text-right">FakBid</th>
+                                        <th  class="text-right">Amount</th>
+                                        <!-- <th  class="text-right">Curr</th> -->
+                                        <th></th>
                                         <th></th>
                                         <th *ngIf="showBid">Edit</th>
                                         <th *ngIf="!showBid">Winner</th>
@@ -128,8 +133,9 @@
                                         <tr *ngFor="let bid of bids; let i = index" >
                                         <!-- <td>{{bid.auctionId}}</td> -->
                                         <td>{{bid.email}}</td>
-                                        <td class="text-right">{{bid.xrpBid}}</td>
-                                        <td class="text-right">{{bid.fakBid}}</td>
+                                        <td class="text-right">{{bid.amount}}</td>
+                                        <!-- <td class="text-right">{{bid.fakBid}}</td> -->
+                                        <td></td>
                                         <td></td>
                                         <td *ngIf="showBid">
                                             <ul class="displayClass">
@@ -198,9 +204,36 @@
                     bsDatepicker [bsConfig]="{ isAnimated: true }" placement="bottom" [outsideClick]="true">
                 </div>
                 <div class="form-group">
+                    <label for="selectDropdown" class="form-label">Select Currency</label>
+                    <select class="custom-select mb-3"(change)="changeCurrency($event)" formControlName="currencyType">
+                        <option value="fak" selected>
+                            Fak
+                        </option>
+                        <option value="xrp">
+                            Xrp
+                        </option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
                     <label for="exampleInputPassword1" class="form-label">Description</label>
                     <input type="text" formControlName="description" class="form-control" id="inputPassword4">
                 </div>
+                <div class="form-group" *ngIf="showMinimumBid">
+                    <input type="hidden" formControlName="_id" class="form-control">
+                    <label for="minimum_bid" >Minimum Bid</label>
+                    <input type="number" id="minimum_bid" class="form-control" formControlName="minimumBid"
+                    >
+                  <!-- <span *ngIf="f['title'].touched && f['title'].errors?.['required']" class="invalid-feedback">
+                    Title is required
+                  </span> -->
+                </div>
+                <div class="auction__checkbox mb-2">
+                    <input class="styled-checkbox" id="styled-checkbox-1" type="checkbox" value="value1"
+                    (change)="updateMinimumBidState()">
+                    <label for="styled-checkbox-1">No Minimum Bid</label>
+                </div>
+                
                   <button [hidden]="!auctionForm.valid" class="submit_button"(click)="formTitle=='Add Auction'? onSubmit(auctionForm.value) : onUpdate()">Submit</button>
             </form>
         </div>

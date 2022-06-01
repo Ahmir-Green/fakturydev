@@ -43,6 +43,7 @@ export class AuctionComponent implements OnInit {
   highestBidArr: any[] = [];
   showBid: boolean = true;
   winnerEmail: any;
+  showMinimumBid: boolean = true;
 
   
   constructor(public auth: AuthService,public auctionService: AuctionService, 
@@ -63,8 +64,7 @@ export class AuctionComponent implements OnInit {
         email: new FormControl('',    [Validators.required,
                                         Validators.email,
                                         Validators.pattern(emailPattern)]),
-        xrpBid: new FormControl('', [Validators.required]),
-        fakBid: new FormControl('', [Validators.required])
+        amount: new FormControl('')
       })
 
       this.auctionForm = new FormGroup({
@@ -72,7 +72,9 @@ export class AuctionComponent implements OnInit {
         title: new FormControl('', [Validators.required]),
         file: new FormControl(''),
         description: new FormControl(''),
-        expiryTime: new FormControl('', [Validators.required])
+        expiryTime: new FormControl('', [Validators.required]),
+        currencyType: new FormControl('fak', [Validators.required]),
+        minimumBid: new FormControl('')
         });
         this.loadAuctions()
   }
@@ -83,6 +85,9 @@ export class AuctionComponent implements OnInit {
   get g() { return this.bidForm.controls; }
   
 
+  updateMinimumBidState() {
+    this.showMinimumBid = !this.showMinimumBid;
+  }
 
     toggleShow() {
 
@@ -102,13 +107,24 @@ export class AuctionComponent implements OnInit {
     // this.loadAuctions();
     this.fileSrc = '';
   }
-  bidsForm(id, bidForm){
+  bidsForm(auction, bidForm){
+      
+    if(auction.minimumBid !== 0) {
+      if (bidForm.amount < auction.minimumBid) {
+        this.toastr.error('Please enter a bid greater than minimum bid')
+        return
+      }
+    }
       // stop here if form is invalid
       if (this.bidForm.invalid) {
           this.toastr.warning('please fill this form');
       }  else {
         bidForm.userId = this.userId
-        this.auctionService.updateAuction(id, bidForm).subscribe((res: any) => {
+        let auctions = {
+          ...auction,
+          bidForm
+        }
+        this.auctionService.updateAuction(auction._id, auctions).subscribe((res: any) => {
           this.toastr.success(res.message);
         }, err => {
           this.toastr.error(err.error.message);
@@ -133,7 +149,9 @@ export class AuctionComponent implements OnInit {
       _id: auction._id,
       title: auction.title,
       expiryTime: new Date(auction.expiryTime),
-      description: auction.description
+      description: auction.description,
+      currencyType: auction.currencyType,
+      minimumBid: auction.minimumBid,
     });
     this.changeTitle('Update Auction'); ;
   }
@@ -179,8 +197,7 @@ export class AuctionComponent implements OnInit {
             file: auction.file,
             address: bid.address,
             email: bid.email,
-            xrpBid: bid.xrpBid,
-            fakBid: bid.fakBid,
+            amount: bid.amount,
             createdAt: bid.createdAt,
             bidId: bid._id,
             // userId: bid.userId,
@@ -207,6 +224,8 @@ export class AuctionComponent implements OnInit {
       formData.append('expiryTime', this.auctionForm.get('expiryTime')?.value);
       formData.append('file', this.fileUrl)
       formData.append('description', this.auctionForm.get('description')?.value);
+      formData.append('currencyType', this.auctionForm.get('currencyType')?.value);
+      formData.append('minimumBid', this.auctionForm.get('minimumBid')?.value);
       this.auctionService.updateAuction(id, formData).subscribe((res: any) => {
         this.toastr.success(res.message)
       });
@@ -229,7 +248,9 @@ export class AuctionComponent implements OnInit {
         formData.append('title', this.auctionForm.get('title')?.value);
         formData.append('file',  this.fileUrl);
         formData.append('expiryTime', this.auctionForm.get('expiryTime')?.value)
+        formData.append('currencyType', this.auctionForm.get('currencyType')?.value)
         formData.append('description', this.auctionForm.get('description')?.value);
+        formData.append('minimumBid', this.auctionForm.get('minimumBid')?.value);
         this.auctionService.addAuction(formData);
          // Close the stripe modal dialog window
       $('#auctionModal').modal('hide');
@@ -238,6 +259,13 @@ export class AuctionComponent implements OnInit {
       }, 2000);
       }
   }
+
+  changeCurrency(e: any) {
+    this.auctionForm.get('currencyType').setValue(e.target.value, {
+      onlySelf: true
+   })
+  }
+
   onFileChange(event: any){
     const reader = new FileReader();
 
@@ -262,18 +290,19 @@ export class AuctionComponent implements OnInit {
       let greaterBid = 0;
       let greaterBidUser = '';
       for (let i = 0; i < this.auctions.length; i++) {
-        if (this.auctions[i].bids.length != 0) {
-        greaterBid = this.auctions[i].bids[0].xrpBid;
+        // console.log(this.auctions[i].bids.length)
+        if (this.auctions[i].bids.length > 0 && this.auctions[i].bids && this.auctions[i].bids[0].amount != null) {
+        greaterBid = this.auctions[i].bids[0].amount;
         greaterBidUser = this.auctions[i].bids[0].email;
         for (let j = 0; j < this.auctions[i].bids.length; j++) {
           if ( i+j <= j) {
-            if (greaterBid >= this.auctions[i].bids[i+j].xrpBid) {
+            if (greaterBid >= this.auctions[i].bids[i+j].amount) {
               this.highest__bid = greaterBid;
               this.highest__bid__user = greaterBidUser;
             } else {
-              this.highest__bid = this.auctions[i].bids[i+j].xrpBid;
+              this.highest__bid = this.auctions[i].bids[i+j].amount;
               this.highest__bid__user = this.auctions[i].bids[i+j].email;
-              greaterBid = this.auctions[i].bids[i+j].xrpBid;
+              greaterBid = this.auctions[i].bids[i+j].amount;
               greaterBidUser = this.auctions[i].bids[i+j].email;
             }
           }
