@@ -7,7 +7,12 @@
             <div class="auction__wrap">
                 <div class="auction__box" *ngFor="let auction of auctions; let i = index" >
                     <div class="auction__box__head">
-                        <div class="auction__image" *ngIf="auction.file && (auction.file.includes('.jpg') || auction.file.includes('.gif') || auction.file.includes('.bmp') || auction.file.includes('.png') || auction.file.includes('.jpeg')); else videoElement">
+                        <div class="auction__image" 
+                        *ngIf="auction.file && (auction.file.includes('.jpg') || auction.file.includes('.JPG')
+                        || auction.file.includes('.gif') || auction.file.includes('.GIF')
+                        || auction.file.includes('.bmp')  || auction.file.includes('.BMP')
+                        || auction.file.includes('.png') || auction.file.includes('.PNG') 
+                        || auction.file.includes('.jpeg') || auction.file.includes('.JPEG')); else videoElement">
                             <img src="{{imageBaseUrl + auction.file }}">
                         </div>
                         <ng-template class="auction__image" #videoElement>
@@ -26,7 +31,7 @@
                         </div>
                     </div>
                     <div class="auction__box__main">
-                        <div class="highest__bid" *ngIf="auction.highestBidUser != undefined">
+                        <div class="highest__bid" *ngIf="auction.highestBidUser || auction.highestBidCurrency != undefined">
                             <div class="bid__text">
                                 <p>Highest Bid By :</p>
                             </div>
@@ -36,7 +41,7 @@
                                 </div>
                                 <div class="desc__text">
                                     <p>{{obscureEmail(auction.highestBidUser)}}</p>
-                                    <p>Amount = {{auction.highestBidAmount}} {{auction.currencyType}}</p>
+                                    <p>Amount = {{auction.highestBidAmount}} {{auction.highestBidCurrency}}</p>
                                 </div>
                             </div>
                         </div>
@@ -51,7 +56,8 @@
                     </div>
                     
                     <div class="auction__box__form" *ngIf="showAuctionForm[i]">
-                        <form class="auction__form" [formGroup]="bidForm">
+                        <form class="auction__form" [formGroup]="bidForm"
+                        [ngStyle]="{'margin-bottom': auction.minimumBid == '0' ? '' : '0px'}">
                             <div class="form-group">
                                 <input type="text"  id="xrp__address" placeholder="XRP Address" class="form-control" formControlName = "address"
                                 [ngClass]="{ 'is-invalid': g['address'].touched && g['address'].errors }">
@@ -63,27 +69,29 @@
                                 <input type="email" id="email__address" readonly [(ngModel)]="userEmail"
                                 class="form-control" placeholder="Email Address" formControlName = "email">
                             </div>
-                            <div class="form-group" *ngIf="auction && auction.currencyType == 'fak'">
-                                <input type="number" id="bid__fak" placeholder="Bid in FAK" class="form-control" formControlName = "amount" 
+                            <div class="form-group" *ngIf="auction && auction.currencyType == 'FAK'">
+                                <input type="number" id="bid__fak" placeholder="Bid in FAK" class="form-control mb-2" formControlName = "amount" 
                                 >
+                                Minimum bid: ({{auction.minimumBid}} in {{auction.currencyType}})
+
                                 <!-- <span *ngIf="g['fakBid'].touched && g['fakBid'].errors?.['required']" class="invalid-feedback">
                                     Bid in FAK is required
                                 </span> -->
                             </div>
-                            <div class="form-group" *ngIf="auction && auction.currencyType == 'xrp'">
-                                <input type="number" id="bid__xrp" placeholder="Bid in XRP" class="form-control" formControlName = "amount" 
+                            <div class="form-group" *ngIf="auction && auction.currencyType == 'XRP'">
+                                <input type="number" id="bid__xrp" placeholder="Bid in XRP" class="form-control mb-2" formControlName = "amount" 
                                 >
-                                <!-- <span *ngIf="g['xrpBid'].touched && g['xrpBid'].errors?.['required']" class="invalid-feedback">
-                                    Bid in XRP is required
-                                </span> -->
+                                <span *ngIf="auction && auction.minimumBid !== 0">
+                                    Minimum bid: ({{auction.minimumBid}} in {{auction.currencyType}})
+                                </span>
                             </div>
-                            <div class="form-group" *ngIf="auction && auction.minimumBid !== 0">
+                            <!-- <div class="form-group" *ngIf="auction && auction.minimumBid !== 0">
                                 <input type="number" id="bid__xrp" [disabled]="true" placeholder="minimumBid {{auction.minimumBid}}" class="form-control" 
-                                >
+                                > -->
                                 <!-- <span *ngIf="g['xrpBid'].touched && g['xrpBid'].errors?.['required']" class="invalid-feedback">
                                     Bid in XRP is required
                                 </span> -->
-                            </div>
+                            <!-- </div> -->
                             
                         </form>
                         <div class="submit__btn">
@@ -97,7 +105,7 @@
                             <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#auctionModal"(click)=" updateAuction(auction)" >Update</a>
                         </li>
                         <li>
-                            <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#myModal" (click)="getBid(auction._id)">View Bids</a>
+                            <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#myModal" (click)="getBid(auction._id, auction.title)">View Bids</a>
                         </li>
                         <li>
                             <a href="javascript:;" style="color: red" (click)="removeAuction(auction._id)">Delete</a>
@@ -110,7 +118,7 @@
                     
                             <!-- Modal Header -->
                             <div class="modal-header">
-                            <h4 class="modal-title">All Bids</h4>
+                            <h4 class="modal-title">All Bids ({{auctionTitle}})</h4>
                             <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
                             </div>
                     
@@ -124,7 +132,7 @@
                                         <th  class="text-right">Amount</th>
                                         <!-- <th  class="text-right">Curr</th> -->
                                         <th></th>
-                                        <th></th>
+                                        <th>Currency</th>
                                         <th *ngIf="showBid">Edit</th>
                                         <th *ngIf="!showBid">Winner</th>
                                         </tr>
@@ -136,7 +144,7 @@
                                         <td class="text-right">{{bid.amount}}</td>
                                         <!-- <td class="text-right">{{bid.fakBid}}</td> -->
                                         <td></td>
-                                        <td></td>
+                                        <td>{{bid.currency}}</td>
                                         <td *ngIf="showBid">
                                             <ul class="displayClass">
                                                 <li>
@@ -194,6 +202,10 @@
                   </span>
                 </div>
                 <div class="form-group">
+                    <label for="exampleInputPassword1" class="form-label">Description</label>
+                    <input type="text" formControlName="description" class="form-control" id="inputPassword4">
+                </div>
+                <div class="form-group">
                     <label for="image" class="form-label">Image OR Video</label>
                     <input type="file" formControlName="file" class="form-control" (change)="onFileChange($event)">
                 </div>
@@ -203,22 +215,23 @@
                     <input type="text" autocomplete="off" formControlName="expiryTime" class="form-control" id="inputPassword4" 
                     bsDatepicker [bsConfig]="{ isAnimated: true }" placement="bottom" [outsideClick]="true">
                 </div>
-                <div class="form-group">
+                <div class="form-group mb-1">
                     <label for="selectDropdown" class="form-label">Select Currency</label>
                     <select class="custom-select mb-3"(change)="changeCurrency($event)" formControlName="currencyType">
-                        <option value="fak" selected>
-                            Fak
+                        <option value="FAK" selected>
+                            FAK
                         </option>
-                        <option value="xrp">
-                            Xrp
+                        <option value="XRP">
+                            XRP
                         </option>
                     </select>
                 </div>
-                
-                <div class="form-group">
-                    <label for="exampleInputPassword1" class="form-label">Description</label>
-                    <input type="text" formControlName="description" class="form-control" id="inputPassword4">
+                <div class="auction__checkbox mb-3">
+                    <input class="styled-checkbox" id="styled-checkbox-1" type="checkbox" value="value1"
+                    (change)="updateMinimumBidState()">
+                    <label for="styled-checkbox-1" class="ml-2">No Minimum Bid</label>
                 </div>
+                
                 <div class="form-group" *ngIf="showMinimumBid">
                     <input type="hidden" formControlName="_id" class="form-control">
                     <label for="minimum_bid" >Minimum Bid</label>
@@ -228,12 +241,6 @@
                     Title is required
                   </span> -->
                 </div>
-                <div class="auction__checkbox mb-2">
-                    <input class="styled-checkbox" id="styled-checkbox-1" type="checkbox" value="value1"
-                    (change)="updateMinimumBidState()">
-                    <label for="styled-checkbox-1">No Minimum Bid</label>
-                </div>
-                
                   <button [hidden]="!auctionForm.valid" class="submit_button"(click)="formTitle=='Add Auction'? onSubmit(auctionForm.value) : onUpdate()">Submit</button>
             </form>
         </div>

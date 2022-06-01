@@ -44,6 +44,9 @@ export class AuctionComponent implements OnInit {
   showBid: boolean = true;
   winnerEmail: any;
   showMinimumBid: boolean = true;
+  minimumBid: any;
+  auctionTitle: string;
+  highest__bid_currency: any;
 
   
   constructor(public auth: AuthService,public auctionService: AuctionService, 
@@ -73,7 +76,7 @@ export class AuctionComponent implements OnInit {
         file: new FormControl(''),
         description: new FormControl(''),
         expiryTime: new FormControl('', [Validators.required]),
-        currencyType: new FormControl('fak', [Validators.required]),
+        currencyType: new FormControl('FAK', [Validators.required]),
         minimumBid: new FormControl('')
         });
         this.loadAuctions()
@@ -86,7 +89,14 @@ export class AuctionComponent implements OnInit {
   
 
   updateMinimumBidState() {
+    // console.log('current ', this.showMinimumBid)
     this.showMinimumBid = !this.showMinimumBid;
+    // console.log('new ', this.showMinimumBid)
+    if (!this.showMinimumBid) {
+      this.auctionForm.get('minimumBid').setValue(0, {
+        onlySelf: true
+     })
+    }
   }
 
     toggleShow() {
@@ -157,7 +167,8 @@ export class AuctionComponent implements OnInit {
   }
 
   //get auction bid
-  getBid(auctionId: string) {
+  getBid(auctionId: string, auctionTitle: string) {
+    this.auctionTitle = auctionTitle
     this.auctionService.getAuctionBid(auctionId).subscribe((data: any) => {
       this.bids = data.Bids.bids;
       for (let i = 0; i < this.bids.length; i++){
@@ -242,6 +253,13 @@ export class AuctionComponent implements OnInit {
       if (this.auctionForm.invalid) {
           return;
       }
+      if (!this.showMinimumBid) {
+        console.log("false 0 :",this.showMinimumBid)
+        this.minimumBid = 0
+      } else {
+        console.log("true :",this.showMinimumBid)
+        this.minimumBid = this.auctionForm.get('minimumBid')?.value
+      }
       //True if all the fields are filled 
       if(this.submitted) {
         const formData = new FormData();
@@ -250,7 +268,7 @@ export class AuctionComponent implements OnInit {
         formData.append('expiryTime', this.auctionForm.get('expiryTime')?.value)
         formData.append('currencyType', this.auctionForm.get('currencyType')?.value)
         formData.append('description', this.auctionForm.get('description')?.value);
-        formData.append('minimumBid', this.auctionForm.get('minimumBid')?.value);
+        formData.append('minimumBid', this.minimumBid);
         this.auctionService.addAuction(formData);
          // Close the stripe modal dialog window
       $('#auctionModal').modal('hide');
@@ -287,28 +305,46 @@ export class AuctionComponent implements OnInit {
       if (this.auctions.length <= 0) {
         Utils.closeSwalLoader()
       }
+      for (let i = 0; i < this.auctions.length; i++) {
       let greaterBid = 0;
       let greaterBidUser = '';
-      for (let i = 0; i < this.auctions.length; i++) {
-        // console.log(this.auctions[i].bids.length)
-        if (this.auctions[i].bids.length > 0 && this.auctions[i].bids && this.auctions[i].bids[0].amount != null) {
-        greaterBid = this.auctions[i].bids[0].amount;
-        greaterBidUser = this.auctions[i].bids[0].email;
+      let greaterBidCurrency;
+        // console.clear();
+        if (this.auctions[i].bids && this.auctions[i].bids.length > 0 && this.auctions[i].bids[0].amount != null) {
+          this.auctions[i].bids.every(bid => {
+            if (bid.currency == this.auctions[i].currencyType) {
+              greaterBid = bid.amount;
+              greaterBidUser = bid.email;
+              greaterBidCurrency = bid.currency;        
+              return false;
+            }
+            return true;
+          });
+          
         for (let j = 0; j < this.auctions[i].bids.length; j++) {
-          if ( i+j <= j) {
+          if (this.auctions[i].bids[i+j] && this.auctions[i].bids[i+j].amount && this.auctions[i].bids[i+j].amount 
+            !== undefined && greaterBidCurrency == this.auctions[i].bids[i+j].currency){
+            console.log(greaterBidCurrency, greaterBid);
+            
+          if ( i+j-1 <= j) {
             if (greaterBid >= this.auctions[i].bids[i+j].amount) {
               this.highest__bid = greaterBid;
               this.highest__bid__user = greaterBidUser;
+              this.highest__bid_currency = greaterBidCurrency
             } else {
               this.highest__bid = this.auctions[i].bids[i+j].amount;
               this.highest__bid__user = this.auctions[i].bids[i+j].email;
               greaterBid = this.auctions[i].bids[i+j].amount;
               greaterBidUser = this.auctions[i].bids[i+j].email;
+              greaterBidCurrency = this.auctions[i].bids[i+j].currency;
+              
             }
           }
         }
+      }
         this.auctions[i].highestBidUser = greaterBidUser;
         this.auctions[i].highestBidAmount = greaterBid;
+        this.auctions[i].highestBidCurrency = greaterBidCurrency;
       }
         
       }
