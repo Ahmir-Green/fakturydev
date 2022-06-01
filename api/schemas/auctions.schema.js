@@ -22,6 +22,7 @@ const auctionSchema = mongoose.Schema({
     address: { type: String },
     email: { type: String },
     amount: { type: Number },
+    currency: { type: String },
     createdAt: { type: Date },
     is_winner: { type: Boolean, default: false }
   }]
