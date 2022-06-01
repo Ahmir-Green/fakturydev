@@ -72,7 +72,7 @@
                             <div class="form-group" *ngIf="auction && auction.currencyType == 'FAK'">
                                 <input type="number" id="bid__fak" placeholder="Bid in FAK" class="form-control mb-2" formControlName = "amount" 
                                 >
-                                Minimum bid: ({{auction.minimumBid}} in {{auction.currencyType}})
+                                Minimum bid: ({{auction.minimumBid}} {{auction.currencyType}})
 
                                 <!-- <span *ngIf="g['fakBid'].touched && g['fakBid'].errors?.['required']" class="invalid-feedback">
                                     Bid in FAK is required
