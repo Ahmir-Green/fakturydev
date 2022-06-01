@@ -100,6 +100,7 @@ exports.auction_update_one = (req, res, next) => {
       email: req.body.bidForm.email,
       address: req.body.bidForm.address,
       amount: req.body.bidForm.amount,
+      currency: req.body.currencyType,
       createdAt: new Date()
     }
     auction.bids.push(bid)
