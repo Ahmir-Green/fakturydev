@@ -423,7 +423,7 @@ export class AuctionComponent implements OnInit {
   };
 
   formatDate = value => {
-    if (value) return moment(String(value)).format('ll');
+    if (value) return moment(String(value)).format('LLL');
   };
 
   isLoggedIn() {
