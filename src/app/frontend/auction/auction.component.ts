@@ -93,9 +93,7 @@ export class AuctionComponent implements OnInit {
   
 
   updateMinimumBidState() {
-    // console.log('current ', this.showMinimumBid)
     this.showMinimumBid = !this.showMinimumBid;
-    // console.log('new ', this.showMinimumBid)
     if (!this.showMinimumBid) {
       this.auctionForm.get('minimumBid').setValue(0, {
         onlySelf: true
@@ -201,7 +199,6 @@ export class AuctionComponent implements OnInit {
     });  
   }
 
-    // approve Bid
     editBid(bid, auction) {
       Swal.fire(Utils.updateConfig()).then(result => {
         if (result.value && result.value === true) {
@@ -259,10 +256,8 @@ export class AuctionComponent implements OnInit {
           return;
       }
       if (!this.showMinimumBid) {
-        console.log("false 0 :",this.showMinimumBid)
         this.minimumBid = 0
       } else {
-        console.log("true :",this.showMinimumBid)
         this.minimumBid = this.auctionForm.get('minimumBid')?.value
       }
       //True if all the fields are filled 
@@ -305,7 +300,6 @@ export class AuctionComponent implements OnInit {
   loadAuctions() {
     Utils.showSwalLoader();
     return this.auctionService.getPosts().subscribe((data: any) => {
-      // console.log(data)
       this.auctions = data.Auction;
       if (this.auctions.length <= 0) {
         Utils.closeSwalLoader()
