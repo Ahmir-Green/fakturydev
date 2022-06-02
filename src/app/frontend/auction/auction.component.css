@@ -185,3 +185,8 @@ table {
         display: inline!important;
         margin: 10px auto;
     }
+
+    .imgClass {
+        width: 40px;
+        border-radius: 50%;
+    }

@@ -31,13 +31,13 @@
                         </div>
                     </div>
                     <div class="auction__box__main">
-                        <div class="highest__bid" *ngIf="auction.highestBidUser || auction.highestBidCurrency != undefined">
+                        <div class="highest__bid" *ngIf="auction.highestBidUser != '' || auction.highestBidCurrency != ''">
                             <div class="bid__text">
                                 <p>Highest Bid By :</p>
                             </div>
                             <div class="bid__desc">
                                 <div class="desc__image__class">
-                                    <img src="../../../assets/images/head-image.svg">
+                                    <img class="imgClass" [src]="auction.highestBidUserImage != null ? auction.highestBidUserImage : '../../../assets/images/head-image.svg'">
                                 </div>
                                 <div class="desc__text">
                                     <p>{{obscureEmail(auction.highestBidUser)}}</p>
@@ -70,18 +70,18 @@
                                 class="form-control" placeholder="Email Address" formControlName = "email">
                             </div>
                             <div class="form-group" *ngIf="auction && auction.currencyType == 'FAK'">
-                                <input type="number" id="bid__fak" placeholder="Bid in FAK" class="form-control mb-2" formControlName = "amount" 
-                                >
-                                Minimum bid: ({{auction.minimumBid}} {{auction.currencyType}})
+                                <input type="number" id="bid__fak" placeholder="Bid in FAK" class="form-control mb-2" formControlName = "amount" >
+                                <span *ngIf="auction && auction.minimumBid != 0">
+                                    Minimum bid: ({{auction.minimumBid}} {{auction.currencyType}})
+                                </span>
 
                                 <!-- <span *ngIf="g['fakBid'].touched && g['fakBid'].errors?.['required']" class="invalid-feedback">
                                     Bid in FAK is required
                                 </span> -->
                             </div>
                             <div class="form-group" *ngIf="auction && auction.currencyType == 'XRP'">
-                                <input type="number" id="bid__xrp" placeholder="Bid in XRP" class="form-control mb-2" formControlName = "amount" 
-                                >
-                                <span *ngIf="auction && auction.minimumBid !== 0">
+                                <input type="number" id="bid__xrp" placeholder="Bid in XRP" class="form-control mb-2" formControlName = "amount" >
+                                <span *ngIf="auction && auction.minimumBid != 0">
                                     Minimum bid: ({{auction.minimumBid}} in {{auction.currencyType}})
                                 </span>
                             </div>
@@ -127,24 +127,22 @@
                                 <table class="table" *ngIf="bids && bids.length > 0; else noThings">
                                     <thead>
                                         <tr>
-                                        <!-- <th>AuctionId</th> -->
                                         <th>Email</th>
-                                        <th  class="text-right">Amount</th>
-                                        <!-- <th  class="text-right">Curr</th> -->
+                                        <th class="text-right">Amount</th>
                                         <th></th>
                                         <th>Currency</th>
+                                        <th>Created At</th>
                                         <th *ngIf="showBid">Edit</th>
                                         <th *ngIf="!showBid">Winner</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr *ngFor="let bid of bids; let i = index" >
-                                        <!-- <td>{{bid.auctionId}}</td> -->
                                         <td>{{bid.email}}</td>
                                         <td class="text-right">{{bid.amount}}</td>
-                                        <!-- <td class="text-right">{{bid.fakBid}}</td> -->
                                         <td></td>
                                         <td>{{bid.currency}}</td>
+                                        <td>{{ formatDate(bid.createdAt) }}</td>
                                         <td *ngIf="showBid">
                                             <ul class="displayClass">
                                                 <li>

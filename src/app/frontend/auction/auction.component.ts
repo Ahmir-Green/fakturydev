@@ -11,6 +11,7 @@ import { BidService } from './bid.service';
 import { environment } from '../../../environments/environment';
 declare var $ : any;
 import * as _ from 'lodash';
+import * as moment from 'moment';
 
 
 @Component({
@@ -47,6 +48,8 @@ export class AuctionComponent implements OnInit {
   minimumBid: any;
   auctionTitle: string;
   highest__bid_currency: any;
+  userImage: string;
+  highest__bid_userImage: any;
 
   
   constructor(public auth: AuthService,public auctionService: AuctionService, 
@@ -58,6 +61,7 @@ export class AuctionComponent implements OnInit {
       if (user) {
         this.userEmail = user.email;
         this.getUserData(user.email)
+        this.userImage = user.picture
       }
     });
       var emailPattern = "^[a-zA-Z]{1}[a-zA-Z0-9.\-_]*@[a-zA-Z]{1}[a-zA-Z.-]*[a-zA-Z]{1}[.][a-zA-Z]{2,}$";
@@ -130,6 +134,7 @@ export class AuctionComponent implements OnInit {
           this.toastr.warning('please fill this form');
       }  else {
         bidForm.userId = this.userId
+        bidForm.userImage = this.userImage
         let auctions = {
           ...auction,
           bidForm
@@ -306,47 +311,69 @@ export class AuctionComponent implements OnInit {
         Utils.closeSwalLoader()
       }
       for (let i = 0; i < this.auctions.length; i++) {
-      let greaterBid = 0;
-      let greaterBidUser = '';
-      let greaterBidCurrency;
-        // console.clear();
-        if (this.auctions[i].bids && this.auctions[i].bids.length > 0 && this.auctions[i].bids[0].amount != null) {
-          this.auctions[i].bids.every(bid => {
-            if (bid.currency == this.auctions[i].currencyType) {
-              greaterBid = bid.amount;
-              greaterBidUser = bid.email;
-              greaterBidCurrency = bid.currency;        
-              return false;
-            }
-            return true;
-          });
-          
-        for (let j = 0; j < this.auctions[i].bids.length; j++) {
-          if (this.auctions[i].bids[i+j] && this.auctions[i].bids[i+j].amount && this.auctions[i].bids[i+j].amount 
-            !== undefined && greaterBidCurrency == this.auctions[i].bids[i+j].currency){
-            console.log(greaterBidCurrency, greaterBid);
-            
-          if ( i+j-1 <= j) {
-            if (greaterBid >= this.auctions[i].bids[i+j].amount) {
-              this.highest__bid = greaterBid;
-              this.highest__bid__user = greaterBidUser;
-              this.highest__bid_currency = greaterBidCurrency
-            } else {
-              this.highest__bid = this.auctions[i].bids[i+j].amount;
-              this.highest__bid__user = this.auctions[i].bids[i+j].email;
-              greaterBid = this.auctions[i].bids[i+j].amount;
-              greaterBidUser = this.auctions[i].bids[i+j].email;
-              greaterBidCurrency = this.auctions[i].bids[i+j].currency;
-              
+        let greaterBidAmount = 0.0;
+        let greaterBidUserEmail = '';
+        let greaterBidCurrency = '';
+        let greaterBidUserImage = '';
+        if (this.auctions[i].bids.length > 0) {
+          for (let j = 0; j < this.auctions[i].bids.length; j++) {
+            if (this.auctions[i].bids[j].currency == this.auctions[i].currencyType && this.auctions[i].bids[j].amount > greaterBidAmount) {
+              greaterBidAmount = this.auctions[i].bids[j].amount;
+              greaterBidUserEmail = this.auctions[i].bids[j].email;
+              greaterBidCurrency = this.auctions[i].bids[j].currency;
+              greaterBidUserImage = this.auctions[i].bids[j].userImage;
             }
           }
         }
-      }
-        this.auctions[i].highestBidUser = greaterBidUser;
-        this.auctions[i].highestBidAmount = greaterBid;
+        this.auctions[i].highestBidUser = greaterBidUserEmail;
+        this.auctions[i].highestBidAmount = greaterBidAmount;
         this.auctions[i].highestBidCurrency = greaterBidCurrency;
-      }
-        
+        this.auctions[i].highestBidUserImage = greaterBidUserImage;
+        // let greaterBid = 0;
+        // let greaterBidUser = '';
+        // let greaterBidCurrency;
+        // let greaterBidUserImage;
+        // console.clear();
+        // if (this.auctions[i].bids.length > 0 && this.auctions[i].bids[0].amount != null) {
+        //   this.auctions[i].bids.every(bid => {
+        //     if (bid.currency == this.auctions[i].currencyType) {
+        //       greaterBid = bid.amount;
+        //       greaterBidUser = bid.email;
+        //       greaterBidCurrency = bid.currency; 
+        //       greaterBidUserImage = bid.userImage;       
+        //       return false;
+        //     }
+        //     return true;
+        //   });
+          
+        //   for (let j = 0; j < this.auctions[i].bids.length; j++) {
+        //     if (this.auctions[i].bids[i+j] && this.auctions[i].bids[i+j].amount && this.auctions[i].bids[i+j].amount 
+        //       !== undefined && greaterBidCurrency == this.auctions[i].bids[i+j].currency){
+        //       console.log(greaterBidCurrency, greaterBid);
+              
+        //       if ( i+j-1 <= j) {
+        //         if (greaterBid >= this.auctions[i].bids[i+j].amount) {
+        //           this.highest__bid = greaterBid;
+        //           this.highest__bid__user = greaterBidUser;
+        //           this.highest__bid_currency = greaterBidCurrency
+        //           this.highest__bid_userImage= greaterBidUserImage
+        //         } else {
+        //           this.highest__bid = this.auctions[i].bids[i+j].amount;
+        //           this.highest__bid__user = this.auctions[i].bids[i+j].email;
+        //           greaterBid = this.auctions[i].bids[i+j].amount;
+        //           greaterBidUser = this.auctions[i].bids[i+j].email;
+        //           greaterBidCurrency = this.auctions[i].bids[i+j].currency;
+        //           greaterBidUserImage = this.auctions[i].bids[i+j].userImage;
+                  
+        //         }
+        //       }
+        //     }
+        //   }
+        //   this.auctions[i].highestBidUser = greaterBidUser;
+        //   this.auctions[i].highestBidAmount = greaterBid;
+        //   this.auctions[i].highestBidCurrency = greaterBidCurrency;
+        //   this.auctions[i].highestBidUserImage = greaterBidUserImage;
+        // }
       }
       
       setTimeout(() => {
@@ -393,6 +420,10 @@ export class AuctionComponent implements OnInit {
   obscureEmail = email => {
     const [name, domain] = email.split("@");
     return `${name[0]}${new Array(name.length).join("*")}@${domain}`;
+  };
+
+  formatDate = value => {
+    if (value) return moment(String(value)).format('ll');
   };
 
   isLoggedIn() {
