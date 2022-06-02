@@ -20,6 +20,7 @@ const auctionSchema = mongoose.Schema({
       ref: 'User'
     },
     address: { type: String },
+    userImage: { type: String },
     email: { type: String },
     amount: { type: Number },
     currency: { type: String },
