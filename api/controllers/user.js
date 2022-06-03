@@ -4,21 +4,20 @@ var bcryptjs = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 
 exports.user_signup = (req, res, next) => {
-  User.find({email: req.body.email})
-  .exec()
-  .then(user => {
-    if(user.length >= 1) {
-       return
-    } else {
-          var user = new User({
-            _id: new mongoose.Types.ObjectId(),
-            email: req.body.email,
-            firstName: req.body.firstName,
-            role: req.body.role
-          });
-          user.save()
+  User.find({ email: req.body.email })
+    .exec()
+    .then(user => {
+      if (user.length >= 1) {
+        return
+      } else {
+        var user = new User({
+          _id: new mongoose.Types.ObjectId(),
+          email: req.body.email,
+          firstName: req.body.firstName,
+          role: req.body.role
+        });
+        user.save()
           .then(result => {
-            console.log(result);
             res.status(201).json({
               Message: 'User successfully added.'
             });
@@ -29,60 +28,60 @@ exports.user_signup = (req, res, next) => {
               error: err
             })
           });
-        }
-      });
-    }
+      }
+    });
+}
 
 exports.user_login = (req, res, next) => {
-  User.find({email: req.body.email})
-  .exec()
-  .then(user => {
-    if (user.length < 1){
-      return res.status(401).json({
-        Error: 'Auth Failed.'
-      });
-    }
-    bcryptjs.compare(req.body.password, user[0].password, (err, result) => {
-      if (err){
+  User.find({ email: req.body.email })
+    .exec()
+    .then(user => {
+      if (user.length < 1) {
         return res.status(401).json({
           Error: 'Auth Failed.'
         });
       }
-      if (result) {
-        var JWT_KEY = 'secret';
-        var token = jwt.sign({
-          email: user[0].email,
-          userId: user[0]._id
-        },
-        JWT_KEY,
-        {
-          expiresIn: '1h'
+      bcryptjs.compare(req.body.password, user[0].password, (err, result) => {
+        if (err) {
+          return res.status(401).json({
+            Error: 'Auth Failed.'
+          });
         }
-      );
-        return res.status(200).json({
-          Message: 'Auth Successful.',
-          token: token
+        if (result) {
+          var JWT_KEY = 'secret';
+          var token = jwt.sign({
+            email: user[0].email,
+            userId: user[0]._id
+          },
+            JWT_KEY,
+            {
+              expiresIn: '1h'
+            }
+          );
+          return res.status(200).json({
+            Message: 'Auth Successful.',
+            token: token
+          });
+        }
+        res.status(401).json({
+          Error: 'Auth Failed.'
         });
-      }
-      res.status(401).json({
-        Error: 'Auth Failed.'
       });
-    });
-  })
-  .catch(err => {
-    console.log(err);
-    res.status(500).json({
-      error: err
-    });
-  })
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        error: err
+      });
+    })
 }
 
 
 exports.user_delete = (req, res, next) => {
   var id = req.params.userId;
   User.remove({
-      _id: id
-    })
+    _id: id
+  })
     .exec()
     .then(doc => {
       res.status(200).json({
@@ -97,7 +96,7 @@ exports.user_delete = (req, res, next) => {
 }
 
 exports.user_get = (req, res, next) => {
-    User.findOne({email: req.params.email}).select('_id email role firstName lastName xrplAddress')
+  User.findOne({ email: req.params.email }).select('_id email role firstName lastName xrplAddress')
     .exec().then(doc => {
       if (doc) {
         res.status(200).json({
@@ -114,26 +113,26 @@ exports.user_get = (req, res, next) => {
         error: err
       })
     });
-  }
-  
+}
+
 exports.user_update = (req, res, next) => {
   console.log(req.body)
   let email = req.params.email;
   let user = {
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      xrplAddress: req.body.xrplAddress,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    xrplAddress: req.body.xrplAddress,
   }
   User.updateOne({
-      email: email
-    }, {
-      $set: user
-    })
+    email: email
+  }, {
+    $set: user
+  })
     .exec()
     .then(doc => {
       res.status(200).json({
         message: 'Successfully Updated',
-  
+
       });
     }).catch(err => {
       console.log(err);
@@ -141,4 +140,4 @@ exports.user_update = (req, res, next) => {
         error: err
       });
     });
-  }
+}

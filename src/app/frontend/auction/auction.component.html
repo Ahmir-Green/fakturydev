@@ -131,7 +131,6 @@
                                         <th class="text-right">Amount</th>
                                         <th></th>
                                         <th>Currency</th>
-                                        <th>Xrpl Address</th>
                                         <th>Created At</th>
                                         <th *ngIf="showBid">Edit</th>
                                         <th *ngIf="!showBid">Winner</th>
@@ -143,7 +142,6 @@
                                         <td class="text-right">{{bid.amount}}</td>
                                         <td></td>
                                         <td>{{bid.currency}}</td>
-                                        <td>{{bid.address}}</td>
                                         <td>{{ formatDate(bid.createdAt) }}</td>
                                         <td *ngIf="showBid">
                                             <ul class="displayClass">
